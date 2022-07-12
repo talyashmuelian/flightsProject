@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BL;
+using BE;
 
 namespace UIFlights
 {
@@ -20,6 +22,8 @@ namespace UIFlights
     /// </summary>
     public partial class MainWindow : Window
     {
+        private IBL bL = BLImp.theInstance();
+
         public MainWindow()
         {
             InitializeComponent();
