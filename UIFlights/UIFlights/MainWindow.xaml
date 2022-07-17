@@ -6,10 +6,97 @@
         xmlns:local="clr-namespace:UIFlights"
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="550" Width="1900" >
+    <Window.Resources>
+        <Style TargetType="m:Pushpin" x:Key="FromIsrael">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Image Source="Images\airplane.png"  />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+
+        </Style>
+        <Style TargetType="m:Pushpin" x:Key="ToIsrael">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Image Source="Images\airplaneToIsrael.png"/>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- We can bind to a method, Not this time --><!--
+        <ObjectDataProvider ObjectType="{x:Type helper:HelperClass}" MethodName="GetDateTimeFromEpoch" x:Key="EpochConvert">
+            <ObjectDataProvider.MethodParameters>
+                <system:Double>0</system:Double>
+            </ObjectDataProvider.MethodParameters>
+        </ObjectDataProvider>
+
+
+        <converters:TickToDateTimeConverter x:Key="TickConvert"/>-->
+
+    </Window.Resources>
     <Grid>
-        <m:Map Width="500" Height="300" Margin="227,71,66.333,49.667" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9"/>
-        <Button Content="Button" HorizontalAlignment="Left" Margin="87,53,0,0" VerticalAlignment="Top" Width="75"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50*"/>
+            <RowDefinition Height="469*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="222*"/>
+            <ColumnDefinition Width="221*"/>
+            <ColumnDefinition Width="1449*"/>
+        </Grid.ColumnDefinitions>
+
+        <Button Content="Read All" HorizontalAlignment="Left" Height="36" Margin="58,10,0,0" VerticalAlignment="Top" Width="89" Click="Button_Click" RenderTransformOrigin="0.322,1.237"/>
+        <ListBox ItemsSource="{Binding Path=listOutGoingFlights}" Name="OutFlightsListBox" HorizontalAlignment="Left" Height="112" Margin="30,235,0,0" VerticalAlignment="Top" Width="176" SelectionChanged="FlightsListBox_SelectionChanged" Grid.Row="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Destination}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+
+        <Label Content="Flight Details" HorizontalAlignment="Left" Margin="59,20,0,0" VerticalAlignment="Top" Grid.Column="1" Height="26" Width="79"/>
+        <ListBox ItemsSource="{Binding Path=listIncomingFlights}" x:Name="InFlightsListBox" HorizontalAlignment="Left" Height="112" Margin="30,67,0,0" VerticalAlignment="Top" Width="176" SelectionChanged="FlightsListBox_SelectionChanged" Grid.Row="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Source}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Label Content="Incoming" HorizontalAlignment="Left" Margin="30,36,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26" Width="60"/>
+        <Label Content="Outgoing" HorizontalAlignment="Left" Margin="30,204,0,0" VerticalAlignment="Top" Grid.Row="1" Height="26" Width="61"/>
+        <!-- Documentation
+          https://docs.microsoft.com/en-us/previous-versions/bing/wpf-control/hh750210(v=msdn.10)
+        -->
+       
+        <m:Map x:Name="myMap" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9"          
+               Center="32.000454,34.870743" ZoomLevel="5.0" AnimationLevel="None" Margin="22,48,10,10" Grid.Column="2" Grid.RowSpan="2" >
+            <!-- <m:Pushpin Location="34.620574,34.34942"/>-->
+        </m:Map>
+        <Button Content="Start Track" HorizontalAlignment="Left" Height="33" Margin="646,10,0,0" VerticalAlignment="Top" Width="126" Click="Button_Click_1" Grid.Column="2"/>
+        <TextBox x:Name="Counter" HorizontalAlignment="Left" Margin="777,15,0,10" TextWrapping="Wrap" Text="1" Width="45" Grid.Column="2"/>
+        <StackPanel x:Name="DetailsPanel" Grid.Column="1" HorizontalAlignment="Left" Height="403"  Grid.Row="1" VerticalAlignment="Top" Width="201" Margin="10,36,0,0">
+            <TextBlock Text="{Binding identification.callsign}"></TextBlock>
+            <TextBlock Text="{Binding aircraft.registration}"></TextBlock>
+            <TextBlock Text="{Binding airline.name}"></TextBlock>
+            <TextBlock Text="{Binding airport.destination.name}"></TextBlock>
+            <TextBlock Text="{Binding airport.destination.position.country.name}"></TextBlock>
+            <TextBlock Text="{Binding airport.origin.name}"></TextBlock>
+            <TextBlock Text="{Binding airport.origin.position.country.name}"></TextBlock>
+            <TextBlock Text="{Binding status.text}"></TextBlock>
+            <!--<TextBlock Text="{Binding time.estimated.arrival,Converter={StaticResource TickConvert}}"></TextBlock>-->
+        </StackPanel>
+
 
     </Grid>
+    
 </Window>

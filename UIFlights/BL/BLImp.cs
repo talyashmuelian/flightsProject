@@ -28,7 +28,7 @@ namespace BL
             return instance;
         }
         //GetCurrentFlights-לטפל לגבי סינכרוני ואסינכרוני
-        #region
+        #region GetCurrentFlights
         public Dictionary<string, List<FlightInfoPartial>> GetCurrentFlights()
         {
             Dictionary<string, List<FlightInfoPartial>> result = new Dictionary<string, List<FlightInfoPartial>>();
@@ -40,7 +40,7 @@ namespace BL
         /// private async function, the public called her
         /// </summary>
         /// <param name="dict"></param>
-        private void GetCurrentFlights(Dictionary<string, List<FlightInfoPartial>> dict)
+        public  void GetCurrentFlights(Dictionary<string, List<FlightInfoPartial>> dict)
         {
             JObject allFlightData = null;
             //IList<string> keys = null;
@@ -95,7 +95,7 @@ namespace BL
                 }
             }
             dict.Add("outgoing", outgoing);
-            dict.Add("incomong", incoming);
+            dict.Add("incoming", incoming);
         }
 
 
