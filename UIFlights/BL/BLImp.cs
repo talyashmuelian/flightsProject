@@ -40,7 +40,7 @@ namespace BL
         /// private async function, the public called her
         /// </summary>
         /// <param name="dict"></param>
-        public  void GetCurrentFlights(Dictionary<string, List<FlightInfoPartial>> dict)
+        public async void GetCurrentFlights(Dictionary<string, List<FlightInfoPartial>> dict)
         {
             JObject allFlightData = null;
             //IList<string> keys = null;
@@ -49,8 +49,20 @@ namespace BL
             List<FlightInfoPartial> outgoing = new List<FlightInfoPartial>();
             using (var webClient = new System.Net.WebClient())
             {
-                //var json = await webClient.DownloadStringTaskAsync(AllFlightsURL);
-                var json = webClient.DownloadString(AllFlightsURL);
+                var json = await webClient.DownloadStringTaskAsync(AllFlightsURL);
+                try
+                {
+
+                    //dict["incoming"].Clear();
+                    //dict["outgoing"].Clear();
+                    dict.Clear();
+                }
+                catch(Exception e)
+                {
+
+                }
+
+                //var json = webClient.DownloadString(AllFlightsURL);
                 allFlightData = JObject.Parse(json);
                 try
                 {

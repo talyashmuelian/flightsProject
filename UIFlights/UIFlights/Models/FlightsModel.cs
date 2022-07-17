@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Threading;
 
 namespace UIFlights
 {
@@ -13,17 +14,23 @@ namespace UIFlights
     {
         public Dictionary<string,List<FlightInfoPartial>> Flights { get; set; }
         private BLImp bl = BLImp.theInstance();
+        
         public FlightsModel()
         {
             Flights = bl.GetCurrentFlights();
-            Thread thread = new Thread(startClock);
-            thread.Start();
+            //Thread thread = new Thread(startClock);
+            //thread.Start();
+            
         }
+        
         public void startClock()
         {    
             while (true){
                 Flights=bl.GetCurrentFlights();
-                Thread.Sleep(10000);
+                Flights["outgoing"].Add(new FlightInfoPartial{Destination= "jer" ,Source="san fransisco", ID=123 });
+                Thread.Sleep(100);
+                Flights["outgoing"].Add(new FlightInfoPartial { Destination = "maale", Source = "san fransisco", ID = 123 });
+
             }
         }
 
