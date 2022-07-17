@@ -15,10 +15,12 @@ namespace UIFlights
         private BLImp bl = BLImp.theInstance();
         public FlightsModel()
         {
-            startClock();
+            Flights = bl.GetCurrentFlights();
+            Thread thread = new Thread(startClock);
+            thread.Start();
         }
         public void startClock()
-        {
+        {    
             while (true){
                 Flights=bl.GetCurrentFlights();
                 Thread.Sleep(10000);

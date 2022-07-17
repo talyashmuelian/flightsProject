@@ -16,7 +16,7 @@ namespace UIFlights
         public ObservableCollection<FlightInfoPartial> listIncomingFlights {
             get
             {
-                return new ObservableCollection<FlightInfoPartial>( flightsModel.Flights["incoming"]);
+                return new ObservableCollection<FlightInfoPartial>(flightsModel.Flights["incoming"]);
             }
         }
         public ObservableCollection<FlightInfoPartial> listOutGoingFlights {
