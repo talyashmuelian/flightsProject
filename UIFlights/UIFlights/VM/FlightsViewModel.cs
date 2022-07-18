@@ -110,7 +110,11 @@ namespace UIFlights
         private void extractSelectedFlight(string id)
         {
             SelectedFlightModel = new FlightModel(id);
-
+            selectedFlight = listIncomingFlights.ToList().Find( f=>f.SourceID == id);
+            if(selectedFlight==null)
+            {
+                selectedFlight = listOutgoingFlights.ToList().Find(f => f.SourceID == id);
+            }
             //עדכון נתונים עבור טיסה בודדת
 
         }
