@@ -19,8 +19,8 @@ namespace BE.Weather
 
     public class Coord
     {
-        public int lon { get; set; }
-        public int lat { get; set; }
+        public object lon { get; set; }
+        public object lat { get; set; }
         public override string ToString()
         {
             return JsonConvert.SerializeObject(this);

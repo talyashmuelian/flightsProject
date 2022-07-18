@@ -52,10 +52,18 @@
 
         <Button Content="Read All" HorizontalAlignment="Left" Height="36" Margin="58,10,0,0" VerticalAlignment="Top" Width="89" Click="Button_Click" RenderTransformOrigin="0.322,1.237"/>
         <ListBox ItemsSource="{Binding Path=ListOutgoingFlights}" Name="OutFlightsListBox" HorizontalAlignment="Left" Height="112" Margin="30,235,0,0" VerticalAlignment="Top" Width="176" SelectionChanged="FlightsListBox_SelectionChanged" Grid.Row="1">
+
             <ListBox.ItemTemplate>
                 <DataTemplate>
+                    
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Destination}"/>
+                        <TextBlock Text="{Binding Destination}">
+                            <TextBlock.InputBindings>
+                                <MouseBinding 
+                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=SourceID}"
+                                    MouseAction="LeftClick" />
+                            </TextBlock.InputBindings>
+                        </TextBlock>
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
@@ -85,14 +93,19 @@
         <Button Content="Start Track" HorizontalAlignment="Left" Height="33" Margin="646,10,0,0" VerticalAlignment="Top" Width="126" Click="Button_Click_1" Grid.Column="2"/>
         <TextBox x:Name="Counter" HorizontalAlignment="Left" Margin="777,15,0,10" TextWrapping="Wrap" Text="1" Width="45" Grid.Column="2"/>
         <StackPanel x:Name="DetailsPanel" Grid.Column="1" HorizontalAlignment="Left" Height="403"  Grid.Row="1" VerticalAlignment="Top" Width="201" Margin="10,36,0,0">
-            <TextBlock Text="{Binding identification.callsign}"></TextBlock>
-            <TextBlock Text="{Binding aircraft.registration}"></TextBlock>
-            <TextBlock Text="{Binding airline.name}"></TextBlock>
-            <TextBlock Text="{Binding airport.destination.name}"></TextBlock>
-            <TextBlock Text="{Binding airport.destination.position.country.name}"></TextBlock>
-            <TextBlock Text="{Binding airport.origin.name}"></TextBlock>
-            <TextBlock Text="{Binding airport.origin.position.country.name}"></TextBlock>
-            <TextBlock Text="{Binding status.text}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.DestinationName}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.DestinationCountryName}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.FlightId}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.AirlineName}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.OriginName}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.OriginCountryName}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.Status}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.EstimetedArrivalTime}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.DepartureTime}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.DestinationWeather}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.DescriptionDestination}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.OriginWeather}"></TextBlock>
+            <TextBlock Text="{Binding SelectedFlightModel.DescriptionOrigin}"></TextBlock>
             <!--<TextBlock Text="{Binding time.estimated.arrival,Converter={StaticResource TickConvert}}"></TextBlock>-->
         </StackPanel>
 

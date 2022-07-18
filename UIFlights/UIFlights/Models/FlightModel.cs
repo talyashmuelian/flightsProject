@@ -12,6 +12,9 @@ namespace UIFlights
    public class FlightModel
     {
         private BE.Flights.Root flightRoot;
+        private BE.Weather.Root rootWeatherOrigin;
+        private BE.Weather.Root rootWeatherDestination;
+
 
         private BLImp bl = BLImp.theInstance();
 
@@ -118,7 +121,7 @@ namespace UIFlights
                 }
                 catch
                 {
-                    return new DateTime(0,0,0);
+                    return new DateTime();
                 }
             }
         }
@@ -142,10 +145,7 @@ namespace UIFlights
             {
                 try
                 {
-                    double lon = flightRoot.airport.destination.position.longitude;
-                    double lat = flightRoot.airport.destination.position.latitude;
-                    BE.Weather.Root root = bl.GetWeather(lon, lat);
-                    return Util.Helper.FahrenheitToCelsius(root.main.temp);
+                    return Util.Helper.kelvinToCelsius(rootWeatherDestination.main.temp);
                 }
                 catch
                 {
@@ -159,10 +159,7 @@ namespace UIFlights
             {
                 try
                 {
-                    double lon = flightRoot.airport.origin.position.longitude;
-                    double lat = flightRoot.airport.origin.position.latitude;
-                    BE.Weather.Root root = bl.GetWeather(lon, lat);
-                    return Util.Helper.FahrenheitToCelsius(root.main.temp);
+                    return Util.Helper.kelvinToCelsius(rootWeatherOrigin.main.temp);
                 }
                 catch
                 {
@@ -170,10 +167,45 @@ namespace UIFlights
                 }
             }
         }
-        
+        public string DescriptionOrigin { 
+            get
+            {
+                try
+                {
+                    return rootWeatherOrigin.weather[0].description;
+                }
+                catch { return ""; }
+            }
+        }
+        public string DescriptionDestination
+        {
+            get
+            {
+                try
+                {
+                    return rootWeatherDestination.weather[0].description;
+                }
+                catch { return ""; }
+            }
+        }
+
         public FlightModel(string id)
         {
             flightRoot = bl.GetSelectedFlight(id);
+            try
+            {
+                double lonOrigin = flightRoot.airport.origin.position.longitude;
+                double latOrigin = flightRoot.airport.origin.position.latitude;
+                rootWeatherOrigin = bl.GetWeather(lonOrigin, latOrigin);
+            }
+            catch { }
+            try
+            {
+                double lonDes = flightRoot.airport.destination.position.longitude;
+                double latDes = flightRoot.airport.destination.position.latitude;
+                rootWeatherDestination = bl.GetWeather(lonDes, latDes);
+            }
+            catch { }
         }
         public override string ToString()
         {

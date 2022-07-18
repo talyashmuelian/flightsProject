@@ -13,9 +13,9 @@ namespace Util
             DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return start.AddSeconds(epochTime);
         }
-        public static double FahrenheitToCelsius(double Fahrenheit)
+        public static double kelvinToCelsius(double kelvin)
         {
-            return (Fahrenheit - 32) * 5 / 9;
+            return kelvin-273.15;
         }
     }
 }

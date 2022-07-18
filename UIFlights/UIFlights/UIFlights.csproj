@@ -63,6 +63,7 @@
     </ApplicationDefinition>
     <Compile Include="Models\FlightModel.cs" />
     <Compile Include="VM\FlightsViewModel.cs" />
+    <Compile Include="VM\FlightViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

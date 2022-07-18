@@ -15,18 +15,35 @@ namespace UIFlights
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private FlightInfoPartial selectedFlight;
-        public FlightInfoPartial SelectedFlight { 
-            get { return selectedFlight; } 
+        public FlightInfoPartial SelectedFlight
+        {
+            get { return selectedFlight; }
             set
             {
                 selectedFlight = value;
-                if(PropertyChanged!=null)
+                if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("SelectedFlight"));
                 }
             }
         }
         private FlightsModel flightsModel;
+        private FlightModel selectedFlightModel;
+        public FlightModel SelectedFlightModel
+        {
+            get
+            {
+                return selectedFlightModel;
+            }
+            set
+            {
+                selectedFlightModel = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("SelectedFlightModel"));
+                }
+            }
+        }
         private BLImp bl = BLImp.theInstance();
 
         private Random random = new Random();
@@ -34,6 +51,7 @@ namespace UIFlights
         private ObservableCollection<FlightInfoPartial> listOutgoingFlights;
         private Dictionary<string, List<FlightInfoPartial>> Flights=new Dictionary<string, List<FlightInfoPartial>>();
         private FlightCommand flightcommand = new FlightCommand();
+        public FlightCommand Flightcommand { get { return flightcommand; } set { flightcommand = value; } }
         public ObservableCollection<FlightInfoPartial> ListIncomingFlights {
             get
             {
@@ -66,7 +84,7 @@ namespace UIFlights
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flights;
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flight;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 3);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 15);
             dispatcherTimer.Start();
         }
       
@@ -85,11 +103,13 @@ namespace UIFlights
         }
         private void DispatcherTimer_Tick_Flight(object sender, EventArgs e)/////////////////////////////////////////////////////
         {
-            extractSelectedFlight(selectedFlight.SourceID);
+            if (selectedFlight!=null)
+                extractSelectedFlight(selectedFlight.SourceID);
         }
 
         private void extractSelectedFlight(string id)
         {
+            SelectedFlightModel = new FlightModel(id);
 
             //עדכון נתונים עבור טיסה בודדת
 
