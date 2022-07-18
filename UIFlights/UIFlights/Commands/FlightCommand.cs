@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace UIFlights.Commands
+namespace UIFlights
 {
     public class FlightCommand : ICommand
     {
-        public event Action<string> selectedFlight; //parameter is id flight
+        public event Action<string> SelectedFlight; //parameter is id flight
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -25,9 +25,9 @@ namespace UIFlights.Commands
         public void Execute(object parameter)
         {
             string FlightID = parameter as string;
-            if (selectedFlight != null)
+            if (SelectedFlight != null)
             {
-                selectedFlight(FlightID);
+                SelectedFlight(FlightID);
             }
         }
     }

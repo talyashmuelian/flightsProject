@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,26 +20,43 @@ namespace BE.Flights
         public Identification identification { get; set; }
         public Airport airport { get; set; }
         public Time time { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
+
     }
 
     public class Airline
     {
         public string name { get; set; }
-        public object code { get; set; }
-        public object url { get; set; }
+        public Code code { get; set; }
+        public string url { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Airport
     {
         public Origin origin { get; set; }
-        public object destination { get; set; }
+        public Destination destination { get; set; }
         public object real { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Code
     {
         public string iata { get; set; }
         public string icao { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Country
@@ -46,6 +64,10 @@ namespace BE.Flights
         public object id { get; set; }
         public string name { get; set; }
         public string code { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Destination
@@ -56,22 +78,38 @@ namespace BE.Flights
         public Timezone timezone { get; set; }
         public bool visible { get; set; }
         public string website { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Estimated
     {
         public object departure { get; set; }
         public object arrival { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class FlightHistory
     {
         public List<Aircraft> aircraft { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Generic
     {
         public Status status { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Identification
@@ -80,6 +118,10 @@ namespace BE.Flights
         public long row { get; set; }
         public Number number { get; set; }
         public string callsign { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Images
@@ -87,6 +129,10 @@ namespace BE.Flights
         public List<Thumbnail> thumbnails { get; set; }
         public List<Medium> medium { get; set; }
         public List<Large> large { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Info
@@ -94,6 +140,10 @@ namespace BE.Flights
         public object terminal { get; set; }
         public object baggage { get; set; }
         public object gate { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Large
@@ -102,6 +152,10 @@ namespace BE.Flights
         public string link { get; set; }
         public string copyright { get; set; }
         public string source { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Medium
@@ -110,18 +164,30 @@ namespace BE.Flights
         public string link { get; set; }
         public string copyright { get; set; }
         public string source { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Model
     {
         public string code { get; set; }
         public string text { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Number
     {
         public object @default { get; set; }
         public object alternative { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Origin
@@ -133,12 +199,20 @@ namespace BE.Flights
         public bool visible { get; set; }
         public object website { get; set; }
         public Info info { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Other
     {
         public int eta { get; set; }
         public int updated { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Position
@@ -148,17 +222,29 @@ namespace BE.Flights
         public int altitude { get; set; }
         public Country country { get; set; }
         public Region region { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Real
     {
-        public int departure { get; set; }
+        public object departure { get; set; }
         public object arrival { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Region
     {
         public string city { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Root
@@ -179,12 +265,20 @@ namespace BE.Flights
         public List<Trail> trail { get; set; }
         public int firstTimestamp { get; set; }
         public string s { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Scheduled
     {
         public int departure { get; set; }
         public int arrival { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Status
@@ -197,6 +291,10 @@ namespace BE.Flights
         public Generic generic { get; set; }
         public string color { get; set; }
         public string type { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Thumbnail
@@ -205,6 +303,10 @@ namespace BE.Flights
         public string link { get; set; }
         public string copyright { get; set; }
         public string source { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Time
@@ -214,6 +316,10 @@ namespace BE.Flights
         public Estimated estimated { get; set; }
         public Other other { get; set; }
         public object historical { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Timezone
@@ -224,6 +330,10 @@ namespace BE.Flights
         public string abbr { get; set; }
         public string abbrName { get; set; }
         public bool isDst { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
     public class Trail
@@ -234,6 +344,10 @@ namespace BE.Flights
         public int spd { get; set; }
         public int ts { get; set; }
         public int hd { get; set; }
+        public override string ToString()
+        {
+            return JsonConvert.SerializeObject(this);
+        }
     }
 
 

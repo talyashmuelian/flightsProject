@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DL
+namespace Util
 {
     public static class Helper
     {
@@ -13,6 +13,9 @@ namespace DL
             DateTime start = new DateTime(1970, 1, 1, 0, 0, 0, 0);
             return start.AddSeconds(epochTime);
         }
-
+        public static double FahrenheitToCelsius(double Fahrenheit)
+        {
+            return (Fahrenheit - 32) * 5 / 9;
+        }
     }
 }

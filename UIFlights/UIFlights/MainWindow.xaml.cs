@@ -35,11 +35,11 @@ namespace UIFlights
         {
             //load current data
             //TrafficAdapter dal = new TrafficAdapter();
-            var FlightKeys = bl.GetCurrentFlights();
+         //   var FlightKeys = bl.GetCurrentFlights();
 
             // this.DataContext = FlightKeys;
-            InFlightsListBox.DataContext = FlightKeys["incoming"];
-            OutFlightsListBox.DataContext = FlightKeys["outgoing"];
+            //InFlightsListBox.DataContext = FlightKeys["incoming"];
+            //OutFlightsListBox.DataContext = FlightKeys["outgoing"];
 
         }
 

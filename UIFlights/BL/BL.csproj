@@ -57,6 +57,10 @@
       <Project>{3bd6932d-1c4e-4dcb-92a2-140c2fdb0ca6}</Project>
       <Name>DL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Util\Util.csproj">
+      <Project>{ab1735e9-9e61-4662-aff5-fd09326e8ec7}</Project>
+      <Name>Util</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

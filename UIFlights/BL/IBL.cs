@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE.Flights;
-using BE.Whether;
+using BE.Weather;
 namespace BL
 {
     public interface IBL
     {
-        Dictionary<string, List<FlightInfoPartial>> GetCurrentFlights();
-        BE.Whether.Root GetWhether(double lon, double lat);
+        Dictionary<string, List<FlightInfoPartial>> GetCurrentFlightsSync();
+        void GetCurrentFlightsAsync(Dictionary<string, List<FlightInfoPartial>> dict);
+
+        BE.Weather.Root GetWeather(double lon, double lat);
+        BE.Flights.Root GetSelectedFlight(string id);
     }
 }

@@ -58,6 +58,10 @@
       <Project>{572b195f-a2fb-4319-b493-cf33637ff911}</Project>
       <Name>BL</Name>
     </ProjectReference>
+    <ProjectReference Include="..\UIFlights\UIFlights.csproj">
+      <Project>{64c2c322-4d23-4c3f-acc2-7996b8ba46b5}</Project>
+      <Name>UIFlights</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

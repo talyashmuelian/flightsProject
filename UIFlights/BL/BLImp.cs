@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE.Flights;
-using BE.Whether;
+using BE.Weather;
 using DL;
 using Newtonsoft.Json;
 
@@ -29,99 +29,97 @@ namespace BL
         }
         //GetCurrentFlights-לטפל לגבי סינכרוני ואסינכרוני
         #region GetCurrentFlights
-        public Dictionary<string, List<FlightInfoPartial>> GetCurrentFlights()
+        //public Dictionary<string, List<FlightInfoPartial>> GetCurrentFlights()
+        //{
+        //    Dictionary<string, List<FlightInfoPartial>> result = new Dictionary<string, List<FlightInfoPartial>>();
+        //    GetCurrentFlightsAsync(result);//call the async function
+        //    return result;
+        public Dictionary<string, List<FlightInfoPartial>> GetCurrentFlightsSync()
         {
-            Dictionary<string, List<FlightInfoPartial>> result = new Dictionary<string, List<FlightInfoPartial>>();
-            GetCurrentFlights(result);//call the async function
-            return result;
+            Dictionary<string, List<FlightInfoPartial>> dict = new Dictionary<string, List<FlightInfoPartial>>();
+            using (var webClient = new System.Net.WebClient())
+            {
 
+                var json =  webClient.DownloadString(AllFlightsURL);
+                extractFlightFromString(json, dict);
+            }
+            return dict;
         }
+        //}
         /// <summary>
         /// private async function, the public called her
         /// </summary>
         /// <param name="dict"></param>
-        public async void GetCurrentFlights(Dictionary<string, List<FlightInfoPartial>> dict)
+        public async void GetCurrentFlightsAsync(Dictionary<string, List<FlightInfoPartial>> dict)
         {
-            JObject allFlightData = null;
-            //IList<string> keys = null;
-            //IList<object> values = null;
-            List<FlightInfoPartial> incoming = new List<FlightInfoPartial>();
-            List<FlightInfoPartial> outgoing = new List<FlightInfoPartial>();
             using (var webClient = new System.Net.WebClient())
             {
                 var json = await webClient.DownloadStringTaskAsync(AllFlightsURL);
-                try
+                extractFlightFromString(json, dict);
+            }
+                   }
+        private void extractFlightFromString(string json, Dictionary<string, List<FlightInfoPartial>> dict)
+        {
+            List<FlightInfoPartial> incoming = new List<FlightInfoPartial>();
+            List<FlightInfoPartial> outgoing = new List<FlightInfoPartial>();
+            JObject allFlightData = null;
+            dict.Clear();
+            allFlightData = JObject.Parse(json);
+            try
+            {
+                foreach (var item in allFlightData)
                 {
-
-                    //dict["incoming"].Clear();
-                    //dict["outgoing"].Clear();
-                    dict.Clear();
-                }
-                catch(Exception e)
-                {
-
-                }
-
-                //var json = webClient.DownloadString(AllFlightsURL);
-                allFlightData = JObject.Parse(json);
-                try
-                {
-                    foreach (var item in allFlightData)
+                    var key = item.Key;
+                    if (key == "full_count" || key == "version" || key == "stats" || key == "visible") continue;
+                    if (item.Value[11].ToString() == "TLV")
                     {
-                        var key = item.Key;
-                        if (key == "full_count" || key == "version" || key == "stats" || key == "visible") continue;
-                        if (item.Value[11].ToString() == "TLV")
+                        outgoing.Add(new FlightInfoPartial
                         {
-                            outgoing.Add(new FlightInfoPartial
-                            {
-                                ID = -1,
-                                Source = item.Value[11].ToString(),
-                                Destination = item.Value[12].ToString(),
-                                SourceID = key,
-                                Long = Convert.ToDouble(item.Value[1]),
-                                Lat = Convert.ToDouble(item.Value[2]),
-                                DateAndTime = Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
-                                FlightCode = item.Value[13].ToString()
-                            });
-                        }
-                        if (item.Value[12].ToString() == "TLV")
+                            ID = -1,
+                            Source = item.Value[11].ToString(),
+                            Destination = item.Value[12].ToString(),
+                            SourceID = key,
+                            Long = Convert.ToDouble(item.Value[1]),
+                            Lat = Convert.ToDouble(item.Value[2]),
+                            DateAndTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
+                            FlightCode = item.Value[13].ToString()
+                        });
+                    }
+                    if (item.Value[12].ToString() == "TLV")
+                    {
+                        incoming.Add(new FlightInfoPartial
                         {
-                            incoming.Add(new FlightInfoPartial
-                            {
-                                ID = -1,
-                                Source = item.Value[11].ToString(),
-                                Destination = item.Value[12].ToString(),
-                                SourceID = key,
-                                Long = Convert.ToDouble(item.Value[1]),
-                                Lat = Convert.ToDouble(item.Value[2]),
-                                DateAndTime = Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
-                                FlightCode = item.Value[13].ToString()
-                            });
-                        }
+                            ID = -1,
+                            Source = item.Value[11].ToString(),
+                            Destination = item.Value[12].ToString(),
+                            SourceID = key,
+                            Long = Convert.ToDouble(item.Value[1]),
+                            Lat = Convert.ToDouble(item.Value[2]),
+                            DateAndTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
+                            FlightCode = item.Value[13].ToString()
+                        });
                     }
                 }
+            }
 
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
             }
             dict.Add("outgoing", outgoing);
             dict.Add("incoming", incoming);
         }
-
-
         #endregion
-        public BE.Whether.Root GetWhether(double lon, double lat)
+        public BE.Weather.Root GetWeather(double lon, double lat)
         {
-            BE.Whether.Root result = null;
+            BE.Weather.Root result = null;
             string urlWhether = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=05b1f955b138af8db2dac1319b725a96";
             using (var webClient = new System.Net.WebClient())
             {
                 try
                 {
                     var json = webClient.DownloadString(urlWhether);
-                    result = (BE.Whether.Root)JsonConvert.DeserializeObject(json, typeof(BE.Whether.Root));
+                    result = (BE.Weather.Root)JsonConvert.DeserializeObject(json, typeof(BE.Weather.Root));
                 }
                 catch(Exception e)
                 {
@@ -131,8 +129,23 @@ namespace BL
             return result;
         }
 
-
-
+        public BE.Flights.Root GetSelectedFlight(string id)
+        {
+            BE.Flights.Root result = null;
+            using (var webClient = new System.Net.WebClient())
+            {
+                try
+                {
+                    var json = webClient.DownloadString(FlightURL+id);
+                    result = (BE.Flights.Root)JsonConvert.DeserializeObject(json, typeof(BE.Flights.Root));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return result;
+        }
     }
    
     
