@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using BL;
 using BE.Flights;
 using UIFlights;
+using System.Threading;
 
 namespace consoleUI
 {
@@ -15,7 +16,14 @@ namespace consoleUI
         {
             BLImp bl = BLImp.theInstance();
             bl.SaveFlightInfoPartial(bl.GetCurrentFlightsSync()["incoming"][1]);
-            foreach(var item in bl.GetSavedFlights(new DateTime(), DateTime.Now))
+            //Thread.Sleep(10);
+            foreach (var item in bl.GetSavedFlights(new DateTime(), DateTime.Now))
+            {
+                Console.WriteLine(item);
+            }
+            Console.WriteLine("__________________________________________________________________________");
+           // bl.SaveFlightInfoPartial(bl.GetCurrentFlightsSync()["incoming"][1]);
+            foreach (var item in bl.GetSavedFlights(new DateTime(), DateTime.Now))
             {
                 Console.WriteLine(item);
             }
@@ -29,7 +37,7 @@ namespace consoleUI
             //    foreach (var item2 in item.Value)
             //        Console.WriteLine(item2);
             //}
-            //Console.ReadLine();
+            Console.ReadLine();
         }
     }
 }

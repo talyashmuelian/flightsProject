@@ -19,8 +19,13 @@ namespace BL
         static BLImp instance;//=new DLImp();
         private BLImp()
         {
-
+            
         }
+        ~BLImp()
+        {
+            dl.DestroyThread();
+
+                }
         static public BLImp theInstance()
         {
             if (instance == null)

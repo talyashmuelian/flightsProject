@@ -11,5 +11,6 @@ namespace DL
     {
         void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial);
         List<FlightInfoPartial> GetSavedFlights();
+        void DestroyThread();
     }
 }

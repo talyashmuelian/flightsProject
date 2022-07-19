@@ -75,6 +75,7 @@ namespace UIFlights
         {
             flightsModel = new FlightsModel();
             flightcommand.SelectedFlight += extractSelectedFlight;
+            flightcommand.SelectedFlight += saveSelectedFlight;
             //var Flights = bl.GetCurrentFlights();
             Flights = bl.GetCurrentFlightsSync();
            // ListIncomingFlights = new ObservableCollection<FlightInfoPartial>();
@@ -117,6 +118,15 @@ namespace UIFlights
             }
             //עדכון נתונים עבור טיסה בודדת
 
+        }
+        private void saveSelectedFlight(string id)
+        {
+            selectedFlight = listIncomingFlights.ToList().Find(f => f.FlightID == id);
+            if (selectedFlight == null)
+            {
+                selectedFlight = listOutgoingFlights.ToList().Find(f => f.FlightID == id);
+            }
+            bl.SaveFlightInfoPartial(selectedFlight);
         }
 
     }

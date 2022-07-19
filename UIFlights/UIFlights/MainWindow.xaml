@@ -52,12 +52,17 @@
 
         <Button Content="Read All" HorizontalAlignment="Left" Height="36" Margin="58,10,0,0" VerticalAlignment="Top" Width="89" Click="Button_Click" RenderTransformOrigin="0.322,1.237"/>
         <ListBox ItemsSource="{Binding Path=ListOutgoingFlights}" Name="OutFlightsListBox" HorizontalAlignment="Left" Height="112" Margin="30,235,0,0" VerticalAlignment="Top" Width="176" SelectionChanged="FlightsListBox_SelectionChanged" Grid.Row="1">
-
+            <!--<ListBox.Resources>
+                <Style x:Key="ReadOnlyTextBoxStyle" TargetType="TextBox">
+                    <EventSetter Event="MouseDown" Handler="TextBox_MouseDown" 
+                         HandledEventsToo="True"/>
+                </Style>
+            </ListBox.Resources>-->
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Destination}" Width="70">
+                        <TextBlock Text="{Binding Destination}" Width="150">
                             <TextBlock.InputBindings>
                                 <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
