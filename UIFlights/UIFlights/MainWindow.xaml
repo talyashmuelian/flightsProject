@@ -60,10 +60,11 @@
                         <TextBlock Text="{Binding Destination}">
                             <TextBlock.InputBindings>
                                 <MouseBinding 
-                        Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=SourceID}"
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=SourceID}"
                                     MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
                         </TextBlock>
+                        <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding  Path=SourceID }"/>-->
                     <!--</StackPanel>-->
                 </DataTemplate>
             </ListBox.ItemTemplate>
