@@ -24,7 +24,7 @@ namespace UIFlights
             {
                 try{
                     return flightRoot.airport.destination.name;}
-                catch{ return ""; }
+                catch{ return "NA"; }
             }
         }
 
@@ -37,7 +37,7 @@ namespace UIFlights
                 }
                 catch
                 { 
-                    return ""; }
+                    return "NA"; }
                 }
         }
         public string FlightId
@@ -49,7 +49,7 @@ namespace UIFlights
                 }
                 catch
                 {
-                    return "";
+                    return "NA";
                 }
             
         }
@@ -64,7 +64,7 @@ namespace UIFlights
                 }
                 catch
                 {
-                    return "";
+                    return "NA";
                 }
             }
         }
@@ -79,7 +79,7 @@ namespace UIFlights
                 }
                 catch
                 {
-                    return "";
+                    return "NA";
                 }
             }
         }
@@ -93,7 +93,7 @@ namespace UIFlights
                 }
                 catch
                 {
-                    return "";
+                    return "NA";
                 }
             }
         }
@@ -107,63 +107,69 @@ namespace UIFlights
                 }
                 catch
                 {
-                    return "";
+                    return "NA";
                 }
             }
         }
-        public DateTime EstimetedArrivalTime
+        public string EstimetedArrivalTime
         {
             get
             {
                 try
                 {
-                    return Util.Helper.GetDateFromEpoch(Convert.ToDouble(flightRoot.time.estimated.arrival));
+                    var arrival = flightRoot.time.estimated.arrival;
+                    if (arrival != null)
+                        return Util.Helper.GetDateFromEpoch(Convert.ToDouble(arrival)).ToString();
+                    else { return "NA"; }
                 }
                 catch
                 {
-                    return new DateTime();
+                    return  "NA";
                 }
             }
         }
-        public DateTime DepartureTime
+        public string DepartureTime
         {
             get
             {
                 try
                 {
-                    return Util.Helper.GetDateFromEpoch(Convert.ToDouble(flightRoot.time.estimated.departure));
+                    var departure = flightRoot.time.estimated.departure;
+                    if (departure != null)
+                        return Util.Helper.GetDateFromEpoch(Convert.ToDouble(departure)).ToString();
+                    else { return "NA"; }
                 }
                 catch
                 {
-                    return new DateTime();
+                    return "NA";
                 }
             }
         }
-        public double DestinationWeather
+        public string DestinationWeather
         {
             get
             {
                 try
                 {
-                    return Util.Helper.kelvinToCelsius(rootWeatherDestination.main.temp);
+                    return Util.Helper.kelvinToCelsius(rootWeatherDestination.main.temp).ToString();
                 }
                 catch
                 {
-                    return -999;
+                    return "NA";
                 }
             }
         }
-        public double OriginWeather
+        public string OriginWeather
         {
             get
             {
                 try
                 {
-                    return Util.Helper.kelvinToCelsius(rootWeatherOrigin.main.temp);
+                    return Util.Helper.kelvinToCelsius(rootWeatherOrigin.main.temp).ToString();
                 }
                 catch
                 {
-                    return -999;
+                    return "NA";
                 }
             }
         }
@@ -174,7 +180,7 @@ namespace UIFlights
                 {
                     return rootWeatherOrigin.weather[0].description;
                 }
-                catch { return ""; }
+                catch { return "NA"; }
             }
         }
         public string DescriptionDestination
@@ -185,7 +191,7 @@ namespace UIFlights
                 {
                     return rootWeatherDestination.weather[0].description;
                 }
-                catch { return ""; }
+                catch { return "NA"; }
             }
         }
 

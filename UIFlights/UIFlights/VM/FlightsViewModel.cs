@@ -104,16 +104,16 @@ namespace UIFlights
         private void DispatcherTimer_Tick_Flight(object sender, EventArgs e)/////////////////////////////////////////////////////
         {
             if (selectedFlight!=null)
-                extractSelectedFlight(selectedFlight.SourceID);
+                extractSelectedFlight(selectedFlight.FlightID);
         }
 
         private void extractSelectedFlight(string id)
         {
             SelectedFlightModel = new FlightModel(id);
-            selectedFlight = listIncomingFlights.ToList().Find( f=>f.SourceID == id);
+            selectedFlight = listIncomingFlights.ToList().Find( f=>f.FlightID == id);
             if(selectedFlight==null)
             {
-                selectedFlight = listOutgoingFlights.ToList().Find(f => f.SourceID == id);
+                selectedFlight = listOutgoingFlights.ToList().Find(f => f.FlightID == id);
             }
             //עדכון נתונים עבור טיסה בודדת
 

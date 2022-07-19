@@ -14,17 +14,22 @@ namespace consoleUI
         static void Main(string[] args)
         {
             BLImp bl = BLImp.theInstance();
-            FlightModel f = new FlightModel("2cb19464");
-            Console.WriteLine(f);
-            Console.WriteLine(bl.GetSelectedFlight("2cb1781a"));
-            Console.WriteLine(bl.GetWeather(0, 0));
-            Console.WriteLine(bl.GetCurrentFlightsSync());
-            foreach (var item in bl.GetCurrentFlightsSync())
+            bl.SaveFlightInfoPartial(bl.GetCurrentFlightsSync()["incoming"][1]);
+            foreach(var item in bl.GetSavedFlights(new DateTime(), DateTime.Now))
             {
-                foreach (var item2 in item.Value)
-                    Console.WriteLine(item2);
+                Console.WriteLine(item);
             }
-            Console.ReadLine();
+            //FlightModel f = new FlightModel("2cb19464");
+            //Console.WriteLine(f);
+            //Console.WriteLine(bl.GetSelectedFlight("2cb1781a"));
+            //Console.WriteLine(bl.GetWeather(0, 0));
+            //Console.WriteLine(bl.GetCurrentFlightsSync());
+            //foreach (var item in bl.GetCurrentFlightsSync())
+            //{
+            //    foreach (var item2 in item.Value)
+            //        Console.WriteLine(item2);
+            //}
+            //Console.ReadLine();
         }
     }
 }

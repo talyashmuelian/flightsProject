@@ -14,5 +14,7 @@ namespace BL
 
         BE.Weather.Root GetWeather(double lon, double lat);
         BE.Flights.Root GetSelectedFlight(string id);
+        void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial);
+        List<FlightInfoPartial> GetSavedFlights(DateTime start, DateTime end);
     }
 }

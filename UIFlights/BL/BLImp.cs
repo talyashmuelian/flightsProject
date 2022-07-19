@@ -15,7 +15,7 @@ namespace BL
     {
         private const string AllFlightsURL = "https://data-cloud.flightradar24.com/zones/fcgi/feed.js?faa=1&bounds=32.366%2C31.271%2C34.012%2C36.282&satellite=1&mlat=1&flarm=1&adsb=1&gnd=1&air=1&vehicles=1&estimated=1&maxage=14400&gliders=1&stats=1";
         private const string FlightURL = "https://data-live.flightradar24.com/clickhandler/?version=1.5&flight=";
-        private IDL dL=DLImp.theInstance();
+        private IDL dl=DLImp.theInstance();
         static BLImp instance;//=new DLImp();
         private BLImp()
         {
@@ -78,10 +78,10 @@ namespace BL
                             ID = -1,
                             Source = item.Value[11].ToString(),
                             Destination = item.Value[12].ToString(),
-                            SourceID = key,
+                            FlightID = key,
                             Long = Convert.ToDouble(item.Value[1]),
                             Lat = Convert.ToDouble(item.Value[2]),
-                            DateAndTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
+                            DepartureTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
                             FlightCode = item.Value[13].ToString()
                         });
                     }
@@ -92,10 +92,10 @@ namespace BL
                             ID = -1,
                             Source = item.Value[11].ToString(),
                             Destination = item.Value[12].ToString(),
-                            SourceID = key,
+                            FlightID = key,
                             Long = Convert.ToDouble(item.Value[1]),
                             Lat = Convert.ToDouble(item.Value[2]),
-                            DateAndTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
+                            DepartureTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
                             FlightCode = item.Value[13].ToString()
                         });
                     }
@@ -145,6 +145,23 @@ namespace BL
                 }
             }
             return result;
+        }
+
+        public void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial)
+        {
+            dl.SaveFlightInfoPartial(flightInfoPartial);
+        }
+
+        public List<FlightInfoPartial> GetSavedFlights(DateTime start, DateTime end)
+        {
+            try
+            {
+                return (from f in dl.GetSavedFlights()
+                        where f.CreateTime > start && f.CreateTime < end
+                        select f).ToList();
+            }
+            catch { return null; }
+
         }
     }
    
