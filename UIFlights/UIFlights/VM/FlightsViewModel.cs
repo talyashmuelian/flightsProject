@@ -118,6 +118,9 @@ namespace UIFlights
             foreach (var f in flights)
             {
                 Pushpin PinCurrent = new Pushpin { ToolTip = "source: " + f.Source + "\n destination: " + f.Destination };
+                PinCurrent.Height = 20;
+                PinCurrent.Width = 20;
+                PinCurrent.Name = "_"+f.FlightID;
                 //PositionOrigin origin = new PositionOrigin { X = 0.4, Y = 0.4 };
                 //MapLayer.SetPositionOrigin(PinCurrent, origin);
                 //Better to use RenderTransform
