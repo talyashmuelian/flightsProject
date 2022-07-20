@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:UIFlights"
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF" 
         mc:Ignorable="d"
-        Title="MainWindow" Height="550" Width="1900" >
+        Title="MainWindow" Height="550" Width="1900">
     <Window.Resources>
         <Style TargetType="m:Pushpin" x:Key="FromIsrael">
             <Setter Property="Template">
@@ -62,14 +62,14 @@
                 <DataTemplate>
                     
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Destination}" Width="150">
+                        <TextBlock Text="{Binding Destination}" Width="30">
                             <TextBlock.InputBindings>
                                 <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
                                     MouseAction="LeftClick" />
                             </TextBlock.InputBindings>
                         </TextBlock>
-                        <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding  Path=SourceID }"/>-->
+                        <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding ElementName=OutFlightsListBox,  Path=ListBoxItem.Selected }"/>-->
                     </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
