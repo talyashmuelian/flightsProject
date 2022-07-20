@@ -8,14 +8,14 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         Closing="killThread"
-        Title="MainWindow" Height="550" Width="1900">
+        Title="MainWindow" Height="550" Width="1900" WindowState="Maximized">
     <Window.Resources>
         <local:MyConverter x:Key="MyConverter"></local:MyConverter>
         <Style TargetType="m:Pushpin" x:Key="FromIsrael">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Image Source="Images\airplane.png"  />
+                        <Image Source="Images\airplane.jpeg"  />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -109,7 +109,7 @@
           https://docs.microsoft.com/en-us/previous-versions/bing/wpf-control/hh750210(v=msdn.10)
         -->
 
-                            <m:Map x:Name="myMap" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9"          
+                            <m:Map x:Name="myMap" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"         
                Center="32.000454,34.870743" ZoomLevel="5.0" AnimationLevel="None" Margin="22,48,10,10" Grid.Column="2" Grid.RowSpan="2" >
                                 <!-- <m:Pushpin Location="34.620574,34.34942"/>-->
                             </m:Map>
@@ -139,41 +139,31 @@
                 <TabItem Header="history">
                     <TabItem.Content>
                         <Grid x:Name="historyGrid">
-                            <ListView x:Name="lvLineTiming" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Grid.Column="0" 
-                ItemsSource="{Binding}" FontSize="9" Width="400" Height="305" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607" >
+                            <ListView x:Name="historyListView" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Grid.Column="0" 
+                ItemsSource="{Binding SavedFlights}" FontSize="9" Width="400" Height="305" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607" >
                              
                                 <ListView.View >
                                     <GridView x:Name="lineGridview">
 
-                                        <GridViewColumn Header="flightID" Width="165" DisplayMemberBinding="{Binding LastStation}" FrameworkElement.FlowDirection="RightToLeft"   />
-                                        <GridViewColumn Header="source" Width="90" DisplayMemberBinding="{Binding TripStart}" FrameworkElement.FlowDirection="RightToLeft" />
-                                        <GridViewColumn Header="destination" Width="90" DisplayMemberBinding="{Binding ExpectedTimeTillArrive}" FrameworkElement.FlowDirection="RightToLeft" />
-                                        <GridViewColumn Header="arrival time" Width="49" DisplayMemberBinding="{Binding LineCode}" FrameworkElement.FlowDirection="RightToLeft" />
+                                        <GridViewColumn Header="flightID" Width="60" DisplayMemberBinding="{Binding FlightID}" FrameworkElement.FlowDirection="RightToLeft"   />
+                                        <GridViewColumn Header="source" Width="40" DisplayMemberBinding="{Binding Source}" FrameworkElement.FlowDirection="RightToLeft" />
+                                        <GridViewColumn Header="destination" Width="60" DisplayMemberBinding="{Binding Destination}" FrameworkElement.FlowDirection="RightToLeft" />
+                                        <GridViewColumn Header="Departure time" Width="110" DisplayMemberBinding="{Binding DepartureTime}" FrameworkElement.FlowDirection="RightToLeft" />
+                                        <GridViewColumn Header="Flight code" Width="49" DisplayMemberBinding="{Binding FlightCode}" FrameworkElement.FlowDirection="RightToLeft" />
+
                                     </GridView>
                                 </ListView.View>
                             </ListView>
-                            <ListBox HorizontalAlignment="Left" Height="151" Margin="277,224,0,0" VerticalAlignment="Top" Width="409"/>
-                            <ListBox ItemsSource="{Binding Path=ListOutgoingFlights}" Name="SavedFlightsListBox" HorizontalAlignment="Left" Height="112" Margin="30,235,0,0" VerticalAlignment="Top" Width="176" SelectionChanged="FlightsListBox_SelectionChanged" Grid.Row="1">
-                               
-                                <ListBox.ItemTemplate>
-                                    <DataTemplate>
-
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Destination}" Width="30">
-                                            </TextBlock>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListBox.ItemTemplate>
-                            </ListBox>
+                        
                             <DatePicker Name="startDate" SelectedDate="1970-1-1" HorizontalAlignment="Left" Margin="64,78,0,0" VerticalAlignment="Top" />
-                            <DatePicker Name="endDate" SelectedDate="{x:Static sys:DateTime.Now}" HorizontalAlignment="Left" Margin="64,182,0,0" VerticalAlignment="Top"/>
+                            <DatePicker Name="endDate" SelectedDate="{x:Static sys:DateTime.Today}" HorizontalAlignment="Left" Margin="64,182,0,0" VerticalAlignment="Top"/>
                             <Label Content="start date:" HorizontalAlignment="Left" Margin="64,36,0,0" VerticalAlignment="Top"/>
                             <Label Content="end date" HorizontalAlignment="Left" Margin="64,146,0,0" VerticalAlignment="Top"/>
                             <Button Name="search" Command="{Binding SearchHistoryCommand}" Content="search" HorizontalAlignment="Left" Margin="277,103,0,0" VerticalAlignment="Top" Width="75">
                                 <Button.CommandParameter>
                                     <MultiBinding Converter="{StaticResource MyConverter}">
                                         <Binding Path="SelectedDate" ElementName="startDate"/>
-                                        <Binding Path="SelectedDate" ElementName="MyCanvas"/>
+                                        <Binding Path="SelectedDate" ElementName="endDate"/>
                                     </MultiBinding>
                                 </Button.CommandParameter>
                             </Button>

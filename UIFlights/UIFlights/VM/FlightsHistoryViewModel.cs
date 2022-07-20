@@ -23,8 +23,12 @@ namespace UIFlights
         }
         private void GetSavedFlights(DateTime date1, DateTime date2)
         {
+           
             SavedFlights.Clear();
-            bl.GetSavedFlights(date1, date2).ForEach(SavedFlights.Add);
+            var saved = bl.GetSavedFlights(date1, date2);
+            saved.Sort((i, j) => j.CreateTime.CompareTo(i.CreateTime));
+            // bl.GetSavedFlights(date1, date2).ForEach(SavedFlights.Add);
+            saved.ForEach(SavedFlights.Add);
         }
     }
 }

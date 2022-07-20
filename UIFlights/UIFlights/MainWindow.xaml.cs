@@ -29,8 +29,10 @@ namespace UIFlights
         public MainWindow()
         {
             InitializeComponent();
-            flightsViewModel = new FlightsViewModel();
+            flightsViewModel = new FlightsViewModel(myMap, Resources);
             mainGrid.DataContext = flightsViewModel;
+            historyGrid.DataContext = new FlightsHistoryViewModel();
+            
         }
         void killThread(object sender, CancelEventArgs e)
         {

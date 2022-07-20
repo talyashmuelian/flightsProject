@@ -166,7 +166,7 @@ namespace BL
             try
             {
                 return (from f in dl.GetSavedFlights()
-                        where f.CreateTime > start && f.CreateTime < end
+                        where f.CreateTime >= start && f.CreateTime <= end
                         select f).ToList();
             }
             catch { return null; }

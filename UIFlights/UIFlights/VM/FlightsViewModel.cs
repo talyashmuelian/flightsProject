@@ -5,16 +5,27 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Threading;
 using BE.Flights;
 using BL;
+using Microsoft.Maps.MapControl.WPF;
 namespace UIFlights
 {
     public class FlightsViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+        private BLImp bl = BLImp.theInstance();
+        private Random random = new Random();
+        private ObservableCollection<FlightInfoPartial> listIncomingFlights;
+        private ObservableCollection<FlightInfoPartial> listOutgoingFlights;
+        private Dictionary<string, List<FlightInfoPartial>> Flights = new Dictionary<string, List<FlightInfoPartial>>();
+        private FlightCommand flightcommand = new FlightCommand();
+        private Map myMap;
+        private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private FlightInfoPartial selectedFlight;
+        private ResourceDictionary mainWindowResource;
         public FlightInfoPartial SelectedFlight
         {
             get { return selectedFlight; }
@@ -44,14 +55,7 @@ namespace UIFlights
                 }
             }
         }
-        private BLImp bl = BLImp.theInstance();
-
-        private Random random = new Random();
-        private ObservableCollection<FlightInfoPartial> listIncomingFlights;
-        private ObservableCollection<FlightInfoPartial> listOutgoingFlights;
-        private Dictionary<string, List<FlightInfoPartial>> Flights=new Dictionary<string, List<FlightInfoPartial>>();
-        private FlightCommand flightcommand = new FlightCommand();
-        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+       
 
         public FlightCommand Flightcommand { get { return flightcommand; } set { flightcommand = value; } }
         public ObservableCollection<FlightInfoPartial> ListIncomingFlights {
@@ -73,8 +77,10 @@ namespace UIFlights
             }
             set{ listOutgoingFlights = value; }
         }
-        public FlightsViewModel()
+        public FlightsViewModel(Map map, ResourceDictionary resources)
         {
+            myMap = map;
+            mainWindowResource = resources;
             flightsModel = new FlightsModel();
             Flightcommand.SelectedFlight += extractSelectedFlight;
             Flightcommand.SelectedFlight += saveSelectedFlight;
@@ -87,14 +93,45 @@ namespace UIFlights
             //DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flights;
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flight;
+            dispatcherTimer.Tick += ShowPushPinOnMap;
+
             dispatcherTimer.Interval = new TimeSpan(0, 0, 15);
             dispatcherTimer.Start();
         }
+
+        
+
         ~FlightsViewModel() {
             dispatcherTimer.Stop();
             System.Windows.MessageBox.Show("arrived to dtor in vm");
         }
-      
+        private void ShowPushPinOnMap(object sender, EventArgs e)
+        {
+            addPlanesToMap(ListOutgoingFlights);
+            addPlanesToMap(ListIncomingFlights);
+
+        }
+        private void addPlanesToMap(ObservableCollection<FlightInfoPartial> flights)
+        {
+            foreach (var f in flights)
+            {
+                Pushpin PinCurrent = new Pushpin { ToolTip = "source: " + f.Source + "\n destination: " + f.Destination };
+                PositionOrigin origin = new PositionOrigin { X = 0.4, Y = 0.4 };
+                MapLayer.SetPositionOrigin(PinCurrent, origin);
+                //Better to use RenderTransform
+                if (f.Destination == "TLV")
+                {
+                    PinCurrent.Style = (Style)mainWindowResource["ToIsrael"];
+                }
+                else
+                {
+                    PinCurrent.Style = (Style)mainWindowResource["FromIsrael"];
+                }
+                var PlaneLocation = new Location { Latitude = f.Lat, Longitude = f.Long };
+                PinCurrent.Location = PlaneLocation;
+                myMap.Children.Add(PinCurrent);
+            }
+        }
         private void DispatcherTimer_Tick_Flights(object sender, EventArgs e)
         {
             bl.GetCurrentFlightsAsync(Flights);

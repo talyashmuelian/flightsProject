@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace UIFlights
@@ -23,12 +24,12 @@ namespace UIFlights
 
         public void Execute(object parameter)
         {
-            List<Object> dates= parameter as List<object>;
+            List<Object> dates= (parameter as IEnumerable<object>).ToList();
             if (SelectedRangeDates != null)
             {
                 DateTime date1 = DateTime.Parse(dates[0].ToString());
                 DateTime date2 = DateTime.Parse(dates[1].ToString());
-
+                date2= date2.AddHours(23).AddMinutes(59).AddSeconds(59);
                 SelectedRangeDates(date1, date2);
             }
         }
