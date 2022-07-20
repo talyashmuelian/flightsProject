@@ -132,8 +132,16 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Images1\" />
     <Folder Include="Views\UserControls\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="airpalneToIsrael.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images1\airplaneToIsrael.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images1\airplane.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

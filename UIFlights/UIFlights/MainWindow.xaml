@@ -15,7 +15,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Image Source="Images\airplane.png"  />
+                        <Image Source="Images1\airplane.png"  />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -25,7 +25,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Image Source="Images\airplaneToIsrael.png"/>
+                        <Image Source="Images1\airplaneToIsrael.png"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -110,7 +110,8 @@
         -->
 
                             <m:Map x:Name="myMap" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"         
-               Center="32.000454,34.870743" ZoomLevel="5.0" AnimationLevel="None" Margin="22,48,10,10" Grid.Column="2" Grid.RowSpan="2" >
+               Center="32.000454,34.870743" ZoomLevel="7.0" AnimationLevel="None" Margin="22,48,10,10" Grid.Column="2" Grid.RowSpan="2" >
+                            
                                 <!-- <m:Pushpin Location="34.620574,34.34942"/>-->
                             </m:Map>
                             <Button Content="Start Track" HorizontalAlignment="Left" Height="33" Margin="646,10,0,0" VerticalAlignment="Top" Width="126" Click="Button_Click_1" Grid.Column="2"/>

@@ -90,12 +90,13 @@ namespace UIFlights
             //ListOutgoingFlights = new ObservableCollection<FlightInfoPartial>();
             ListIncomingFlights = new ObservableCollection<FlightInfoPartial>(Flights["incoming"]);
             ListOutgoingFlights = new ObservableCollection<FlightInfoPartial>(Flights["outgoing"]);
+            ShowPushPinOnMap(null, null);
             //DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flights;
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flight;
             dispatcherTimer.Tick += ShowPushPinOnMap;
 
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 15);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             dispatcherTimer.Start();
         }
 
@@ -117,17 +118,17 @@ namespace UIFlights
             foreach (var f in flights)
             {
                 Pushpin PinCurrent = new Pushpin { ToolTip = "source: " + f.Source + "\n destination: " + f.Destination };
-                PositionOrigin origin = new PositionOrigin { X = 0.4, Y = 0.4 };
-                MapLayer.SetPositionOrigin(PinCurrent, origin);
+                //PositionOrigin origin = new PositionOrigin { X = 0.4, Y = 0.4 };
+                //MapLayer.SetPositionOrigin(PinCurrent, origin);
                 //Better to use RenderTransform
-                //if (f.Destination == "TLV")
-                //{
-                //    PinCurrent.Style = (Style)mainWindowResource["ToIsrael"];
-                //}
-                //else
-                //{
-                //    PinCurrent.Style = (Style)mainWindowResource["FromIsrael"];
-                //}
+                if (f.Destination == "TLV")
+                {
+                    PinCurrent.Style = (Style)mainWindowResource["ToIsrael"];
+                }
+                else
+                {
+                    PinCurrent.Style = (Style)mainWindowResource["FromIsrael"];
+                }
                 var PlaneLocation = new Location { Latitude = f.Lat, Longitude = f.Long };
                 PinCurrent.Location = PlaneLocation;
                 myMap.Children.Add(PinCurrent);
