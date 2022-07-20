@@ -30,7 +30,7 @@ namespace UIFlights
         {
             InitializeComponent();
             flightsViewModel = new FlightsViewModel();
-            this.DataContext = flightsViewModel;
+            mainGrid.DataContext = flightsViewModel;
         }
         void killThread(object sender, CancelEventArgs e)
         {

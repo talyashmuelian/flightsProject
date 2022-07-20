@@ -49,7 +49,7 @@
                 <TabItem Header="main window">
                     <TabItem.Content>
 
-                        <Grid>
+                        <Grid x:Name="mainGrid">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="50*"/>
                                 <RowDefinition Height="469*"/>
@@ -138,17 +138,42 @@
                 </TabItem>
                 <TabItem Header="history">
                     <TabItem.Content>
-                        <Grid>
+                        <Grid x:Name="historyGrid">
+                            <ListView x:Name="lvLineTiming" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Grid.Column="0" 
+                ItemsSource="{Binding}" FontSize="9" Width="400" Height="305" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607" >
+                             
+                                <ListView.View >
+                                    <GridView x:Name="lineGridview">
+
+                                        <GridViewColumn Header="flightID" Width="165" DisplayMemberBinding="{Binding LastStation}" FrameworkElement.FlowDirection="RightToLeft"   />
+                                        <GridViewColumn Header="source" Width="90" DisplayMemberBinding="{Binding TripStart}" FrameworkElement.FlowDirection="RightToLeft" />
+                                        <GridViewColumn Header="destination" Width="90" DisplayMemberBinding="{Binding ExpectedTimeTillArrive}" FrameworkElement.FlowDirection="RightToLeft" />
+                                        <GridViewColumn Header="arrival time" Width="49" DisplayMemberBinding="{Binding LineCode}" FrameworkElement.FlowDirection="RightToLeft" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
                             <ListBox HorizontalAlignment="Left" Height="151" Margin="277,224,0,0" VerticalAlignment="Top" Width="409"/>
+                            <ListBox ItemsSource="{Binding Path=ListOutgoingFlights}" Name="SavedFlightsListBox" HorizontalAlignment="Left" Height="112" Margin="30,235,0,0" VerticalAlignment="Top" Width="176" SelectionChanged="FlightsListBox_SelectionChanged" Grid.Row="1">
+                               
+                                <ListBox.ItemTemplate>
+                                    <DataTemplate>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="{Binding Destination}" Width="30">
+                                            </TextBlock>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ListBox.ItemTemplate>
+                            </ListBox>
                             <DatePicker Name="startDate" SelectedDate="1970-1-1" HorizontalAlignment="Left" Margin="64,78,0,0" VerticalAlignment="Top" />
                             <DatePicker Name="endDate" SelectedDate="{x:Static sys:DateTime.Now}" HorizontalAlignment="Left" Margin="64,182,0,0" VerticalAlignment="Top"/>
                             <Label Content="start date:" HorizontalAlignment="Left" Margin="64,36,0,0" VerticalAlignment="Top"/>
                             <Label Content="end date" HorizontalAlignment="Left" Margin="64,146,0,0" VerticalAlignment="Top"/>
-                            <Button Name="search" Command="SearchHistoryCommand" Content="search" HorizontalAlignment="Left" Margin="277,103,0,0" VerticalAlignment="Top" Width="75">
+                            <Button Name="search" Command="{Binding SearchHistoryCommand}" Content="search" HorizontalAlignment="Left" Margin="277,103,0,0" VerticalAlignment="Top" Width="75">
                                 <Button.CommandParameter>
                                     <MultiBinding Converter="{StaticResource MyConverter}">
-                                        <Binding Path="Width" ElementName="startDate"/>
-                                        <Binding Path="Height" ElementName="MyCanvas"/>
+                                        <Binding Path="SelectedDate" ElementName="startDate"/>
+                                        <Binding Path="SelectedDate" ElementName="MyCanvas"/>
                                     </MultiBinding>
                                 </Button.CommandParameter>
                             </Button>

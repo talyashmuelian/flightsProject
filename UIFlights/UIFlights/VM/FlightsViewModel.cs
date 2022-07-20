@@ -76,8 +76,8 @@ namespace UIFlights
         public FlightsViewModel()
         {
             flightsModel = new FlightsModel();
-            flightcommand.SelectedFlight += extractSelectedFlight;
-            flightcommand.SelectedFlight += saveSelectedFlight;
+            Flightcommand.SelectedFlight += extractSelectedFlight;
+            Flightcommand.SelectedFlight += saveSelectedFlight;
             //var Flights = bl.GetCurrentFlights();
             Flights = bl.GetCurrentFlightsSync();
            // ListIncomingFlights = new ObservableCollection<FlightInfoPartial>();

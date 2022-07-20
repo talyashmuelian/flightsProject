@@ -61,12 +61,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\SearchHistoryCommand.cs" />
     <Compile Include="Converters\MyConverter.cs" />
     <Compile Include="Models\FlightModel.cs" />
     <Compile Include="MyConverter.cs" />
     <Compile Include="Views\FlightsHistoryWindow.xaml.cs">
       <DependentUpon>FlightsHistoryWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="VM\FlightsHistoryViewModel.cs" />
     <Compile Include="VM\FlightsViewModel.cs" />
     <Compile Include="VM\FlightViewModel.cs" />
     <Page Include="MainWindow.xaml">
