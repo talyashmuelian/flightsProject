@@ -107,6 +107,7 @@ namespace UIFlights
         }
         private void ShowPushPinOnMap(object sender, EventArgs e)
         {
+            myMap.Children.Clear();
             addPlanesToMap(ListOutgoingFlights);
             addPlanesToMap(ListIncomingFlights);
 
@@ -119,14 +120,14 @@ namespace UIFlights
                 PositionOrigin origin = new PositionOrigin { X = 0.4, Y = 0.4 };
                 MapLayer.SetPositionOrigin(PinCurrent, origin);
                 //Better to use RenderTransform
-                if (f.Destination == "TLV")
-                {
-                    PinCurrent.Style = (Style)mainWindowResource["ToIsrael"];
-                }
-                else
-                {
-                    PinCurrent.Style = (Style)mainWindowResource["FromIsrael"];
-                }
+                //if (f.Destination == "TLV")
+                //{
+                //    PinCurrent.Style = (Style)mainWindowResource["ToIsrael"];
+                //}
+                //else
+                //{
+                //    PinCurrent.Style = (Style)mainWindowResource["FromIsrael"];
+                //}
                 var PlaneLocation = new Location { Latitude = f.Lat, Longitude = f.Long };
                 PinCurrent.Location = PlaneLocation;
                 myMap.Children.Add(PinCurrent);

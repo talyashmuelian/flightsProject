@@ -15,7 +15,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Image Source="Images\airplane.jpeg"  />
+                        <Image Source="Images\airplane.png"  />
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
