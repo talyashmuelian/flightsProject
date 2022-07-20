@@ -16,5 +16,6 @@ namespace BL
         BE.Flights.Root GetSelectedFlight(string id);
         void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial);
         List<FlightInfoPartial> GetSavedFlights(DateTime start, DateTime end);
+        void DestroyThread();
     }
 }

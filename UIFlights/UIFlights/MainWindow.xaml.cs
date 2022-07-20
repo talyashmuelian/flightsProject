@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using BL;
 using BE.Flights;
+using System.ComponentModel;
 
 namespace UIFlights
 {
@@ -30,6 +31,11 @@ namespace UIFlights
             InitializeComponent();
             flightsViewModel = new FlightsViewModel();
             this.DataContext = flightsViewModel;
+        }
+        void killThread(object sender, CancelEventArgs e)
+        {
+            System.Windows.MessageBox.Show("arrived");
+            bl.DestroyThread();
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
@@ -136,10 +142,12 @@ namespace UIFlights
         //    dispatcherTimer.Start();
         }
 
+        
+
         //private void DispatcherTimer_Tick(object sender, EventArgs e)
         //{
         //    UpdateFlight(SelectedFlight);
         //    Counter.Text = (Convert.ToInt32(Counter.Text) + 1).ToString();
         //}
-}
+    }
 }

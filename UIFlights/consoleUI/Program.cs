@@ -15,7 +15,7 @@ namespace consoleUI
         static void Main(string[] args)
         {
             BLImp bl = BLImp.theInstance();
-            bl.SaveFlightInfoPartial(bl.GetCurrentFlightsSync()["incoming"][1]);
+            bl.SaveFlightInfoPartial(bl.GetCurrentFlightsSync()["incoming"][0]);
             //Thread.Sleep(10);
             foreach (var item in bl.GetSavedFlights(new DateTime(), DateTime.Now))
             {

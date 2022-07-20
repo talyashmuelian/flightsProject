@@ -51,6 +51,8 @@ namespace UIFlights
         private ObservableCollection<FlightInfoPartial> listOutgoingFlights;
         private Dictionary<string, List<FlightInfoPartial>> Flights=new Dictionary<string, List<FlightInfoPartial>>();
         private FlightCommand flightcommand = new FlightCommand();
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
+
         public FlightCommand Flightcommand { get { return flightcommand; } set { flightcommand = value; } }
         public ObservableCollection<FlightInfoPartial> ListIncomingFlights {
             get
@@ -82,11 +84,15 @@ namespace UIFlights
             //ListOutgoingFlights = new ObservableCollection<FlightInfoPartial>();
             ListIncomingFlights = new ObservableCollection<FlightInfoPartial>(Flights["incoming"]);
             ListOutgoingFlights = new ObservableCollection<FlightInfoPartial>(Flights["outgoing"]);
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            //DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flights;
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flight;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 15);
             dispatcherTimer.Start();
+        }
+        ~FlightsViewModel() {
+            dispatcherTimer.Stop();
+            System.Windows.MessageBox.Show("arrived to dtor in vm");
         }
       
         private void DispatcherTimer_Tick_Flights(object sender, EventArgs e)

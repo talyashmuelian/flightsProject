@@ -21,16 +21,20 @@ namespace BL
         {
             
         }
-        ~BLImp()
-        {
-            dl.DestroyThread();
+        //~BLImp()
+        //{
+        //    dl.DestroyThread();
 
-                }
+        //        }
         static public BLImp theInstance()
         {
             if (instance == null)
                 instance = new BLImp();
             return instance;
+        }
+        public void DestroyThread()
+        {
+            dl.DestroyThread();
         }
         //GetCurrentFlights-לטפל לגבי סינכרוני ואסינכרוני
         #region GetCurrentFlights
