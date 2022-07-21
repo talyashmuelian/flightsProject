@@ -20,7 +20,7 @@
                                 <TransformGroup>
                                     <ScaleTransform/>
                                     <SkewTransform/>
-                                    <RotateTransform x:Name="rotate" Angle="180" />
+                                    <RotateTransform x:Name="rotate" Angle="{Binding Lat}" />
                                 </TransformGroup>
                             </Image.RenderTransform>
                         </Image>
@@ -38,14 +38,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Image Source="Images1\airplane.png" x:Key="myImage">
+        <!--<Image Source="Images1\airplane.png" x:Key="myImage">
             <Image.LayoutTransform>
                 <TransformGroup>
                     <ScaleTransform x:Name="scale"/>
                     <RotateTransform x:Name="rotate"/>
                 </TransformGroup>
             </Image.LayoutTransform>
-        </Image>
+        </Image>-->
 
         <!-- We can bind to a method, Not this time -->
         <!--
@@ -138,6 +138,7 @@
                                     MouseAction="LeftClick" />
                                     </m:Pushpin.InputBindings>
                                 </m:Pushpin>
+                               
                             </m:Map>
                             <Button Content="Start Track" HorizontalAlignment="Left" Height="33" Margin="646,10,0,0" VerticalAlignment="Top" Width="126" Click="Button_Click_1" Grid.Column="2"/>
                             <TextBox x:Name="Counter" HorizontalAlignment="Left" Margin="777,15,0,10" TextWrapping="Wrap" Text="1" Width="45" Grid.Column="2"/>

@@ -148,9 +148,13 @@ namespace UIFlights
                 //                </ Image.RenderTransform >
     
                 //            </ Image >
-                Style style = (Style)mainWindowResource["ToIsrael"];
-                Image image = (Image)mainWindowResource["myImage"];
-                style.rotate
+               // Style style = (Style)mainWindowResource["ToIsrael"];
+                // Image image = (Image)mainWindowResource["myImage"];
+                //style.rotate
+             //   Setter setter = new Setter();
+                //setter.Value=Image.Jpeg("uyi")
+                //style.Setters.Add(new Setter());
+                PinCurrent.DataContext = f;
                 if (f.Destination == "TLV")
                 {
                     PinCurrent.Style = (Style)mainWindowResource["ToIsrael"];
