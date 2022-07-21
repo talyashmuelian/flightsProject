@@ -28,16 +28,31 @@ namespace UIFlights
         FlightInfoPartial SelectedFlight = null; //Selected Flight
         public MainWindow()
         {
-            InitializeComponent();
-            flightsViewModel = new FlightsViewModel(myMap, Resources);
-            mainGrid.DataContext = flightsViewModel;
-            historyGrid.DataContext = new FlightsHistoryViewModel();
+
+            try
+            {
+                InitializeComponent();
+                flightsViewModel = new FlightsViewModel(myMap, Resources);
+                mainGrid.DataContext = flightsViewModel;
+                historyGrid.DataContext = new FlightsHistoryViewModel();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show(e.Message);
+            }
             
         }
         void killThread(object sender, CancelEventArgs e)
         {
-            System.Windows.MessageBox.Show("arrived");
-            bl.DestroyThread();
+            try
+            {
+                System.Windows.MessageBox.Show("arrived");
+                bl.DestroyThread();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {

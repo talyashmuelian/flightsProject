@@ -13,7 +13,7 @@ namespace BL
 {
     public class BLImp:IBL
     {
-        private const string AllFlightsURL = "https://data-cloud.flightradar24.com/zones/fcgi/feed.js?faa=1&bounds=32.366%2C31.271%2C34.012%2C36.282&satellite=1&mlat=1&flarm=1&adsb=1&gnd=1&air=1&vehicles=1&estimated=1&maxage=14400&gliders=1&stats=1";
+        private const string AllFlightsURL = "https://data-cloud.flightradar24.com/zones/fcgi/feed.js?faa=1&bounds=38.805%2C24.785%2C29.014%2C40.505&satellite=1&mlat=1&flarm=1&adsb=1&gnd=1&air=1&vehicles=1&estimated=1&maxage=14400&gliders=1&stats=1";
         private const string FlightURL = "https://data-live.flightradar24.com/clickhandler/?version=1.5&flight=";
         private IDL dl=DLImp.theInstance();
         static BLImp instance;//=new DLImp();
@@ -88,8 +88,8 @@ namespace BL
                             Source = item.Value[11].ToString(),
                             Destination = item.Value[12].ToString(),
                             FlightID = key,
-                            Long = Convert.ToDouble(item.Value[1]),
-                            Lat = Convert.ToDouble(item.Value[2]),
+                            Long = Convert.ToDouble(item.Value[2]),
+                            Lat = Convert.ToDouble(item.Value[1]),
                             DepartureTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
                             FlightCode = item.Value[13].ToString()
                         });
@@ -102,8 +102,8 @@ namespace BL
                             Source = item.Value[11].ToString(),
                             Destination = item.Value[12].ToString(),
                             FlightID = key,
-                            Long = Convert.ToDouble(item.Value[1]),
-                            Lat = Convert.ToDouble(item.Value[2]),
+                            Long = Convert.ToDouble(item.Value[2]),
+                            Lat = Convert.ToDouble(item.Value[1]),
                             DepartureTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
                             FlightCode = item.Value[13].ToString()
                         });

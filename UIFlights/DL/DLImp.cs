@@ -15,8 +15,8 @@ namespace DL
         List<FlightInfoPartial> flightToSave = new List<FlightInfoPartial>();
         private DLImp()
         {
-            saveThread = new Thread(runThread);
-            saveThread.Start();
+            //saveThread = new Thread(runThread);
+            //saveThread.Start();
         }
         //~DLImp()
         //{
@@ -34,22 +34,26 @@ namespace DL
         }
         private void saveToDB()
         {
-            if (flightToSave.Count() > 0)
+            try
             {
-                object lck = new object();
-                lock (lck)
+                if (flightToSave.Count() > 0)
                 {
-                    using (var ctx = new FlightContext())
-                    {
-                        foreach (var f in flightToSave)
+                    //object lck = new object();
+                    //lock (lck)
+                    //{
+                        using (var ctx = new FlightContext())
                         {
-                            ctx.Flights.Add(f);
-                            ctx.SaveChanges();
+                            foreach (var f in flightToSave)
+                            {
+                                ctx.Flights.Add(f);
+                                ctx.SaveChanges();
+                            }
                         }
-                    }
-                    flightToSave.Clear();
+                        flightToSave.Clear();
+                    //}
                 }
             }
+            catch { }
         }
         //private async void initDispatcherTimer()
         //{
@@ -68,7 +72,7 @@ namespace DL
 
         public List<FlightInfoPartial> GetSavedFlights()
         {
-           saveToDB();
+           //saveToDB();
            // Thread.Sleep(15000);
             using (var ctx = new FlightContext())
             {
@@ -79,12 +83,16 @@ namespace DL
 
         public void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial)
         {
-             flightToSave.Add(flightInfoPartial);
-            //using (var ctx = new FlightContext())
-            //{
-            //    ctx.Flights.Add(flightInfoPartial);
-            //    ctx.SaveChanges();
-            //}
+            //flightToSave.Add(flightInfoPartial);
+            try
+            {
+                using (var ctx = new FlightContext())
+                {
+                    ctx.Flights.Add(flightInfoPartial);
+                    ctx.SaveChanges();
+                }
+            }
+            catch { }
         }
 
         public void DestroyThread()

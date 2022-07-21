@@ -11,6 +11,8 @@ using System.Windows.Threading;
 using BE.Flights;
 using BL;
 using Microsoft.Maps.MapControl.WPF;
+using static System.Net.Mime.MediaTypeNames;
+
 namespace UIFlights
 {
     public class FlightsViewModel : INotifyPropertyChanged
@@ -93,8 +95,9 @@ namespace UIFlights
             ShowPushPinOnMap(null, null);
             //DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flights;
-            dispatcherTimer.Tick += DispatcherTimer_Tick_Flight;
             dispatcherTimer.Tick += ShowPushPinOnMap;
+            dispatcherTimer.Tick += DispatcherTimer_Tick_Flight;
+            
 
             dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             dispatcherTimer.Start();
@@ -115,15 +118,39 @@ namespace UIFlights
         }
         private void addPlanesToMap(ObservableCollection<FlightInfoPartial> flights)
         {
+            
             foreach (var f in flights)
             {
                 Pushpin PinCurrent = new Pushpin { ToolTip = "source: " + f.Source + "\n destination: " + f.Destination };
                 PinCurrent.Height = 20;
                 PinCurrent.Width = 20;
-                PinCurrent.Name = "_"+f.FlightID;
-                //PositionOrigin origin = new PositionOrigin { X = 0.4, Y = 0.4 };
-                //MapLayer.SetPositionOrigin(PinCurrent, origin);
+                //PinCurrent.Name = "_"+f.FlightID;
+                MouseBinding mouseBinding = new MouseBinding(Flightcommand, new MouseGesture(MouseAction.LeftClick));
+                mouseBinding.CommandParameter = f.FlightID;
+                PinCurrent.InputBindings.Add(mouseBinding);
+                PositionOrigin origin = new PositionOrigin { X = 0.7, Y = 0.7 };
+                MapLayer.SetPositionOrigin(PinCurrent, origin);
                 //Better to use RenderTransform
+                //< Image Source = "Images1\airplane.png" RenderTransformOrigin = "0.5,0.5" >
+   
+                //               < Image.RenderTransform >
+   
+                //                   < TransformGroup >
+   
+                //                       < ScaleTransform />
+   
+                //                       < SkewTransform />
+   
+                //                       < RotateTransform Angle = "180" />
+    
+                //                    </ TransformGroup >
+    
+                //                </ Image.RenderTransform >
+    
+                //            </ Image >
+                Style style = (Style)mainWindowResource["ToIsrael"];
+                Image image = (Image)mainWindowResource["myImage"];
+                style.rotate
                 if (f.Destination == "TLV")
                 {
                     PinCurrent.Style = (Style)mainWindowResource["ToIsrael"];
@@ -152,21 +179,68 @@ namespace UIFlights
         }
         private void DispatcherTimer_Tick_Flight(object sender, EventArgs e)/////////////////////////////////////////////////////
         {
-            if (selectedFlight!=null)
-                extractSelectedFlight(selectedFlight.FlightID);
+            if (SelectedFlightModel != null)
+                extractSelectedFlight(SelectedFlightModel.FlightId);
         }
 
         private void extractSelectedFlight(string id)
         {
             SelectedFlightModel = new FlightModel(id);
-            selectedFlight = listIncomingFlights.ToList().Find( f=>f.FlightID == id);
-            if(selectedFlight==null)
-            {
-                selectedFlight = listOutgoingFlights.ToList().Find(f => f.FlightID == id);
-            }
+            addNewPolyLine(SelectedFlightModel.Trail);
+            //selectedFlight = listIncomingFlights.ToList().Find( f=>f.FlightID == id);
+            //if(selectedFlight==null)
+            //{
+            //    selectedFlight = listOutgoingFlights.ToList().Find(f => f.FlightID == id);
+            //}
             //עדכון נתונים עבור טיסה בודדת
 
         }
+        void addNewPolyLine(List<Trail> Route)
+        {
+            Route = (from f in Route
+                                 orderby f.ts
+                                 select f).ToList<Trail>();
+
+            MapPolyline polyline = new MapPolyline();
+            //polyline.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Blue);
+            polyline.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Gold);
+            polyline.StrokeThickness = 3;
+            polyline.Opacity = 1;
+            polyline.Locations = new LocationCollection();
+            foreach (var item in Route)
+            {
+                polyline.Locations.Add(new Location(item.lat, item.lng));
+            }
+            List<MapPolyline> mapPolylinesToRemove = new List<MapPolyline>();
+            List<MapPolygon> mapPolygonToRemove = new List<MapPolygon>();
+            foreach (var item in myMap.Children)
+            {
+                if (item is MapPolyline ) { mapPolylinesToRemove.Add(item as MapPolyline); }
+                else if (item is MapPolygon) { mapPolygonToRemove.Add(item as MapPolygon); }
+            }
+            mapPolylinesToRemove.ForEach(myMap.Children.Remove);
+            mapPolygonToRemove.ForEach(myMap.Children.Remove);
+            myMap.Children.Add(polyline);
+            addNewPolygon(Route[0]);
+        }
+        void addNewPolygon(Trail trail)
+        {
+            double distance = 0.05;
+            MapPolygon polygon = new MapPolygon();
+            polygon.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+            polygon.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
+            polygon.StrokeThickness = 5;
+            polygon.Opacity = 1;
+            polygon.Locations = new LocationCollection() {
+        new Location(trail.lat-distance,trail.lng-distance),
+        new Location(trail.lat-distance,trail.lng+distance),
+        new Location(trail.lat+distance,trail.lng+distance),
+        
+            new Location(trail.lat+distance,trail.lng-distance)};
+
+            myMap.Children.Add(polygon);
+        }
+
         private void saveSelectedFlight(string id)
         {
             selectedFlight = listIncomingFlights.ToList().Find(f => f.FlightID == id);

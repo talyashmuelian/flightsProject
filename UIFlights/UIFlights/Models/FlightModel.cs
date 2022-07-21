@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BE;
+using BE.Flights;
 using BL;
 using Newtonsoft.Json;
 
@@ -192,6 +193,17 @@ namespace UIFlights
                     return rootWeatherDestination.weather[0].description;
                 }
                 catch { return "NA"; }
+            }
+        }
+        public List<Trail> Trail {
+            get
+            {
+                try
+                {
+                    return flightRoot.trail;
+                }
+                catch { return new List<Trail>(); }
+
             }
         }
 
