@@ -91,7 +91,8 @@ namespace BL
                             Long = Convert.ToDouble(item.Value[2]),
                             Lat = Convert.ToDouble(item.Value[1]),
                             DepartureTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
-                            FlightCode = item.Value[13].ToString()
+                            FlightCode = item.Value[13].ToString(),
+                            Angle=Convert.ToDouble(item.Value[3])
                         });
                     }
                     if (item.Value[12].ToString() == "TLV")
@@ -105,7 +106,8 @@ namespace BL
                             Long = Convert.ToDouble(item.Value[2]),
                             Lat = Convert.ToDouble(item.Value[1]),
                             DepartureTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
-                            FlightCode = item.Value[13].ToString()
+                            FlightCode = item.Value[13].ToString(),
+                            Angle = Convert.ToDouble(item.Value[3])
                         });
                     }
                 }
@@ -170,6 +172,33 @@ namespace BL
                         select f).ToList();
             }
             catch { return null; }
+
+        }
+
+        public async void IsBeforeHoliday(DateTime date,bool isBeforeHoliday)
+        {
+            var yyyy = date.ToString("yyyy");
+            var mm = date.ToString("mm");
+            var dd = date.ToString("dd");
+            string hebrewDateUrl = $"https://www.hebcal.com./converter?cfg=json&date={yyyy}-{mm}-{dd}&g2h=1&strict=1";
+            BE.HebrewDates.Root root = null;
+            try
+            {
+                using (var webClient = new System.Net.WebClient())
+                {
+                    try
+                    {
+                        var json = await webClient.DownloadStringTaskAsync(hebrewDateUrl);
+                        root = (BE.HebrewDates.Root)JsonConvert.DeserializeObject(json, typeof(BE.HebrewDates.Root));
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                    }
+                }
+                isBeforeHoliday = root.events[0].Contains("Erev");
+            }
+            catch { isBeforeHoliday = false; }
 
         }
     }

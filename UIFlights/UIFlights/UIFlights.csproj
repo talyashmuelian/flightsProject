@@ -71,6 +71,7 @@
     <Compile Include="VM\FlightsHistoryViewModel.cs" />
     <Compile Include="VM\FlightsViewModel.cs" />
     <Compile Include="VM\FlightViewModel.cs" />
+    <Compile Include="VM\hebrewDatesViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -145,6 +146,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="airplane.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images1\airplane1.jpeg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images1\airplane2.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -57,6 +57,7 @@
     <Compile Include="Class1.cs" />
     <Compile Include="Flights\FlightInfo.cs" />
     <Compile Include="Flights\FlightInfoPartial.cs" />
+    <Compile Include="HebrewDates\HebrewDates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Weather\Weather.cs" />
   </ItemGroup>

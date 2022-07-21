@@ -15,12 +15,12 @@
             <Setter x:Name="setterStyle" Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Image Source="Images1\airplane.png" RenderTransformOrigin="0.5,0.5" >
+                        <Image Source="Images1\airplane2.png" RenderTransformOrigin="0.5,0.5" >
                             <Image.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
                                     <SkewTransform/>
-                                    <RotateTransform x:Name="rotate" Angle="{Binding Lat}" />
+                                    <RotateTransform x:Name="rotate" Angle="{Binding Angle}" />
                                 </TransformGroup>
                             </Image.RenderTransform>
                         </Image>
@@ -131,7 +131,8 @@
                                     <ImageBrush/>
                                 </m:Map.Background>
 
-                                <m:Pushpin Name="_2cb98cf3" Location="32.000454,34.870743"  Width="20" Height="20">
+                                <m:Pushpin Name="_2cb98cf3" Location="32.000454,34.870743"  Width="20" Height="20" Margin="0.2,0,-0.2,-0.2" VerticalAlignment="Bottom">
+                                    
                                     <m:Pushpin.InputBindings>
                                         <MouseBinding 
                                     Command="{Binding Flightcommand}"  CommandParameter="{Binding Path=Name}"
@@ -199,7 +200,16 @@
                         </Grid>
                     </TabItem.Content>
                 </TabItem>
+                <TabItem Header="date">
+                    <TabItem.Content>
+                        <Grid x:Name="DateGrid">
+                            <DatePicker Name="currentDate" SelectedDate="{x:Static sys:DateTime.Today}" HorizontalAlignment="Left" Margin="64,182,0,0" VerticalAlignment="Top"/>
+                            <!--<TextBlock Text="erev hag" Margin="100,100,100,100" Width="60" Height="30"/>-->
+                            <Label Content="erev hag" HorizontalAlignment="Left" Margin="64,36,0,0" VerticalAlignment="Top"/>
 
+                        </Grid>
+                    </TabItem.Content>
+                </TabItem>
             </TabControl.Items>
         </TabControl>
 

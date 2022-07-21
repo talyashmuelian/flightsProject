@@ -124,40 +124,16 @@ namespace UIFlights
                 Pushpin PinCurrent = new Pushpin { ToolTip = "source: " + f.Source + "\n destination: " + f.Destination };
                 PinCurrent.Height = 20;
                 PinCurrent.Width = 20;
-                //PinCurrent.Name = "_"+f.FlightID;
                 MouseBinding mouseBinding = new MouseBinding(Flightcommand, new MouseGesture(MouseAction.LeftClick));
                 mouseBinding.CommandParameter = f.FlightID;
                 PinCurrent.InputBindings.Add(mouseBinding);
                 PositionOrigin origin = new PositionOrigin { X = 0.7, Y = 0.7 };
                 MapLayer.SetPositionOrigin(PinCurrent, origin);
-                //Better to use RenderTransform
-                //< Image Source = "Images1\airplane.png" RenderTransformOrigin = "0.5,0.5" >
-   
-                //               < Image.RenderTransform >
-   
-                //                   < TransformGroup >
-   
-                //                       < ScaleTransform />
-   
-                //                       < SkewTransform />
-   
-                //                       < RotateTransform Angle = "180" />
-    
-                //                    </ TransformGroup >
-    
-                //                </ Image.RenderTransform >
-    
-                //            </ Image >
-               // Style style = (Style)mainWindowResource["ToIsrael"];
-                // Image image = (Image)mainWindowResource["myImage"];
-                //style.rotate
-             //   Setter setter = new Setter();
-                //setter.Value=Image.Jpeg("uyi")
-                //style.Setters.Add(new Setter());
+               
                 PinCurrent.DataContext = f;
                 if (f.Destination == "TLV")
                 {
-                    PinCurrent.Style = (Style)mainWindowResource["ToIsrael"];
+                    PinCurrent.Style = (Style)mainWindowResource["FromIsrael"];
                 }
                 else
                 {
@@ -175,7 +151,7 @@ namespace UIFlights
             ListOutgoingFlights.Clear();
             try
             {
-                Flights["outgoing"].Add(new FlightInfoPartial { Destination = random.Next(1, 100).ToString(), Source = "san fransisco", ID = 123 });
+              //  Flights["outgoing"].Add(new FlightInfoPartial { Destination = random.Next(1, 100).ToString(), Source = "san fransisco", ID = 123 });
                 Flights["incoming"].ForEach(ListIncomingFlights.Add);
                 Flights["outgoing"].ForEach(ListOutgoingFlights.Add);
             }
@@ -201,6 +177,8 @@ namespace UIFlights
         }
         void addNewPolyLine(List<Trail> Route)
         {
+            if (Route.Count == 0)
+                return;
             Route = (from f in Route
                                  orderby f.ts
                                  select f).ToList<Trail>();

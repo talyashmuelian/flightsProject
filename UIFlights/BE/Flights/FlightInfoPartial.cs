@@ -23,6 +23,7 @@ namespace BE.Flights
         public string FlightCode { get; set; }
         public DateTime CreateTime { get; private set; }
 
+        public double Angle { get; set; }
         public FlightInfoPartial()
         {
             CreateTime = DateTime.Now;
