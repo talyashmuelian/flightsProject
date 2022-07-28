@@ -35,6 +35,7 @@ namespace UIFlights
                 flightsViewModel = new FlightsViewModel(myMap, Resources);
                 mainGrid.DataContext = flightsViewModel;
                 historyGrid.DataContext = new FlightsHistoryViewModel();
+                DateGrid.DataContext = new hebrewDatesViewModel();
             }
             catch(Exception e)
             {
