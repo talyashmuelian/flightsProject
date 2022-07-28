@@ -59,13 +59,14 @@ namespace BL
         /// private async function, the public called her
         /// </summary>
         /// <param name="dict"></param>
-        public async void GetCurrentFlightsAsync(Dictionary<string, List<FlightInfoPartial>> dict)
+        public async Task<Dictionary<string, List<FlightInfoPartial>>> GetCurrentFlightsAsync(Dictionary<string, List<FlightInfoPartial>> dict)
         {
             using (var webClient = new System.Net.WebClient())
             {
                 var json = await webClient.DownloadStringTaskAsync(AllFlightsURL);
                 extractFlightFromString(json, dict);
             }
+            return dict;
                    }
         private void extractFlightFromString(string json, Dictionary<string, List<FlightInfoPartial>> dict)
         {
@@ -175,7 +176,7 @@ namespace BL
 
         }
 
-        public async void IsBeforeHoliday(DateTime date,bool isBeforeHoliday)
+        public async Task<bool> IsBeforeHoliday(DateTime date)
         {
             var yyyy = date.ToString("yyyy");
             var mm = date.ToString("mm");
@@ -196,9 +197,9 @@ namespace BL
                         Console.WriteLine(e);
                     }
                 }
-                isBeforeHoliday = root.events[0].Contains("Erev");
+                return root.events[0].Contains("Erev");
             }
-            catch { isBeforeHoliday = false; }
+            catch { return false; }
 
         }
     }

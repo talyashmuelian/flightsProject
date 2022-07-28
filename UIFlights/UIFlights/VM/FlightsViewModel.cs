@@ -144,14 +144,14 @@ namespace UIFlights
                 myMap.Children.Add(PinCurrent);
             }
         }
-        private void DispatcherTimer_Tick_Flights(object sender, EventArgs e)
+        private async void DispatcherTimer_Tick_Flights(object sender, EventArgs e)
         {
-            bl.GetCurrentFlightsAsync(Flights);
+            Flights=await bl.GetCurrentFlightsAsync(Flights);
             ListIncomingFlights.Clear();
             ListOutgoingFlights.Clear();
             try
             {
-              //  Flights["outgoing"].Add(new FlightInfoPartial { Destination = random.Next(1, 100).ToString(), Source = "san fransisco", ID = 123 });
+              Flights["outgoing"].Add(new FlightInfoPartial { Destination = random.Next(1, 100).ToString(), Source = "san fransisco", ID = 123 });
                 Flights["incoming"].ForEach(ListIncomingFlights.Add);
                 Flights["outgoing"].ForEach(ListOutgoingFlights.Add);
             }

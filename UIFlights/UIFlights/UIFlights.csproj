@@ -61,6 +61,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\HolidayCommand.cs" />
     <Compile Include="Commands\SearchHistoryCommand.cs" />
     <Compile Include="Converters\MyConverter.cs" />
     <Compile Include="Models\FlightModel.cs" />

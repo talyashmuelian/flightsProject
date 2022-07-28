@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BL;
 using BE.Flights;
-using UIFlights;
+//using UIFlights;
 using System.Threading;
 
 namespace consoleUI
