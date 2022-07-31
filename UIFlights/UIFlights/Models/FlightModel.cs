@@ -152,7 +152,7 @@ namespace UIFlights
             {
                 try
                 {
-                    return Util.Helper.kelvinToCelsius(rootWeatherDestination.main.temp).ToString();
+                    return Math.Round( Util.Helper.kelvinToCelsius(rootWeatherDestination.main.temp),1).ToString();
                 }
                 catch
                 {
@@ -166,7 +166,7 @@ namespace UIFlights
             {
                 try
                 {
-                    return Util.Helper.kelvinToCelsius(rootWeatherOrigin.main.temp).ToString();
+                    return Math.Round(Util.Helper.kelvinToCelsius(rootWeatherOrigin.main.temp),1).ToString();
                 }
                 catch
                 {
@@ -207,21 +207,42 @@ namespace UIFlights
             }
         }
 
-        public FlightModel(string id)
+        public  FlightModel(string id)
         {
-            flightRoot = bl.GetSelectedFlight(id);
+            initialize(id);
+        //{
+        //    flightRoot =await bl.GetSelectedFlight(id);
+        //    try
+        //    {
+        //        double lonOrigin = flightRoot.airport.origin.position.longitude;
+        //        double latOrigin = flightRoot.airport.origin.position.latitude;
+        //        rootWeatherOrigin = bl.GetWeather(lonOrigin, latOrigin).Result;
+        //    }
+        //    catch { }
+        //    try
+        //    {
+        //        double lonDes = flightRoot.airport.destination.position.longitude;
+        //        double latDes = flightRoot.airport.destination.position.latitude;
+        //        rootWeatherDestination = bl.GetWeather(lonDes, latDes).Result;
+        //    }
+        //    catch { }
+        }
+        public void initialize(string id)
+        {
+
+            flightRoot =  bl.GetSelectedFlight(id);
             try
             {
                 double lonOrigin = flightRoot.airport.origin.position.longitude;
                 double latOrigin = flightRoot.airport.origin.position.latitude;
-                rootWeatherOrigin = bl.GetWeather(lonOrigin, latOrigin);
+                rootWeatherOrigin =  bl.GetWeather(lonOrigin, latOrigin);
             }
             catch { }
             try
             {
                 double lonDes = flightRoot.airport.destination.position.longitude;
                 double latDes = flightRoot.airport.destination.position.latitude;
-                rootWeatherDestination = bl.GetWeather(lonDes, latDes);
+                rootWeatherDestination =  bl.GetWeather(lonDes, latDes);
             }
             catch { }
         }

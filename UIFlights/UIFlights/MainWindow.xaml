@@ -206,7 +206,7 @@
                             <DatePicker Name="currentDate" SelectedDate="{x:Static sys:DateTime.Today}" HorizontalAlignment="Left" Margin="64,182,0,0" VerticalAlignment="Top"/>
                             <!--<TextBlock Text="erev hag" Margin="100,100,100,100" Width="60" Height="30"/>-->
                             <Label Content="erev hag" HorizontalAlignment="Left" Margin="64,36,0,0" VerticalAlignment="Top"/>
-
+                            <Label Content="A week before holiday" Visibility="{Binding isBeforeHoliday }"/>
                         </Grid>
                     </TabItem.Content>
                 </TabItem>

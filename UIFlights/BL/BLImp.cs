@@ -45,14 +45,8 @@ namespace BL
         //    return result;
         public Dictionary<string, List<FlightInfoPartial>> GetCurrentFlightsSync()
         {
-            Dictionary<string, List<FlightInfoPartial>> dict = new Dictionary<string, List<FlightInfoPartial>>();
-            using (var webClient = new System.Net.WebClient())
-            {
-
-                var json =  webClient.DownloadString(AllFlightsURL);
-                extractFlightFromString(json, dict);
-            }
-            return dict;
+            var flights =  dl.GetCurrentFlightsSync();
+            return seperateFlights(flights);
         }
         //}
         /// <summary>
@@ -61,55 +55,26 @@ namespace BL
         /// <param name="dict"></param>
         public async Task<Dictionary<string, List<FlightInfoPartial>>> GetCurrentFlightsAsync(Dictionary<string, List<FlightInfoPartial>> dict)
         {
-            using (var webClient = new System.Net.WebClient())
-            {
-                var json = await webClient.DownloadStringTaskAsync(AllFlightsURL);
-                extractFlightFromString(json, dict);
+           var flights= await dl.GetCurrentFlightsAsync();
+           return seperateFlights(flights);
             }
-            return dict;
-                   }
-        private void extractFlightFromString(string json, Dictionary<string, List<FlightInfoPartial>> dict)
+        private Dictionary<string, List<FlightInfoPartial>> seperateFlights(List<FlightInfoPartial> flights)
         {
+            Dictionary<string, List<FlightInfoPartial>> dict = new Dictionary<string, List<FlightInfoPartial>>();
             List<FlightInfoPartial> incoming = new List<FlightInfoPartial>();
             List<FlightInfoPartial> outgoing = new List<FlightInfoPartial>();
-            JObject allFlightData = null;
-            dict.Clear();
-            allFlightData = JObject.Parse(json);
             try
             {
-                foreach (var item in allFlightData)
+                foreach (var item in flights)
                 {
-                    var key = item.Key;
-                    if (key == "full_count" || key == "version" || key == "stats" || key == "visible") continue;
-                    if (item.Value[11].ToString() == "TLV")
+                    
+                    if (item.Source == "TLV")
                     {
-                        outgoing.Add(new FlightInfoPartial
-                        {
-                            ID = -1,
-                            Source = item.Value[11].ToString(),
-                            Destination = item.Value[12].ToString(),
-                            FlightID = key,
-                            Long = Convert.ToDouble(item.Value[2]),
-                            Lat = Convert.ToDouble(item.Value[1]),
-                            DepartureTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
-                            FlightCode = item.Value[13].ToString(),
-                            Angle=Convert.ToDouble(item.Value[3])
-                        });
+                        outgoing.Add(item);
                     }
-                    if (item.Value[12].ToString() == "TLV")
+                    else if (item.Destination == "TLV")
                     {
-                        incoming.Add(new FlightInfoPartial
-                        {
-                            ID = -1,
-                            Source = item.Value[11].ToString(),
-                            Destination = item.Value[12].ToString(),
-                            FlightID = key,
-                            Long = Convert.ToDouble(item.Value[2]),
-                            Lat = Convert.ToDouble(item.Value[1]),
-                            DepartureTime = Util.Helper.GetDateFromEpoch(Convert.ToDouble(item.Value[10])),
-                            FlightCode = item.Value[13].ToString(),
-                            Angle = Convert.ToDouble(item.Value[3])
-                        });
+                        incoming.Add(item);
                     }
                 }
             }
@@ -120,43 +85,32 @@ namespace BL
             }
             dict.Add("outgoing", outgoing);
             dict.Add("incoming", incoming);
+            return dict;
         }
         #endregion
-        public BE.Weather.Root GetWeather(double lon, double lat)
+        public  BE.Weather.Root GetWeather(double lon, double lat)
         {
-            BE.Weather.Root result = null;
-            string urlWhether = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=05b1f955b138af8db2dac1319b725a96";
-            using (var webClient = new System.Net.WebClient())
-            {
-                try
-                {
-                    var json = webClient.DownloadString(urlWhether);
-                    result = (BE.Weather.Root)JsonConvert.DeserializeObject(json, typeof(BE.Weather.Root));
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
-            return result;
+            return  dl.GetWeather(lon, lat);
         }
 
-        public BE.Flights.Root GetSelectedFlight(string id)
+        public  BE.Flights.Root GetSelectedFlight(string id)
         {
-            BE.Flights.Root result = null;
-            using (var webClient = new System.Net.WebClient())
-            {
-                try
-                {
-                    var json = webClient.DownloadString(FlightURL+id);
-                    result = (BE.Flights.Root)JsonConvert.DeserializeObject(json, typeof(BE.Flights.Root));
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
-            return result;
+            return  dl.GetSelectedFlight(id);
+        //{
+        //    BE.Flights.Root result = null;
+        //    using (var webClient = new System.Net.WebClient())
+        //    {
+        //        try
+        //        {
+        //            var json = webClient.DownloadString(FlightURL+id);
+        //            result = (BE.Flights.Root)JsonConvert.DeserializeObject(json, typeof(BE.Flights.Root));
+        //        }
+        //        catch (Exception e)
+        //        {
+        //            Console.WriteLine(e);
+        //        }
+        //    }
+        //    return result;
         }
 
         public void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial)
@@ -178,28 +132,29 @@ namespace BL
 
         public async Task<bool> IsBeforeHoliday(DateTime date)
         {
-            var yyyy = date.ToString("yyyy");
-            var mm = date.ToString("mm");
-            var dd = date.ToString("dd");
-            string hebrewDateUrl = $"https://www.hebcal.com./converter?cfg=json&date={yyyy}-{mm}-{dd}&g2h=1&strict=1";
-            BE.HebrewDates.Root root = null;
-            try
-            {
-                using (var webClient = new System.Net.WebClient())
-                {
-                    try
-                    {
-                        var json = await webClient.DownloadStringTaskAsync(hebrewDateUrl);
-                        root = (BE.HebrewDates.Root)JsonConvert.DeserializeObject(json, typeof(BE.HebrewDates.Root));
-                    }
-                    catch (Exception e)
-                    {
-                        Console.WriteLine(e);
-                    }
-                }
-                return root.events[0].Contains("Erev");
-            }
-            catch { return false; }
+            return await dl.IsBeforeHoliday(date);
+            //var yyyy = date.ToString("yyyy");
+            //var mm = date.ToString("MM");
+            //var dd = date.ToString("dd");
+            //string hebrewDateUrl = $"https://www.hebcal.com./converter?cfg=json&date={yyyy}-{mm}-{dd}&g2h=1&strict=1";
+            //BE.HebrewDates.Root root = null;
+            //try
+            //{
+            //    using (var webClient = new System.Net.WebClient())
+            //    {
+            //        try
+            //        {
+            //            var json = await webClient.DownloadStringTaskAsync(hebrewDateUrl);
+            //            root = (BE.HebrewDates.Root)JsonConvert.DeserializeObject(json, typeof(BE.HebrewDates.Root));
+            //        }
+            //        catch (Exception e)
+            //        {
+            //            Console.WriteLine(e);
+            //        }
+            //    }
+            //    return root.events[0].Contains("Erev");
+            //}
+            //catch { return false; }
 
         }
     }

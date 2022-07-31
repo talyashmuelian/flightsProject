@@ -10,12 +10,13 @@ namespace BL
     public interface IBL
     {
         Dictionary<string, List<FlightInfoPartial>> GetCurrentFlightsSync();
-        void GetCurrentFlightsAsync(Dictionary<string, List<FlightInfoPartial>> dict);
+        Task<Dictionary<string, List<FlightInfoPartial>>> GetCurrentFlightsAsync(Dictionary<string, List<FlightInfoPartial>> dict);
 
         BE.Weather.Root GetWeather(double lon, double lat);
         BE.Flights.Root GetSelectedFlight(string id);
         void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial);
         List<FlightInfoPartial> GetSavedFlights(DateTime start, DateTime end);
         void DestroyThread();
-        void IsBeforeHoliday(DateTime date, bool isBeforeHoliday);
+        Task<bool> IsBeforeHoliday(DateTime date);
+    }
 }

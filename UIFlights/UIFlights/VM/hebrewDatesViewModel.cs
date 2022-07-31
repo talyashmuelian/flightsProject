@@ -33,6 +33,8 @@ namespace UIFlights
         public HolidayCommand HolidayCommand { get; set; }
         public hebrewDatesViewModel()
         {
+            CurrentDate = DateTime.Now;
+            HolidayCommand = new HolidayCommand();
             SetUpTimer(new TimeSpan(0,0,0));
             CheckIsBeforeHoliday();
             HolidayCommand.SelectedDate += CheckIsBeforeHoliday;

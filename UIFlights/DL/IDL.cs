@@ -12,5 +12,11 @@ namespace DL
         void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial);
         List<FlightInfoPartial> GetSavedFlights();
         void DestroyThread();
+        List<FlightInfoPartial> GetCurrentFlightsSync();
+        Task<List<FlightInfoPartial>> GetCurrentFlightsAsync();
+
+        BE.Weather.Root GetWeather(double lon, double lat);
+        BE.Flights.Root GetSelectedFlight(string id);
+        Task<bool> IsBeforeHoliday(DateTime date);
     }
 }
