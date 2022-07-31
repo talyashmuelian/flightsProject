@@ -11,6 +11,8 @@
         Title="MainWindow" Height="550" Width="1900" WindowState="Maximized">
     <Window.Resources>
         <local:MyConverter x:Key="MyConverter"></local:MyConverter>
+        <local:VisibilityConverter x:Key="VisibilityConverter"/>
+
         <Style TargetType="m:Pushpin" x:Key="FromIsrael">
             <Setter x:Name="setterStyle" Property="Template">
                 <Setter.Value>
@@ -132,14 +134,14 @@
                                 </m:Map.Background>
 
                                 <m:Pushpin Name="_2cb98cf3" Location="32.000454,34.870743"  Width="20" Height="20" Margin="0.2,0,-0.2,-0.2" VerticalAlignment="Bottom">
-                                    
+
                                     <m:Pushpin.InputBindings>
                                         <MouseBinding 
                                     Command="{Binding Flightcommand}"  CommandParameter="{Binding Path=Name}"
                                     MouseAction="LeftClick" />
                                     </m:Pushpin.InputBindings>
                                 </m:Pushpin>
-                               
+
                             </m:Map>
                             <Button Content="Start Track" HorizontalAlignment="Left" Height="33" Margin="646,10,0,0" VerticalAlignment="Top" Width="126" Click="Button_Click_1" Grid.Column="2"/>
                             <TextBox x:Name="Counter" HorizontalAlignment="Left" Margin="777,15,0,10" TextWrapping="Wrap" Text="1" Width="45" Grid.Column="2"/>
@@ -203,10 +205,13 @@
                 <TabItem Header="date">
                     <TabItem.Content>
                         <Grid x:Name="DateGrid">
-                            <DatePicker Name="currentDate" SelectedDate="{x:Static sys:DateTime.Today}" HorizontalAlignment="Left" Margin="64,182,0,0" VerticalAlignment="Top"/>
+
+                            <Button Width="100" Height="20" Content="change date" Command="{Binding HolidayCommand}" CommandParameter="{Binding ElementName=currentDate, Path=SelectedDate}"/>
+
                             <!--<TextBlock Text="erev hag" Margin="100,100,100,100" Width="60" Height="30"/>-->
-                            <Label Content="erev hag" HorizontalAlignment="Left" Margin="64,36,0,0" VerticalAlignment="Top"/>
-                            <Label Content="A week before holiday" Visibility="{Binding isBeforeHoliday }"/>
+                            <Label Content="A week before holiday" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource VisibilityConverter} }" Width="166" HorizontalAlignment="Left" Margin="0,208,0,265.2"/>
+                            <DatePicker Name="currentDate" HorizontalAlignment="Center" VerticalAlignment="Top" SelectedDate="{x:Static sys:DateTime.Today}" />
+
                         </Grid>
                     </TabItem.Content>
                 </TabItem>

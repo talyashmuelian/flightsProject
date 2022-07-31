@@ -124,7 +124,7 @@ namespace UIFlights
                 Pushpin PinCurrent = new Pushpin { ToolTip = "source: " + f.Source + "\n destination: " + f.Destination };
                 PinCurrent.Height = 20;
                 PinCurrent.Width = 20;
-                MouseBinding mouseBinding = new MouseBinding(Flightcommand, new MouseGesture(MouseAction.LeftClick));
+                MouseBinding mouseBinding = new MouseBinding(Flightcommand, new MouseGesture(MouseAction.LeftClick));// add command definition 
                 mouseBinding.CommandParameter = f.FlightID;
                 PinCurrent.InputBindings.Add(mouseBinding);
                 PositionOrigin origin = new PositionOrigin { X = 0.7, Y = 0.7 };
@@ -167,6 +167,7 @@ namespace UIFlights
         {
             SelectedFlightModel = new FlightModel(id);
             addNewPolyLine(SelectedFlightModel.Trail);
+            //addSourcePushPin(selectedFlightModel.)
             //selectedFlight = listIncomingFlights.ToList().Find( f=>f.FlightID == id);
             //if(selectedFlight==null)
             //{
@@ -194,16 +195,27 @@ namespace UIFlights
                 polyline.Locations.Add(new Location(item.lat, item.lng));
             }
             List<MapPolyline> mapPolylinesToRemove = new List<MapPolyline>();
-            List<MapPolygon> mapPolygonToRemove = new List<MapPolygon>();
+            List<Pushpin> mapPushpinToRemove = new List<Pushpin>();
             foreach (var item in myMap.Children)
             {
                 if (item is MapPolyline ) { mapPolylinesToRemove.Add(item as MapPolyline); }
-                else if (item is MapPolygon) { mapPolygonToRemove.Add(item as MapPolygon); }
+                else if (item is Pushpin) {
+                    var p = item as Pushpin;
+                    if (p.Name=="source")
+                        mapPushpinToRemove.Add(item as Pushpin); 
+                }
             }
             mapPolylinesToRemove.ForEach(myMap.Children.Remove);
-            mapPolygonToRemove.ForEach(myMap.Children.Remove);
+            mapPushpinToRemove.ForEach(myMap.Children.Remove);
             myMap.Children.Add(polyline);
-            addNewPolygon(Route[0]);
+            Pushpin sourcePushPin = new Pushpin();
+            sourcePushPin.Name = "source";
+            sourcePushPin.Height = 10;
+            sourcePushPin.Width = 10;
+            var sourceLocation = new Location { Latitude = Route[0].lat, Longitude = Route[0].lng };
+            sourcePushPin.Location = sourceLocation;
+            myMap.Children.Add(sourcePushPin);
+            //addNewPolygon(Route[0]);
         }
         void addNewPolygon(Trail trail)
         {

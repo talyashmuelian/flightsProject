@@ -18,5 +18,7 @@ namespace DL
         BE.Weather.Root GetWeather(double lon, double lat);
         BE.Flights.Root GetSelectedFlight(string id);
         Task<bool> IsBeforeHoliday(DateTime date);
+        bool IsBeforeHoliday1(DateTime date);
+
     }
 }

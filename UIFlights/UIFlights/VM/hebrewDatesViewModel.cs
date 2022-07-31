@@ -36,7 +36,7 @@ namespace UIFlights
             CurrentDate = DateTime.Now;
             HolidayCommand = new HolidayCommand();
             SetUpTimer(new TimeSpan(0,0,0));
-            CheckIsBeforeHoliday();
+            CheckIsBeforeHoliday(CurrentDate);
             HolidayCommand.SelectedDate += CheckIsBeforeHoliday;
         }
         
@@ -58,17 +58,18 @@ namespace UIFlights
         {
             //this runs at 00:00:00
             //
-            dispatcherTimer.Tick += CheckIsBeforeHoliday;
+            dispatcherTimer.Tick += CheckIsBeforeHolidayDispatcher;
             dispatcherTimer.Interval = new TimeSpan(24, 0, 0);
             dispatcherTimer.Start();
         }
-        private void CheckIsBeforeHoliday(object sender, EventArgs e)
+        private void CheckIsBeforeHolidayDispatcher(object sender, EventArgs e)
         {
-            CheckIsBeforeHoliday();
+           CurrentDate=CurrentDate.AddDays(1);
+            CheckIsBeforeHoliday(CurrentDate);
         }
-        private async void CheckIsBeforeHoliday()
+        private async void CheckIsBeforeHoliday( DateTime date)
         {
-            isBeforeHoliday = await bl.IsBeforeHoliday(CurrentDate);
+            IsBeforeHoliday = await bl.IsBeforeHoliday(date);
         }
     }
 }

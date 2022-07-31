@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -202,7 +203,7 @@ namespace DL
             var yyyy = date.ToString("yyyy");
             var mm = date.ToString("MM");
             var dd = date.ToString("dd");
-            string hebrewDateUrl = $"https://www.hebcal.com./converter?cfg=json&date={yyyy}-{mm}-{dd}&g2h=1&strict=1";
+            string hebrewDateUrl = $"http://www.hebcal.com./converter?cfg=json&date={yyyy}-{mm}-{dd}&g2h=1&strict=1";
             BE.HebrewDates.Root root = null;
             try
             {
@@ -221,6 +222,37 @@ namespace DL
                 return root.events[0].Contains("Erev");
             }
             catch(Exception e) { return false; }
+
+        }
+
+
+
+        public bool IsBeforeHoliday1(DateTime date)
+        {
+
+            var yyyy = date.ToString("yyyy");
+            var mm = date.ToString("MM");
+            var dd = date.ToString("dd");
+            string hebrewDateUrl = $"http://www.hebcal.com./converter?cfg=json&date={yyyy}-{mm}-{dd}&g2h=1&strict=1";
+            BE.HebrewDates.Root root = null;
+            try
+            {
+                using (var webClient = new System.Net.WebClient())
+                {
+                    //try
+                    //{
+                    var json =  webClient.DownloadString(hebrewDateUrl);
+                    Debug.Print(json);
+                    root = (BE.HebrewDates.Root)JsonConvert.DeserializeObject(json, typeof(BE.HebrewDates.Root));
+                    //}
+                    //catch (Exception e)
+                    //{
+                    //    Console.WriteLine(e);
+                    //}
+                }
+                return root.events[0].Contains("Erev");
+            }
+            catch (Exception e) { return false; }
 
         }
     }

@@ -157,6 +157,11 @@ namespace BL
             //catch { return false; }
 
         }
+
+        public bool IsBeforeHoliday1(DateTime date)
+        {
+            return dl.IsBeforeHoliday1(date);
+        }
     }
    
     

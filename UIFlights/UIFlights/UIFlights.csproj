@@ -64,6 +64,7 @@
     <Compile Include="Commands\HolidayCommand.cs" />
     <Compile Include="Commands\SearchHistoryCommand.cs" />
     <Compile Include="Converters\MyConverter.cs" />
+    <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Models\FlightModel.cs" />
     <Compile Include="MyConverter.cs" />
     <Compile Include="Views\FlightsHistoryWindow.xaml.cs">
