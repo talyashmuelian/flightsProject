@@ -197,7 +197,7 @@ namespace DL
         }
 
       
-        public async Task<bool> IsBeforeHoliday(DateTime date)
+        public async Task<BE.HebrewDates.Root> GetHebrewDate(DateTime date)
         {
 
             var yyyy = date.ToString("yyyy");
@@ -219,9 +219,9 @@ namespace DL
                     //    Console.WriteLine(e);
                     //}
                 }
-                return root.events[0].Contains("Erev");
+                return root;
             }
-            catch(Exception e) { return false; }
+            catch(Exception e) { return null; }
 
         }
 

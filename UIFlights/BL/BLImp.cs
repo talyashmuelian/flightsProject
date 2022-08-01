@@ -15,8 +15,30 @@ namespace BL
     {
         private const string AllFlightsURL = "https://data-cloud.flightradar24.com/zones/fcgi/feed.js?faa=1&bounds=38.805%2C24.785%2C29.014%2C40.505&satellite=1&mlat=1&flarm=1&adsb=1&gnd=1&air=1&vehicles=1&estimated=1&maxage=14400&gliders=1&stats=1";
         private const string FlightURL = "https://data-live.flightradar24.com/clickhandler/?version=1.5&flight=";
+        private readonly Dictionary<Tuple<string,int>, string> israelHolidays = new Dictionary<Tuple<string, int>, string>() {
+            {Tuple.Create("Tishrei",1), "rosh hashana" },
+             {Tuple.Create("Tishrei",15), "sukot" },
+            {Tuple.Create("Tishrei",22), "Shmini Atzeret" },
+            {Tuple.Create("Kislev",25), "Hanucka" },
+
+            {Tuple.Create("Tevet",2), "Hanucka" },
+            {Tuple.Create("Adar",14), "Purim" },
+            {Tuple.Create("Nisan",15), "Pesach" },
+            {Tuple.Create("Nisan",22), "Pesach" },
+            {Tuple.Create("Sivan",6), "Shavuot" },
+            //{ "א׳ בְּתִשְׁרֵי","rosh hashana" },
+            //{  "ט״ו בְּתִשְׁרֵי", "sukot" },
+            //{"כ״ב בְּתִשְׁרֵי" ,"Shmini Atzeret"},
+            //{"כ״ה בְּכִסְלֵו","Hanucka" },
+            //{"ב׳ בְּטֵבֵת","Hanucka" },
+            //{ "י״ד בַּאֲדָר","Purim"},
+            //{ "ט״ו בְּנִיסָן","Pesach"},
+            //{"כ״ב בְּנִיסָן","Pesach" },
+            //{"ו׳ בְּסִיוָן", "Shavuot"}
+        };
         private IDL dl=DLImp.theInstance();
         static BLImp instance;//=new DLImp();
+
         private BLImp()
         {
             
@@ -130,9 +152,21 @@ namespace BL
 
         }
 
-        public async Task<bool> IsBeforeHoliday(DateTime date)
+        public async Task<Tuple<bool, string>> IsBeforeHoliday(DateTime date)
         {
-            return await dl.IsBeforeHoliday(date);
+            Tuple<bool, string> result= Tuple.Create(false, "");
+            for (int i = 0; i < 7; i++) {
+                var hebrewDate = await dl.GetHebrewDate(date.AddDays(i));
+                foreach (var holiday in israelHolidays)
+                {
+                    if (hebrewDate.hm==holiday.Key.Item1 && hebrewDate.hd == holiday.Key.Item2)
+                    {
+                        result = Tuple.Create(true, holiday.Value);
+                        break;
+                    }
+                }
+            }
+            return result;
             //var yyyy = date.ToString("yyyy");
             //var mm = date.ToString("MM");
             //var dd = date.ToString("dd");

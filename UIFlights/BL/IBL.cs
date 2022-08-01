@@ -17,7 +17,7 @@ namespace BL
         void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial);
         List<FlightInfoPartial> GetSavedFlights(DateTime start, DateTime end);
         void DestroyThread();
-        Task<bool> IsBeforeHoliday(DateTime date);
+        Task<Tuple<bool, string>> IsBeforeHoliday(DateTime date);
         bool IsBeforeHoliday1(DateTime date);
 
     }

@@ -18,6 +18,7 @@ namespace UIFlights
         public DateTime CurrentDate { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         private bool isBeforeHoliday;
+        private string upcomingHoliday;
 
         public bool IsBeforeHoliday
         {
@@ -27,6 +28,18 @@ namespace UIFlights
                 if (PropertyChanged != null)
                 {
                     PropertyChanged(this, new PropertyChangedEventArgs("IsBeforeHoliday"));
+                }
+            }
+        }
+        public string UpcomingHoliday
+        {
+            get { return upcomingHoliday; }
+            set
+            {
+                upcomingHoliday = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("upcomingHoliday"));
                 }
             }
         }
@@ -69,7 +82,9 @@ namespace UIFlights
         }
         private async void CheckIsBeforeHoliday( DateTime date)
         {
-            IsBeforeHoliday = await bl.IsBeforeHoliday(date);
+            var result = await bl.IsBeforeHoliday(date);
+            IsBeforeHoliday = result.Item1;
+            UpcomingHoliday = result.Item2;
         }
     }
 }
