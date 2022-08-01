@@ -7,7 +7,9 @@
         xmlns:m="clr-namespace:Microsoft.Maps.MapControl.WPF;assembly=Microsoft.Maps.MapControl.WPF" 
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-       
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Background="{DynamicResource MaterialDesignPaper}"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Title="MainWindow" Height="550" Width="1900" WindowState="Maximized">
     <Window.Resources>
         <local:MyConverter x:Key="MyConverter"></local:MyConverter>
@@ -59,10 +61,12 @@
 
 
         <converters:TickToDateTimeConverter x:Key="TickConvert"/>-->
-
+        <Style TargetType="ListViewItem">
+            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        </Style>
     </Window.Resources>
     <Grid>
-        <TabControl TabStripPlacement="Right" >
+        <TabControl TabStripPlacement="Left" >
             <TabControl.Items>
                 <TabItem Header="main window">
                     <TabItem.Content>
@@ -169,17 +173,17 @@
                 <TabItem Header="history">
                     <TabItem.Content>
                         <Grid x:Name="historyGrid">
-                            <ListView x:Name="historyListView" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Grid.Column="0" 
-                ItemsSource="{Binding SavedFlights}" FontSize="9" Width="400" Height="305" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607" >
+                            <ListView x:Name="historyListView" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Grid.Column="0" Style="{StaticResource MaterialDesignListView}"
+                ItemsSource="{Binding SavedFlights}" FontSize="9" Width="530" Height="305" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607" >
 
                                 <ListView.View >
                                     <GridView x:Name="lineGridview">
 
-                                        <GridViewColumn Header="flightID" Width="60" DisplayMemberBinding="{Binding FlightID}" FrameworkElement.FlowDirection="RightToLeft"   />
-                                        <GridViewColumn Header="source" Width="40" DisplayMemberBinding="{Binding Source}" FrameworkElement.FlowDirection="RightToLeft" />
-                                        <GridViewColumn Header="destination" Width="60" DisplayMemberBinding="{Binding Destination}" FrameworkElement.FlowDirection="RightToLeft" />
-                                        <GridViewColumn Header="create time" Width="110" DisplayMemberBinding="{Binding CreateTime}" FrameworkElement.FlowDirection="RightToLeft" />
-                                        <GridViewColumn Header="Flight code" Width="49" DisplayMemberBinding="{Binding FlightCode}" FrameworkElement.FlowDirection="RightToLeft" />
+                                        <GridViewColumn Header="flightID" DisplayMemberBinding="{Binding FlightID}"   />
+                                        <GridViewColumn Header="source"  DisplayMemberBinding="{Binding Source}" FrameworkElement.FlowDirection="LeftToRight" />
+                                        <GridViewColumn Header="destination"  DisplayMemberBinding="{Binding Destination}" FrameworkElement.FlowDirection="LeftToRight" />
+                                        <GridViewColumn Header="create time" DisplayMemberBinding="{Binding CreateTime}" FrameworkElement.FlowDirection="LeftToRight" />
+                                        <GridViewColumn Header="Flight code"  DisplayMemberBinding="{Binding FlightCode}" FrameworkElement.FlowDirection="LeftToRight" />
 
                                     </GridView>
                                 </ListView.View>
