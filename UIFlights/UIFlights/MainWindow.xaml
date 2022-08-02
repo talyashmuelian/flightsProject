@@ -142,7 +142,7 @@
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
                                         <Label Content="Flight Details" HorizontalAlignment="Left" Margin="59,20,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" Height="26" Width="79"/>
-                                        <UserControls:FlightUC Grid.Row="1" Grid.Column="1"></UserControls:FlightUC>
+                                        <!--<UserControls:FlightUC Grid.Row="1" Grid.Column="1" Height="403" Width="200" ></UserControls:FlightUC>-->
                                         <!--<StackPanel x:Name="DetailsPanel" Grid.Column="1"  HorizontalAlignment="Left" Height="403"  Grid.Row="1" VerticalAlignment="Top" Width="201" Margin="10,36,0,0">
                                             <TextBlock Text="{Binding SelectedFlightModel.DestinationName}"></TextBlock>
                                             <TextBlock Text="{Binding SelectedFlightModel.DestinationCountryName}"></TextBlock>
