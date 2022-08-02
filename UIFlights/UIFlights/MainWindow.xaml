@@ -66,6 +66,7 @@
         </Style>
     </Window.Resources>
     <Grid>
+        
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="4*"/>
@@ -73,7 +74,7 @@
         <materialDesign:Card >
             <TabControl TabStripPlacement="Left"  VerticalContentAlignment="Top"  materialDesign:ColorZoneAssist.Mode="PrimaryLight" Style="{StaticResource MaterialDesignNavigationRailTabControl}" Background="{DynamicResource MaterialDesignPaper}">
                 <TabControl.Items >
-                    <TabItem Width="140" >
+                    <TabItem Width="160" >
                         <TabItem.Header>
                             <StackPanel Width="130" Height="auto" Orientation="Horizontal" VerticalAlignment="Center" >
                                 <materialDesign:PackIcon Width="24" Height="24" HorizontalAlignment="Center" Kind="Airplane"   />
@@ -81,8 +82,9 @@
                             </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
+                            <materialDesign:Card >
 
-                            <Grid x:Name="mainGrid">
+                                <Grid x:Name="mainGrid">
                                 <!--<Grid.RowDefinitions>
                                 <RowDefinition Height="50*"/>
                                 <RowDefinition Height="469*"/>
@@ -116,7 +118,8 @@
 
                                     </m:Map>
                                 </materialDesign:Card >
-                                <Grid Grid.Column="1" Grid.Row="1" Background="{DynamicResource MaterialDesignPaper}">
+
+                                        <Grid Grid.Column="1" Grid.Row="1" >
                                     <Grid.RowDefinitions>
                                         <RowDefinition/>
                                         <RowDefinition/>
@@ -181,18 +184,20 @@
                                 </Grid>
 
 
-                            </Grid>
+                                </Grid>
+                                </materialDesign:Card >
+
                         </TabItem.Content>
                     </TabItem>
-                    <TabItem Background="#DDDFA692" Width="100">
+                    <TabItem Background="#DDDFA692" Width="160">
                         <TabItem.Header>
-                            <StackPanel Width="165" Height="auto" Orientation="Horizontal" >
+                            <StackPanel Width="100" Height="auto" Orientation="Horizontal" >
                                 <materialDesign:PackIcon Width="24" Height="24" HorizontalAlignment="Center" Kind="History" />
                                 <TextBlock HorizontalAlignment="Center" Text="History" TextAlignment="Center"/>
                             </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
-                            <Grid x:Name="historyGrid">
+                            <Grid x:Name="historyGrid" Background="White">
                                 <ListView x:Name="historyListView" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Grid.Column="0" Style="{StaticResource MaterialDesignListView}"
                 ItemsSource="{Binding SavedFlights}" FontSize="9" Width="530" Height="305" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607" >
 
@@ -235,7 +240,7 @@
                             </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
-                            <Grid x:Name="DateGrid">
+                            <Grid x:Name="DateGrid" Background="White">
 
                                 <Button Width="100" Height="20" Content="change date" Command="{Binding HolidayCommand}" CommandParameter="{Binding ElementName=currentDate, Path=SelectedDate}"/>
 
