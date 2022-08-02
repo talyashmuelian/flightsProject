@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using BE;
 
 namespace DL
 {
@@ -142,12 +143,14 @@ namespace DL
             {
                 Console.WriteLine(e);
             }
+            if (flights.Count == 0)
+                throw new NoDataException("no flights return from server");
             return flights;
         }
 
         public async Task<List<FlightInfoPartial>> GetCurrentFlightsAsync()
         {
-            try
+            //try
             {
                 using (var webClient = new System.Net.WebClient())
                 {
@@ -155,7 +158,7 @@ namespace DL
                     return extractFlightFromString(json);
                 }
             }
-            catch (Exception e) { Console.WriteLine(e); return null; }
+            //catch (Exception e) { throw e; }
         }
 
         public  BE.Weather.Root GetWeather(double lon, double lat)

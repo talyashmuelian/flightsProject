@@ -42,18 +42,19 @@
                     
                     <TextBlock Text="Origin:" Grid.Row="1" Grid.Column="1"> </TextBlock>
                     <TextBlock Text="Destination:" Grid.Row="1" Grid.Column="2"></TextBlock>
-                    <TextBlock Text="Airport:" Grid.Row="2" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth"  /></TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="0" FontSize="15"> <materialDesign:PackIcon Kind="Airport" />Airport:</TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.OriginName}" Grid.Row="2" Grid.Column="1"></TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.DestinationName}" Grid.Row="2" Grid.Column="2"></TextBlock>
-                    <TextBlock Text="Country:" Grid.Row="3" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" /></TextBlock>
+                    <TextBlock  Grid.Row="3" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" />Country:</TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.OriginCountryName}" Grid.Row="3" Grid.Column="1"></TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.DestinationCountryName}" Grid.Row="3" Grid.Column="2"></TextBlock>
-                    <TextBlock Text="IATA Code:" Grid.Row="4" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" /></TextBlock>
+                    <TextBlock Grid.Row="4" Grid.Column="0"> <materialDesign:PackIcon Kind="BarcodeScan" />IATA Code:</TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.OriginIATA}" Grid.Row="4" Grid.Column="1"></TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.DesIATA}" Grid.Row="4" Grid.Column="2"></TextBlock>
-                    <TextBlock Text="Weather: " Grid.Row="5" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" /></TextBlock>
+                    <TextBlock  Grid.Row="5" Grid.Column="0"> <materialDesign:PackIcon Kind="TemperatureCelsius" />Weather:</TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.OriginWeather}" Grid.Row="5" Grid.Column="1"></TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.DestinationWeather}" Grid.Row="5" Grid.Column="2"></TextBlock>
+                    <TextBlock  Grid.Row="6" Grid.Column="0"> <materialDesign:PackIcon Kind="WeatherPartlyCloudy" />description: </TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.DescriptionOrigin}" Grid.Row="6" Grid.Column="1"></TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.DescriptionDestination}" Grid.Row="6" Grid.Column="2"></TextBlock>
                 </Grid>
@@ -70,15 +71,15 @@
                         <ColumnDefinition/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <TextBlock Text="Flight ID: " Grid.Row="0" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" /></TextBlock>
+                    <TextBlock Grid.Row="0" Grid.Column="0"> <materialDesign:PackIcon Kind="QrcodeScan" />Flight ID:</TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.FlightId}" Grid.Row="0" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="Airline Name: " Grid.Row="1" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" /></TextBlock>
+                    <TextBlock Grid.Row="1" Grid.Column="0"> <materialDesign:PackIcon Kind="AirplaneCog" />Airline Name:</TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.AirlineName}" Grid.Row="1" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="Status: " Grid.Row="2" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" /></TextBlock>
+                    <TextBlock Grid.Row="2" Grid.Column="0"> <materialDesign:PackIcon Kind="CheckboxMarkedCircleOutline" />Status:</TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.Status}" Grid.Row="2" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="Departure Time: " Grid.Row="3" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" /></TextBlock>
+                    <TextBlock Grid.Row="3" Grid.Column="0"> <materialDesign:PackIcon Kind="AirplaneTakeoff" />Departure Time:</TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.DepartureTime}" Grid.Row="3" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="Estimeted Arrival Time: " Grid.Row="4" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" /></TextBlock>
+                    <TextBlock Grid.Row="4" Grid.Column="0"> <materialDesign:PackIcon Kind="AirplaneLanding" />Estimeted Arrival Time:</TextBlock>
                     <TextBlock Text="{Binding SelectedFlightModel.EstimetedArrivalTime}" Grid.Row="4" Grid.Column="1"></TextBlock>
                     
                 </Grid>

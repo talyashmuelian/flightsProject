@@ -81,14 +81,27 @@ namespace UIFlights
         }
         public FlightsViewModel(Map map, ResourceDictionary resources)
         {
+            
             myMap = map;
             mainWindowResource = resources;
             flightsModel = new FlightsModel();
             Flightcommand.SelectedFlight += extractSelectedFlight;
             Flightcommand.SelectedFlight += saveSelectedFlight;
             //var Flights = bl.GetCurrentFlights();
-            Flights = bl.GetCurrentFlightsSync();
-           // ListIncomingFlights = new ObservableCollection<FlightInfoPartial>();
+            try
+            {
+                Flights = bl.GetCurrentFlightsSync();
+            }
+            catch (Exception ex)
+            {
+                if (ex is BE.NoDataException)
+                    MessageBox.Show("sorry, the server doesn't return a flights");
+                else
+                {
+                    MessageBox.Show("sorry, there is connection network problem");
+                }
+            }
+            // ListIncomingFlights = new ObservableCollection<FlightInfoPartial>();
             //ListOutgoingFlights = new ObservableCollection<FlightInfoPartial>();
             ListIncomingFlights = new ObservableCollection<FlightInfoPartial>(Flights["incoming"]);
             ListOutgoingFlights = new ObservableCollection<FlightInfoPartial>(Flights["outgoing"]);
@@ -146,16 +159,28 @@ namespace UIFlights
         }
         private async void DispatcherTimer_Tick_Flights(object sender, EventArgs e)
         {
-            Flights=await bl.GetCurrentFlightsAsync(Flights);
-            ListIncomingFlights.Clear();
-            ListOutgoingFlights.Clear();
             try
             {
-              Flights["outgoing"].Add(new FlightInfoPartial { Destination = random.Next(1, 100).ToString(), Source = "san fransisco", ID = 123 });
-                Flights["incoming"].ForEach(ListIncomingFlights.Add);
-                Flights["outgoing"].ForEach(ListOutgoingFlights.Add);
+                Flights = await bl.GetCurrentFlightsAsync(Flights);
+                ListIncomingFlights.Clear();
+                ListOutgoingFlights.Clear();
+                try
+                {
+                    Flights["outgoing"].Add(new FlightInfoPartial { Destination = random.Next(1, 100).ToString(), Source = "san fransisco", ID = 123 });
+                    Flights["incoming"].ForEach(ListIncomingFlights.Add);
+                    Flights["outgoing"].ForEach(ListOutgoingFlights.Add);
+                }
+                catch { }
             }
-            catch { }
+            catch(Exception ex)
+            {
+                if (ex is BE.NoDataException)
+                    MessageBox.Show("sorry, the server doesn't return a flights");
+                else
+                {
+                    MessageBox.Show("sorry, there is connection network problem");
+                }
+            }
         }
         private void DispatcherTimer_Tick_Flight(object sender, EventArgs e)/////////////////////////////////////////////////////
         {

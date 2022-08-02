@@ -91,7 +91,7 @@
         <materialDesign:Card >
             <TabControl TabStripPlacement="Left"  VerticalContentAlignment="Top"   Style="{StaticResource MaterialDesignNavigationRailTabControl}" Background="#FFF2F2F2">
                 <TabControl.Items >
-                    <TabItem Width="160"  >
+                    <TabItem Width="130"  >
                         <TabItem.Header>
                             <StackPanel Width="130" Height="auto" Orientation="Horizontal" VerticalAlignment="Center" >
                                 <materialDesign:PackIcon Width="24" Height="24" HorizontalAlignment="Center" Kind="Airplane"   />
@@ -108,7 +108,7 @@
                             </Grid.RowDefinitions>-->
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1449*"/>
-                                        <ColumnDefinition Width="444*"/>
+                                        <ColumnDefinition Width="550*"/>
                                     </Grid.ColumnDefinitions>
 
                                     <!-- Documentation
@@ -142,7 +142,7 @@
                                             <RowDefinition/>
                                         </Grid.RowDefinitions>
                                         <Label Content="Flight Details" HorizontalAlignment="Left" Margin="59,20,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" Height="26" Width="79"/>
-                                        <!--<UserControls:FlightUC Grid.Row="1" Grid.Column="1" Height="403" Width="200" ></UserControls:FlightUC>-->
+                                        <UserControls:FlightUC Grid.Row="1" Grid.Column="1" Height="403" Width="200" ></UserControls:FlightUC>
                                         <!--<StackPanel x:Name="DetailsPanel" Grid.Column="1"  HorizontalAlignment="Left" Height="403"  Grid.Row="1" VerticalAlignment="Top" Width="201" Margin="10,36,0,0">
                                             <TextBlock Text="{Binding SelectedFlightModel.DestinationName}"></TextBlock>
                                             <TextBlock Text="{Binding SelectedFlightModel.DestinationCountryName}"></TextBlock>
@@ -223,7 +223,7 @@
 
                         </TabItem.Content>
                     </TabItem>
-                    <TabItem Background="#DDDFA692" Width="160">
+                    <TabItem Background="#DDDFA692" Width="130">
                         <TabItem.Header>
                             <StackPanel Width="100" Height="auto" Orientation="Horizontal" >
                                 <materialDesign:PackIcon Width="24" Height="24" HorizontalAlignment="Center" Kind="History" />
@@ -265,7 +265,7 @@
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
-                    <TabItem Width="160" >
+                    <TabItem Width="130" >
                         <TabItem.Header>
                             <StackPanel Orientation="Horizontal" Width="110">
                                 <materialDesign:PackIcon Kind="CalendarRange" Margin="0,0" Width="20" Height="20" />
