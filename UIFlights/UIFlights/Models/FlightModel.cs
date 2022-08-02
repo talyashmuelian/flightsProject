@@ -206,6 +206,27 @@ namespace UIFlights
 
             }
         }
+        public string OriginIATA {
+            get
+            {
+                try
+                {
+                    return flightRoot.airport.origin.code.iata;
+                }
+                catch { return "NA"; }
+            }
+        }
+        public string DesIATA
+        {
+            get
+            {
+                try
+                {
+                    return flightRoot.airport.destination.code.iata;
+                }
+                catch { return "NA"; }
+            }
+        }
 
         public  FlightModel(string id)
         {

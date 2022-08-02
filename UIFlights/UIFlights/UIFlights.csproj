@@ -78,6 +78,9 @@
     <Compile Include="Views\FlightsHistoryWindow.xaml.cs">
       <DependentUpon>FlightsHistoryWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\FlightUC.xaml.cs">
+      <DependentUpon>FlightUC.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VM\FlightsHistoryViewModel.cs" />
     <Compile Include="VM\FlightsViewModel.cs" />
     <Compile Include="VM\FlightViewModel.cs" />
@@ -96,6 +99,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\FlightsHistoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\FlightUC.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -142,9 +149,7 @@
       <Name>Util</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\UserControls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="airpalneToIsrael.jpeg" />
   </ItemGroup>

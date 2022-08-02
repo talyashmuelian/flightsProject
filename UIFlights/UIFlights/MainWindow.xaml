@@ -8,9 +8,10 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:UserControls="clr-namespace:UIFlights"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-        Title="MainWindow" Height="550" Width="1900" WindowState="Maximized">
+        Title="MainWindow" WindowState="Maximized">
     <Window.Resources>
         <local:MyConverter x:Key="MyConverter"></local:MyConverter>
         <local:VisibilityConverter x:Key="VisibilityConverter"/>
@@ -42,6 +43,22 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="ScrollBar">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ScrollBar">
+                        <Grid Height="176">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition/>
+                            </Grid.RowDefinitions>
+                            <materialDesign:PackIcon Kind="ChevronUp" Foreground="Gray" Grid.Row="0" VerticalAlignment="Bottom"/>
+                            <materialDesign:PackIcon Kind="ChevronDown" Foreground="Gray" Grid.Row="1" VerticalAlignment="Top"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
         <!--<Image Source="Images1\airplane.png" x:Key="myImage">
             <Image.LayoutTransform>
                 <TransformGroup>
@@ -66,15 +83,15 @@
         </Style>
     </Window.Resources>
     <Grid>
-        
+
         <!--<Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
             <RowDefinition Height="4*"/>
         </Grid.RowDefinitions>-->
         <materialDesign:Card >
-            <TabControl TabStripPlacement="Left"  VerticalContentAlignment="Top"  materialDesign:ColorZoneAssist.Mode="PrimaryLight" Style="{StaticResource MaterialDesignNavigationRailTabControl}" Background="{DynamicResource MaterialDesignPaper}">
+            <TabControl TabStripPlacement="Left"  VerticalContentAlignment="Top"   Style="{StaticResource MaterialDesignNavigationRailTabControl}" Background="#FFF2F2F2">
                 <TabControl.Items >
-                    <TabItem Width="160" >
+                    <TabItem Width="160"  >
                         <TabItem.Header>
                             <StackPanel Width="130" Height="auto" Orientation="Horizontal" VerticalAlignment="Center" >
                                 <materialDesign:PackIcon Width="24" Height="24" HorizontalAlignment="Center" Kind="Airplane"   />
@@ -85,107 +102,124 @@
                             <materialDesign:Card >
 
                                 <Grid x:Name="mainGrid">
-                                <!--<Grid.RowDefinitions>
+                                    <!--<Grid.RowDefinitions>
                                 <RowDefinition Height="50*"/>
                                 <RowDefinition Height="469*"/>
                             </Grid.RowDefinitions>-->
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="1449*"/>
-                                    <ColumnDefinition Width="444*"/>
-                                </Grid.ColumnDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1449*"/>
+                                        <ColumnDefinition Width="444*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                <!-- Documentation
+                                    <!-- Documentation
           https://docs.microsoft.com/en-us/previous-versions/bing/wpf-control/hh750210(v=msdn.10)
         -->
-                                <Label Width="300" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Flights map from/to Israel"/>
-                                <Label Content="A week before holiday" Visibility="{Binding ElementName=weekBeforeHoliday, Path=Visibility}" Width="129" Height="30" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,0,100,0"/>
-                                <Label Content="{Binding ElementName=holiday, Path=Content}" Visibility="{Binding ElementName=holiday, Path=Visibility}"  Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                                <materialDesign:Card  Margin="0,30,0,0" >
-                                    <m:Map x:Name="myMap" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"        
+                                    <Label Width="300" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Flights map from/to Israel"/>
+                                    <Label Content="A week before holiday" Visibility="{Binding ElementName=weekBeforeHoliday, Path=Visibility}" Width="129" Height="30" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,0,100,0"/>
+                                    <Label Content="{Binding ElementName=holiday, Path=Content}" Visibility="{Binding ElementName=holiday, Path=Visibility}"  Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                                    <materialDesign:Card  Margin="0,30,0,0" >
+                                        <m:Map x:Name="myMap" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"        
                Center="32.000454,34.870743" ZoomLevel="7.0" AnimationLevel="None"  Grid.Column="0" Grid.RowSpan="2" >
-                                        <m:Map.Background>
-                                            <ImageBrush/>
-                                        </m:Map.Background>
+                                            <m:Map.Background>
+                                                <ImageBrush/>
+                                            </m:Map.Background>
 
-                                        <m:Pushpin Name="_2cb98cf3" Location="32.000454,34.870743"  Width="20" Height="20" Margin="0.2,0,-0.2,-0.2" VerticalAlignment="Bottom">
+                                            <m:Pushpin Name="_2cb98cf3" Location="32.000454,34.870743"  Width="20" Height="20" Margin="0.2,0,-0.2,-0.2" VerticalAlignment="Bottom">
 
-                                            <m:Pushpin.InputBindings>
-                                                <MouseBinding 
+                                                <m:Pushpin.InputBindings>
+                                                    <MouseBinding 
                                     Command="{Binding Flightcommand}"  CommandParameter="{Binding Path=Name}"
                                     MouseAction="LeftClick" />
-                                            </m:Pushpin.InputBindings>
-                                        </m:Pushpin>
+                                                </m:Pushpin.InputBindings>
+                                            </m:Pushpin>
 
-                                    </m:Map>
-                                </materialDesign:Card >
+                                        </m:Map>
+                                    </materialDesign:Card >
 
-                                        <Grid Grid.Column="1" Grid.Row="1" >
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
-                                    </Grid.RowDefinitions>
-                                    <Label Content="Flight Details" HorizontalAlignment="Left" Margin="59,20,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" Height="26" Width="79"/>
-
-                                    <StackPanel x:Name="DetailsPanel" Grid.Column="1"  HorizontalAlignment="Left" Height="403"  Grid.Row="1" VerticalAlignment="Top" Width="201" Margin="10,36,0,0">
-                                        <TextBlock Text="{Binding SelectedFlightModel.DestinationName}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.DestinationCountryName}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.FlightId}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.AirlineName}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.OriginName}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.OriginCountryName}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.Status}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.EstimetedArrivalTime}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.DepartureTime}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.DestinationWeather}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.DescriptionDestination}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.OriginWeather}"></TextBlock>
-                                        <TextBlock Text="{Binding SelectedFlightModel.DescriptionOrigin}"></TextBlock>
-                                        <!--<TextBlock Text="{Binding time.estimated.arrival,Converter={StaticResource TickConvert}}"></TextBlock>-->
-                                    </StackPanel>
-                                    <ListBox ItemsSource="{Binding Path=ListOutgoingFlights}" Name="OutFlightsListBox" HorizontalAlignment="Left" VerticalAlignment="Center" Height="176"  Width="176" SelectionChanged="FlightsListBox_SelectionChanged" Grid.Row="0" Margin="0,74,0,10">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-
-                                                <StackPanel Orientation="Horizontal">
-                                                    <TextBlock Text="{Binding Destination}" Width="30">
-                                                        <TextBlock.InputBindings>
-                                                            <MouseBinding 
+                                    <Grid Grid.Column="1" Grid.Row="1" >
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition/>
+                                            <RowDefinition/>
+                                        </Grid.RowDefinitions>
+                                        <Label Content="Flight Details" HorizontalAlignment="Left" Margin="59,20,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" Height="26" Width="79"/>
+                                        <UserControls:FlightUC Grid.Row="1" Grid.Column="1"></UserControls:FlightUC>
+                                        <!--<StackPanel x:Name="DetailsPanel" Grid.Column="1"  HorizontalAlignment="Left" Height="403"  Grid.Row="1" VerticalAlignment="Top" Width="201" Margin="10,36,0,0">
+                                            <TextBlock Text="{Binding SelectedFlightModel.DestinationName}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.DestinationCountryName}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.FlightId}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.AirlineName}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.OriginName}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.OriginCountryName}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.Status}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.EstimetedArrivalTime}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.DepartureTime}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.DestinationWeather}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.DescriptionDestination}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.OriginWeather}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.DescriptionOrigin}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.OriginIATA}"></TextBlock>
+                                            <TextBlock Text="{Binding SelectedFlightModel.DesIATA}"></TextBlock>
+                                            --><!--<TextBlock Text="{Binding time.estimated.arrival,Converter={StaticResource TickConvert}}"></TextBlock>--><!--
+                                        </StackPanel>-->
+                                        <ListBox ItemsSource="{Binding Path=ListOutgoingFlights}" Name="OutFlightsListBox" HorizontalAlignment="Left" VerticalAlignment="Center" Height="176"  Width="70" SelectionChanged="FlightsListBox_SelectionChanged" Grid.Row="0" Margin="0,74,0,10">
+                                            <ListBox.Resources>
+                                                
+                                            </ListBox.Resources>
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border
+        x:Name="Border"
+        Padding="4"
+        BorderThickness="0 0 0 1"
+        BorderBrush="#FF9C27B0">
+                                                   
+                                                    <StackPanel Orientation="Horizontal">
+                                                        <TextBlock Text="{Binding Destination}" Width="30">
+                                                            <TextBlock.InputBindings>
+                                                                <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
                                     MouseAction="LeftClick" />
-                                                        </TextBlock.InputBindings>
-                                                    </TextBlock>
-                                                    <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding ElementName=OutFlightsListBox,  Path=ListBoxItem.Selected }"/>-->
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
+                                                            </TextBlock.InputBindings>
+                                                        </TextBlock>
+                                                        <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding ElementName=OutFlightsListBox,  Path=ListBoxItem.Selected }"/>-->
+                                                    </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
 
 
-                                    <ListBox ItemsSource="{Binding Path=ListIncomingFlights}" x:Name="InFlightsListBox" HorizontalAlignment="Right" Height="176"  VerticalAlignment="Center" Width="176" SelectionChanged="FlightsListBox_SelectionChanged" Grid.Row="0" Margin="0,74,0.4,10">
-                                        <ListBox.ItemTemplate>
-                                            <DataTemplate>
-                                                <StackPanel Orientation="Horizontal">
+                                        <ListBox ItemsSource="{Binding Path=ListIncomingFlights}" x:Name="InFlightsListBox" HorizontalAlignment="Right" Height="176"  VerticalAlignment="Center" Width="70" SelectionChanged="FlightsListBox_SelectionChanged" Grid.Row="0" Margin="0,74,0.4,10">
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border
+        x:Name="Border"
+        Padding="4"
+        BorderThickness="0 0 0 1"
+        BorderBrush="#FF9C27B0">
+                                                        <StackPanel Orientation="Horizontal">
 
-                                                    <TextBlock Text="{Binding Source}" Width="70">
-                                                        <TextBlock.InputBindings>
-                                                            <MouseBinding 
+                                                            <TextBlock Text="{Binding Source}" Width="30">
+                                                                <TextBlock.InputBindings>
+                                                                    <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
                                     MouseAction="LeftClick" />
-                                                        </TextBlock.InputBindings>
-                                                    </TextBlock>
-                                                    <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding  Path=SourceID }"/>-->
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListBox.ItemTemplate>
-                                    </ListBox>
-                                    <Label Content="Incoming" HorizontalAlignment="Right"  VerticalAlignment="Top" Grid.Row="0" Height="26" Width="60" Grid.Column="2"/>
-                                    <Label Content="Outgoing" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="0" Height="26" Width="61" Grid.Column="2"/>
+                                                                </TextBlock.InputBindings>
+                                                            </TextBlock>
+                                                            <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding  Path=SourceID }"/>-->
+                                                        </StackPanel>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                        </ListBox>
+                                        <Label Content="Incoming" HorizontalAlignment="Right"  VerticalAlignment="Top" Grid.Row="0" Height="26" Width="60" Grid.Column="2"/>
+                                        <Label Content="Outgoing" HorizontalAlignment="Left"  VerticalAlignment="Top" Grid.Row="0" Height="26" Width="61" Grid.Column="2"/>
+
+                                    </Grid>
+
 
                                 </Grid>
-
-
-                                </Grid>
-                                </materialDesign:Card >
+                            </materialDesign:Card >
 
                         </TabItem.Content>
                     </TabItem>
@@ -218,7 +252,7 @@
                                 <DatePicker Name="endDate" SelectedDate="{x:Static sys:DateTime.Today}" HorizontalAlignment="Left" Margin="64,182,0,0" VerticalAlignment="Top"/>
                                 <Label Content="start date:" HorizontalAlignment="Left" Margin="64,36,0,0" VerticalAlignment="Top"/>
                                 <Label Content="end date" HorizontalAlignment="Left" Margin="64,146,0,0" VerticalAlignment="Top"/>
-                                <Button Name="search" Command="{Binding SearchHistoryCommand}" Content="search" HorizontalAlignment="Left" Margin="277,103,0,0" VerticalAlignment="Top" Width="75">
+                                <Button  Name="search" Style="{StaticResource MaterialDesignFlatAccentBgButton}" Command="{Binding SearchHistoryCommand}" Content="search" HorizontalAlignment="Left" Margin="277,103,0,0" VerticalAlignment="Top" Width="75">
                                     <Button.CommandParameter>
                                         <MultiBinding Converter="{StaticResource MyConverter}">
                                             <Binding Path="SelectedDate" ElementName="startDate"/>
@@ -242,12 +276,12 @@
                         <TabItem.Content>
                             <Grid x:Name="DateGrid" Background="White">
 
-                                <Button Width="100" Height="20" Content="change date" Command="{Binding HolidayCommand}" CommandParameter="{Binding ElementName=currentDate, Path=SelectedDate}"/>
+                                <Button Style="{StaticResource MaterialDesignFlatAccentBgButton}" Height="50" Width="130" Content="change date" Command="{Binding HolidayCommand}" CommandParameter="{Binding ElementName=currentDate, Path=SelectedDate}" />
 
                                 <!--<TextBlock Text="erev hag" Margin="100,100,100,100" Width="60" Height="30"/>-->
                                 <Label Name="weekBeforeHoliday" Content="A week before holiday" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource VisibilityConverter} }" Width="166" HorizontalAlignment="Left" Margin="0,208,0,265.2"/>
                                 <Label Name="holiday" Content="{Binding UpcomingHoliday}" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource VisibilityConverter} }"  Width="166" HorizontalAlignment="Left" Margin="10,268,0,205"/>
-                                <DatePicker Name="currentDate" HorizontalAlignment="Center" VerticalAlignment="Top" SelectedDate="{x:Static sys:DateTime.Today}" />
+                                <DatePicker Name="currentDate"  Style="{StaticResource MaterialDesignOutlinedDatePicker}" HorizontalAlignment="Center" VerticalAlignment="Top" SelectedDate="{x:Static sys:DateTime.Today}" />
 
                             </Grid>
                         </TabItem.Content>
