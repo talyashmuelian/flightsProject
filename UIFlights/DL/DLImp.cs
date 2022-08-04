@@ -258,5 +258,43 @@ namespace DL
             catch (Exception e) { return false; }
 
         }
+
+        public async Task<BE.Weather.Root> GetWeatherAsync(double lon, double lat)
+        {
+            BE.Weather.Root result = null;
+            string urlWhether = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=05b1f955b138af8db2dac1319b725a96";
+            using (var webClient = new System.Net.WebClient())
+            {
+                try
+                {
+                    var json = await webClient.DownloadStringTaskAsync(urlWhether);
+                    result = (BE.Weather.Root)JsonConvert.DeserializeObject(json, typeof(BE.Weather.Root));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return result;
+        }
+
+        public  async Task<BE.Flights.Root> GetSelectedFlightAsync(string id)
+        {
+
+            BE.Flights.Root result = null;
+            using (var webClient = new System.Net.WebClient())
+            {
+                try
+                {
+                    var json = await webClient.DownloadStringTaskAsync(FlightURL + id);
+                    result = (BE.Flights.Root)JsonConvert.DeserializeObject(json, typeof(BE.Flights.Root));
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
+            }
+            return result;
+        }
     }
     }

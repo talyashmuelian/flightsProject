@@ -196,6 +196,16 @@ namespace BL
         {
             return dl.IsBeforeHoliday1(date);
         }
+
+        public async Task<BE.Weather.Root> GetWeatherAsync(double lon, double lat)
+        {
+            return await dl.GetWeatherAsync(lon, lat);
+        }
+
+        public async Task<BE.Flights.Root> GetSelectedFlightAsync(string id)
+        {
+            return await dl.GetSelectedFlightAsync(id);
+        }
     }
    
     

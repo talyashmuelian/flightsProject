@@ -230,7 +230,7 @@ namespace UIFlights
 
         public  FlightModel(string id)
         {
-            initialize(id);
+            //initialize(id);
         //{
         //    flightRoot =await bl.GetSelectedFlight(id);
         //    try
@@ -248,24 +248,26 @@ namespace UIFlights
         //    }
         //    catch { }
         }
-        public void initialize(string id)
+        
+        public async Task<FlightModel> initialize(string id)
         {
 
-            flightRoot =  bl.GetSelectedFlight(id);
+            flightRoot = await  bl.GetSelectedFlightAsync(id);
             try
             {
                 double lonOrigin = flightRoot.airport.origin.position.longitude;
                 double latOrigin = flightRoot.airport.origin.position.latitude;
-                rootWeatherOrigin =  bl.GetWeather(lonOrigin, latOrigin);
+                rootWeatherOrigin =  await bl.GetWeatherAsync(lonOrigin, latOrigin);
             }
             catch { }
             try
             {
                 double lonDes = flightRoot.airport.destination.position.longitude;
                 double latDes = flightRoot.airport.destination.position.latitude;
-                rootWeatherDestination =  bl.GetWeather(lonDes, latDes);
+                rootWeatherDestination =  await bl.GetWeatherAsync(lonDes, latDes);
             }
             catch { }
+            return this;
         }
         public override string ToString()
         {

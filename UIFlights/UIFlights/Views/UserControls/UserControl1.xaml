@@ -10,7 +10,7 @@
                 d:DesignHeight="403" d:DesignWidth="352">
     <UserControl.Resources>
         <Style x:Key="listViewItemStyle" TargetType="Grid">
-            <Setter Property="Width" Value="320">
+            <Setter Property="Width" Value="300">
                 
             </Setter>
         </Style>
@@ -119,7 +119,7 @@
                     </Grid.ColumnDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="1" Text=" Flight ID:" Style="{StaticResource fontStyle}"></TextBlock>
                     <materialDesign:PackIcon Kind="QrcodeScan" HorizontalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedFlightModel.FlightId}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.FlightId}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
 
             </ListViewItem>
@@ -132,7 +132,7 @@
                     </Grid.ColumnDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="Airline Name:" Style="{StaticResource fontStyle}" ></TextBlock>
                     <materialDesign:PackIcon Kind="AirplaneCog" HorizontalAlignment="Center" />
-                        <TextBlock Text="{Binding SelectedFlightModel.AirlineName}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center"></TextBlock>
+                        <TextBlock Text="{Binding SelectedFlightModel.AirlineName}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"></TextBlock>
                 </Grid>
 
             </ListViewItem>
@@ -145,7 +145,7 @@
                     </Grid.ColumnDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="Departure&#x0a;Time:" Style="{StaticResource fontStyle}"></TextBlock>
                     <materialDesign:PackIcon Kind="AirplaneTakeoff" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedFlightModel.DepartureTime}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.DepartureTime}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
                 </Grid>
 
             </ListViewItem>
@@ -158,7 +158,7 @@
                     </Grid.ColumnDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="Estimeted&#x0a;Arrival Time" Style="{StaticResource fontStyle}"></TextBlock>
                     <materialDesign:PackIcon Kind="AirplaneLanding" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedFlightModel.EstimetedArrivalTime}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.EstimetedArrivalTime}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
 
 
                 </Grid>

@@ -47,7 +47,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="ScrollBar">
-                        <Grid Height="176">
+                        <Grid VerticalAlignment="Stretch">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition/>
@@ -99,7 +99,7 @@
                             </StackPanel>
                         </TabItem.Header>
                         <TabItem.Content>
-                            <materialDesign:Card >
+                            <!--<materialDesign:Card >-->
 
                                 <Grid x:Name="mainGrid">
                                     <!--<Grid.RowDefinitions>
@@ -117,31 +117,32 @@
                                     <Label Width="300" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Flights map from/to Israel"/>
                                     <Label Content="A week before holiday" Visibility="{Binding ElementName=weekBeforeHoliday, Path=Visibility}" Width="129" Height="30" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,0,100,0"/>
                                     <Label Content="{Binding ElementName=holiday, Path=Content}" Visibility="{Binding ElementName=holiday, Path=Visibility}"  Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                                    <materialDesign:Card  Margin="0,30,0,0" >
-                                        <m:Map x:Name="myMap" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"        
+                                    <!--<materialDesign:Card  Margin="0,30,0,0" >-->
+                                        <m:Map x:Name="myMap" Margin="0,30,0,0" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"        
                Center="32.000454,34.870743" ZoomLevel="7.0" AnimationLevel="None"  Grid.Column="0" Grid.RowSpan="2" >
                                             <m:Map.Background>
                                                 <ImageBrush/>
                                             </m:Map.Background>
 
-                                            <m:Pushpin Name="_2cb98cf3" Location="32.000454,34.870743"  Width="20" Height="20" Margin="0.2,0,-0.2,-0.2" VerticalAlignment="Bottom">
+                                            <!--<m:Pushpin Name="_2cb98cf3" Location="32.000454,34.870743"  Width="20" Height="20" Margin="0.2,0,-0.2,-0.2" VerticalAlignment="Bottom">
 
                                                 <m:Pushpin.InputBindings>
                                                     <MouseBinding 
                                     Command="{Binding Flightcommand}"  CommandParameter="{Binding Path=Name}"
                                     MouseAction="LeftClick" />
                                                 </m:Pushpin.InputBindings>
-                                            </m:Pushpin>
+                                            </m:Pushpin>-->
 
                                         </m:Map>
-                                    </materialDesign:Card >
+                                    <!--</materialDesign:Card >-->
 
                                     <Grid Grid.Column="1" Grid.Row="1" >
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="2*"/>
                                             <RowDefinition Height="3*"/>
                                         </Grid.RowDefinitions>
-                                        <Label Content="Flight Details" HorizontalAlignment="Left" Margin="59,20,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" Height="26" Width="79"/>
+                                        <ProgressBar Visibility="{Binding IsLoadingFlight, Converter={StaticResource VisibilityConverter} }" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" VerticalAlignment="Bottom"/>
+                                        <!--<Label Content="Flight Details" HorizontalAlignment="Left" Margin="59,20,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" Height="26" Width="79"/>-->
                                         <UserControls:UserControl1 Grid.Row="1" Grid.Column="1" Height="403" Width="352"  ></UserControls:UserControl1>
 
                                         <!--<UserControls:UserControl1 Grid.Row="1" Grid.Column="1" Height="403" Width="250" ></UserControls:UserControl1>-->
@@ -185,7 +186,7 @@
         BorderBrush="#FF9C27B0">
                                                    
                                                     <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="{Binding Destination}" Width="30">
+                                                        <TextBlock Text="{Binding Destination}" Width="60">
                                                             <TextBlock.InputBindings>
                                                                 <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
@@ -200,25 +201,44 @@
                                         </ListBox>
 
 
-                                        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ListIncomingFlights}" x:Name="InFlightsListBox" HorizontalAlignment="Center"  VerticalAlignment="Stretch" Width="70" >
-                                            <ListBox.ItemTemplate>
-                                                <DataTemplate>
-                                                    <Border
-        x:Name="Border"
-        Padding="4"
-        BorderThickness="0 0 0 1"
-        BorderBrush="#FF9C27B0">
-                                                        <StackPanel Orientation="Horizontal">
+                                        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ListIncomingFlights}" x:Name="InFlightsListBox" HorizontalAlignment="Center"  VerticalAlignment="Stretch" Width="70" Style="{StaticResource MaterialDesignChoiceChipListBox}" >
+                                                <ListBox.ItemContainerStyle>
+                                                    <Style TargetType="{x:Type ListBoxItem}">
+                                                        <Setter Property="Template">
+                                                            <Setter.Value>
+                                                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                                                    <ContentPresenter/>
+                                                                </ControlTemplate>
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </Style>
+                                                </ListBox.ItemContainerStyle>
+                                                <!--<ListBox.ItemContainerStyle>
+                                                    <Style TargetType="ListBoxItem">
+                                                        <Setter Property="Padding" Value="0"/>
+                                                        <Setter Property="sel" Value="True"/>
 
-                                                            <TextBlock Text="{Binding Source}" Width="30">
-                                                                <TextBlock.InputBindings>
+                                                    </Style>
+                                                </ListBox.ItemContainerStyle>-->
+                                                <ListBox.ItemTemplate>
+                                                <DataTemplate >
+                                                        <Border  x:Name="Border" Padding="4"  BorderThickness="0 0 0 1" BorderBrush="#FF9C27B0"  VerticalAlignment="Stretch" Height="40" >
+                                                            <Border.InputBindings>
+                                                                <MouseBinding 
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
+                                    MouseAction="LeftClick" />
+                                                            </Border.InputBindings>
+                                                            <!--<StackPanel Orientation="Horizontal">-->
+
+                                                            <TextBlock Text="{Binding Source}" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Width="25" Height="35">
+                                                                <!--<TextBlock.InputBindings>
                                                                     <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
                                     MouseAction="LeftClick" />
-                                                                </TextBlock.InputBindings>
+                                                                </TextBlock.InputBindings>-->
                                                             </TextBlock>
                                                             <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding  Path=SourceID }"/>-->
-                                                        </StackPanel>
+                                                        <!--</StackPanel>-->
                                                     </Border>
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
@@ -230,7 +250,7 @@
 
 
                                 </Grid>
-                            </materialDesign:Card >
+                            <!--</materialDesign:Card >-->
 
                         </TabItem.Content>
                     </TabItem>

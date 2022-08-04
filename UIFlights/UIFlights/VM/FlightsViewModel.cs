@@ -28,6 +28,19 @@ namespace UIFlights
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private FlightInfoPartial selectedFlight;
         private ResourceDictionary mainWindowResource;
+        private bool isLoadingFlight = false;
+        public bool IsLoadingFlight
+        {
+            get { return isLoadingFlight; }
+            set
+            {
+                isLoadingFlight = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("IsLoadingFlight"));
+                }
+            }
+        }
         public FlightInfoPartial SelectedFlight
         {
             get { return selectedFlight; }
@@ -124,17 +137,28 @@ namespace UIFlights
         }
         private void ShowPushPinOnMap(object sender, EventArgs e)
         {
-            myMap.Children.Clear();
-            addPlanesToMap(ListOutgoingFlights);
-            addPlanesToMap(ListIncomingFlights);
+            List<Pushpin> mapPushpinToRemove = new List<Pushpin>();
+            foreach (var item in myMap.Children)
+            {
+                if (item is Pushpin)
+                {
+                    var p = item as Pushpin;
+                    if (p.Name == "flightPin")
+                        mapPushpinToRemove.Add(item as Pushpin);
+                }
+            }
+            mapPushpinToRemove.ForEach(myMap.Children.Remove);
+            addAirplanesToMap(ListOutgoingFlights);
+            addAirplanesToMap(ListIncomingFlights);
 
         }
-        private void addPlanesToMap(ObservableCollection<FlightInfoPartial> flights)
+        private void addAirplanesToMap(ObservableCollection<FlightInfoPartial> flights)
         {
             
             foreach (var f in flights)
             {
                 Pushpin PinCurrent = new Pushpin { ToolTip = "source: " + f.Source + "\n destination: " + f.Destination };
+                PinCurrent.Name = "flightPin";
                 PinCurrent.Height = 20;
                 PinCurrent.Width = 20;
                 MouseBinding mouseBinding = new MouseBinding(Flightcommand, new MouseGesture(MouseAction.LeftClick));// add command definition 
@@ -182,16 +206,23 @@ namespace UIFlights
                 }
             }
         }
-        private void DispatcherTimer_Tick_Flight(object sender, EventArgs e)/////////////////////////////////////////////////////
+        private async void DispatcherTimer_Tick_Flight(object sender, EventArgs e)/////////////////////////////////////////////////////
         {
             if (SelectedFlightModel != null)
-                extractSelectedFlight(SelectedFlightModel.FlightId);
+            {
+                string id = SelectedFlightModel.FlightId;
+                SelectedFlightModel = await new FlightModel(id).initialize(id);
+                addNewPolyLine(SelectedFlightModel.Trail);
+            }
+                //extractSelectedFlight(SelectedFlightModel.FlightId);
         }
 
-        private void extractSelectedFlight(string id)
+        private async void extractSelectedFlight(string id)
         {
-            SelectedFlightModel = new FlightModel(id);
+            IsLoadingFlight = true;
+            SelectedFlightModel =await new FlightModel(id).initialize(id);
             addNewPolyLine(SelectedFlightModel.Trail);
+            IsLoadingFlight = false;
             //addSourcePushPin(selectedFlightModel.)
             //selectedFlight = listIncomingFlights.ToList().Find( f=>f.FlightID == id);
             //if(selectedFlight==null)
@@ -203,43 +234,48 @@ namespace UIFlights
         }
         void addNewPolyLine(List<Trail> Route)
         {
-            if (Route.Count == 0)
-                return;
-            Route = (from f in Route
-                                 orderby f.ts
-                                 select f).ToList<Trail>();
+            try
+            {
+                if (Route.Count == 0)
+                    return;
+                Route = (from f in Route
+                         orderby f.ts
+                         select f).ToList<Trail>();
 
-            MapPolyline polyline = new MapPolyline();
-            //polyline.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Blue);
-            polyline.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Gold);
-            polyline.StrokeThickness = 3;
-            polyline.Opacity = 1;
-            polyline.Locations = new LocationCollection();
-            foreach (var item in Route)
-            {
-                polyline.Locations.Add(new Location(item.lat, item.lng));
-            }
-            List<MapPolyline> mapPolylinesToRemove = new List<MapPolyline>();
-            List<Pushpin> mapPushpinToRemove = new List<Pushpin>();
-            foreach (var item in myMap.Children)
-            {
-                if (item is MapPolyline ) { mapPolylinesToRemove.Add(item as MapPolyline); }
-                else if (item is Pushpin) {
-                    var p = item as Pushpin;
-                    if (p.Name=="source")
-                        mapPushpinToRemove.Add(item as Pushpin); 
+                MapPolyline polyline = new MapPolyline();
+                //polyline.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Blue);
+                polyline.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Gold);
+                polyline.StrokeThickness = 3;
+                polyline.Opacity = 1;
+                polyline.Locations = new LocationCollection();
+                foreach (var item in Route)
+                {
+                    polyline.Locations.Add(new Location(item.lat, item.lng));
                 }
+                List<MapPolyline> mapPolylinesToRemove = new List<MapPolyline>();
+                List<Pushpin> mapPushpinToRemove = new List<Pushpin>();
+                foreach (var item in myMap.Children)
+                {
+                    if (item is MapPolyline) { mapPolylinesToRemove.Add(item as MapPolyline); }
+                    else if (item is Pushpin)
+                    {
+                        var p = item as Pushpin;
+                        if (p.Name == "source")
+                            mapPushpinToRemove.Add(item as Pushpin);
+                    }
+                }
+                mapPolylinesToRemove.ForEach(myMap.Children.Remove);
+                mapPushpinToRemove.ForEach(myMap.Children.Remove);
+                myMap.Children.Add(polyline);
+                Pushpin sourcePushPin = new Pushpin();
+                sourcePushPin.Name = "source";
+                sourcePushPin.Height = 10;
+                sourcePushPin.Width = 10;
+                var sourceLocation = new Location { Latitude = Route[0].lat, Longitude = Route[0].lng };
+                sourcePushPin.Location = sourceLocation;
+                myMap.Children.Add(sourcePushPin);
             }
-            mapPolylinesToRemove.ForEach(myMap.Children.Remove);
-            mapPushpinToRemove.ForEach(myMap.Children.Remove);
-            myMap.Children.Add(polyline);
-            Pushpin sourcePushPin = new Pushpin();
-            sourcePushPin.Name = "source";
-            sourcePushPin.Height = 10;
-            sourcePushPin.Width = 10;
-            var sourceLocation = new Location { Latitude = Route[0].lat, Longitude = Route[0].lng };
-            sourcePushPin.Location = sourceLocation;
-            myMap.Children.Add(sourcePushPin);
+            catch { }
             //addNewPolygon(Route[0]);
         }
         void addNewPolygon(Trail trail)
