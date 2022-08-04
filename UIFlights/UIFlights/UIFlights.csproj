@@ -81,6 +81,9 @@
     <Compile Include="Views\UserControls\FlightUC.xaml.cs">
       <DependentUpon>FlightUC.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\UserControls\UserControl1.xaml.cs">
+      <DependentUpon>UserControl1.xaml</DependentUpon>
+    </Compile>
     <Compile Include="VM\FlightsHistoryViewModel.cs" />
     <Compile Include="VM\FlightsViewModel.cs" />
     <Compile Include="VM\FlightViewModel.cs" />
@@ -103,6 +106,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\UserControls\FlightUC.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\UserControls\UserControl1.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
