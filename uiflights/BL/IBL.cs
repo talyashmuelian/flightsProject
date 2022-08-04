@@ -14,6 +14,8 @@ namespace BL
 
         BE.Weather.Root GetWeather(double lon, double lat);
         BE.Flights.Root GetSelectedFlight(string id);
+        Task<BE.Weather.Root> GetWeatherAsync(double lon, double lat);
+        Task<BE.Flights.Root> GetSelectedFlightAsync(string id);
         void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial);
         List<FlightInfoPartial> GetSavedFlights(DateTime start, DateTime end);
         void DestroyThread();

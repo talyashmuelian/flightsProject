@@ -101,7 +101,7 @@
                         <TabItem.Content>
                             <!--<materialDesign:Card >-->
 
-                                <Grid x:Name="mainGrid">
+                                <Grid x:Name="mainGrid" Background="white">
                                     <!--<Grid.RowDefinitions>
                                 <RowDefinition Height="50*"/>
                                 <RowDefinition Height="469*"/>
@@ -263,8 +263,22 @@
                         </TabItem.Header>
                         <TabItem.Content>
                             <Grid x:Name="historyGrid" Background="White">
-                                <ListView x:Name="historyListView" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Grid.Column="0" Style="{StaticResource MaterialDesignListView}"
-                ItemsSource="{Binding SavedFlights}" FontSize="9" Width="530" Height="305" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="1*"/>
+                                    <RowDefinition Height="4*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Row="1" Grid.Column="1">
+                                    <Grid.Background>
+                                        <ImageBrush ImageSource="flghtPhoto.jpg"/>
+                                    </Grid.Background>
+                                </Grid>
+                                <ProgressBar  Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Visibility="{Binding IsLoadingHistory, Converter={StaticResource VisibilityConverter} }" />
+                                <ListView x:Name="historyListView" Grid.Row="1" Grid.Column="0" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Style="{StaticResource MaterialDesignListView}"
+                ItemsSource="{Binding SavedFlights}" FontSize="13" Width="600" Height="400" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607" >
 
                                     <ListView.View >
                                         <GridView x:Name="lineGridview">
@@ -278,12 +292,19 @@
                                         </GridView>
                                     </ListView.View>
                                 </ListView>
-
-                                <DatePicker Name="startDate" SelectedDate="1970-1-1" HorizontalAlignment="Left" Margin="64,78,0,0" VerticalAlignment="Top" />
-                                <DatePicker Name="endDate" SelectedDate="{x:Static sys:DateTime.Today}" HorizontalAlignment="Left" Margin="64,182,0,0" VerticalAlignment="Top"/>
-                                <Label Content="start date:" HorizontalAlignment="Left" Margin="64,36,0,0" VerticalAlignment="Top"/>
-                                <Label Content="end date" HorizontalAlignment="Left" Margin="64,146,0,0" VerticalAlignment="Top"/>
-                                <Button  Name="search" Style="{StaticResource MaterialDesignFlatAccentBgButton}" Command="{Binding SearchHistoryCommand}" Content="search" HorizontalAlignment="Left" Margin="277,103,0,0" VerticalAlignment="Top" Width="75">
+                                <Grid Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                <DatePicker Name="startDate" SelectedDate="1970-1-1"  Grid.Column="1" Style="{StaticResource MaterialDesignOutlinedDatePicker}" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                                    <DatePicker Name="endDate" SelectedDate="{x:Static sys:DateTime.Today}"  Grid.Column="3" Style="{StaticResource MaterialDesignOutlinedDatePicker}" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+                                    <Label Content="start date:" Grid.Column="0" HorizontalAlignment="Center"  VerticalAlignment="Center"/>
+                                    <Label Content="end date"  Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Button  Name="search" Grid.Column="4" Style="{StaticResource MaterialDesignFlatAccentBgButton}" Command="{Binding SearchHistoryCommand}" Content="search" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="75">
                                     <Button.CommandParameter>
                                         <MultiBinding Converter="{StaticResource MyConverter}">
                                             <Binding Path="SelectedDate" ElementName="startDate"/>
@@ -291,6 +312,7 @@
                                         </MultiBinding>
                                     </Button.CommandParameter>
                                 </Button>
+                                </Grid>
 
 
                             </Grid>

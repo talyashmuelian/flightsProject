@@ -156,7 +156,9 @@
       <Name>Util</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="flghtPhoto.jpg" />
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="airpalneToIsrael.jpeg" />
   </ItemGroup>
