@@ -143,9 +143,12 @@
                                         </Grid.RowDefinitions>
                                         <ProgressBar Visibility="{Binding IsLoadingFlight, Converter={StaticResource VisibilityConverter} }" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" VerticalAlignment="Bottom"/>
                                         <!--<Label Content="Flight Details" HorizontalAlignment="Left" Margin="59,20,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" Height="26" Width="79"/>-->
-                                        <UserControls:UserControl1 Grid.Row="1" Grid.Column="1" Height="403" Width="352"  ></UserControls:UserControl1>
+                                    <UserControls:FlightUC Grid.Row="1" Grid.Column="1" Height="403" Width="352" HorizontalAlignment="Right" ></UserControls:FlightUC>
+                                    <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" HorizontalAlignment="Right" VerticalAlignment="Top" >
+                                        <materialDesign:PackIcon Kind="WatchExport" />
+                                    </Button>
 
-                                        <!--<UserControls:UserControl1 Grid.Row="1" Grid.Column="1" Height="403" Width="250" ></UserControls:UserControl1>-->
+                                    <!--<UserControls:UserControl1 Grid.Row="1" Grid.Column="1" Height="403" Width="250" ></UserControls:UserControl1>-->
                                         <!--<StackPanel x:Name="DetailsPanel" Grid.Column="1"  HorizontalAlignment="Left" Height="403"  Grid.Row="1" VerticalAlignment="Top" Width="201" Margin="10,36,0,0">
                                             <TextBlock Text="{Binding SelectedFlightModel.DestinationName}"></TextBlock>
                                             <TextBlock Text="{Binding SelectedFlightModel.DestinationCountryName}"></TextBlock>

@@ -16,7 +16,7 @@ using System.Windows.Shapes;
 namespace UIFlights
 {
     /// <summary>
-    /// Interaction logic for FlightUC.xaml
+    /// Interaction logic for UserControl1.xaml
     /// </summary>
     public partial class FlightUC : UserControl
     {

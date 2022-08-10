@@ -4,100 +4,172 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:UIFlights"
+                                  xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+
              mc:Ignorable="d" 
-             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        Background="{DynamicResource MaterialDesignPaper}"
-        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-             d:DesignHeight="403" d:DesignWidth="200">
-    <Grid>
-        <materialDesign:Card Width="200">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
-                    <RowDefinition  Height="7*" />
-                    <RowDefinition  Height="1*" />
-                    <RowDefinition Height="5*" />
-                </Grid.RowDefinitions>
-
-                <Button Grid.Row="0" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0 0 16 -20">
-                    <materialDesign:PackIcon Kind="WatchExport" />
-                </Button>
-                <TextBlock FontWeight="Bold" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center"> Flight Details
-                </TextBlock>
-                <Grid Grid.Row="1" Margin="8 24 8 0">
+                d:DesignHeight="403" d:DesignWidth="352">
+    <UserControl.Resources>
+        <Style x:Key="listViewItemStyle" TargetType="Grid">
+            <Setter Property="Width" Value="300">
+                
+            </Setter>
+        </Style>
+        <Style x:Key="fontStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold" >
+                
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+        <Grid>
+    <Grid Background="#FFF4EDED" Margin="7">
+        <ListView Style="{StaticResource MaterialDesignListView}" BorderBrush="Black">
+            
+            <ListViewItem>
+                    <Grid  Height="40" Style="{StaticResource listViewItemStyle}" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <!--<materialDesign:PackIcon Kind="Earth" HorizontalAlignment="Left" VerticalAlignment="Center" />-->
+                    <TextBlock Grid.Row="0"  Text="Origin:" Grid.Column="2" Style="{StaticResource fontStyle}" HorizontalAlignment="Center" VerticalAlignment="Top"></TextBlock>
+                        <materialDesign:PackIcon Kind="Earth" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="0" Grid.Row="1" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Style="{StaticResource fontStyle}" >Country:</TextBlock>
+                        <TextBlock Grid.Row="0" Grid.Column="3" Text="Destination:" Style="{StaticResource fontStyle}" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.OriginCountryName}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.DestinationCountryName}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center"></TextBlock>
+                </Grid>
+
+            </ListViewItem>
+            <ListViewItem>
+                    <Grid  Height="38" Style="{StaticResource listViewItemStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    
-                    <TextBlock Text="Origin:" Grid.Row="1" Grid.Column="1"> </TextBlock>
-                    <TextBlock Text="Destination:" Grid.Row="1" Grid.Column="2"></TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="0" FontSize="15"> <materialDesign:PackIcon Kind="Airport" />Airport:</TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.OriginName}" Grid.Row="2" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.DestinationName}" Grid.Row="2" Grid.Column="2"></TextBlock>
-                    <TextBlock  Grid.Row="3" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" />Country:</TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.OriginCountryName}" Grid.Row="3" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.DestinationCountryName}" Grid.Row="3" Grid.Column="2"></TextBlock>
-                    <TextBlock Grid.Row="4" Grid.Column="0"> <materialDesign:PackIcon Kind="BarcodeScan" />IATA Code:</TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.OriginIATA}" Grid.Row="4" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.DesIATA}" Grid.Row="4" Grid.Column="2"></TextBlock>
-                    <TextBlock  Grid.Row="5" Grid.Column="0"> <materialDesign:PackIcon Kind="TemperatureCelsius" />Weather:</TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.OriginWeather}" Grid.Row="5" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.DestinationWeather}" Grid.Row="5" Grid.Column="2"></TextBlock>
-                    <TextBlock  Grid.Row="6" Grid.Column="0"> <materialDesign:PackIcon Kind="WeatherPartlyCloudy" />description: </TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.DescriptionOrigin}" Grid.Row="6" Grid.Column="1"></TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.DescriptionDestination}" Grid.Row="6" Grid.Column="2"></TextBlock>
+                    <materialDesign:PackIcon Kind="BarcodeScan" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="0"  Text="IATA&#x0a;Code" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Style="{StaticResource fontStyle}"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.OriginIATA}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.DesIATA}" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center"></TextBlock>
                 </Grid>
-                <TextBlock Text="General Information: " Grid.Row="2" Grid.Column="0"> <materialDesign:PackIcon Kind="Earth" /></TextBlock>
-                <Grid Grid.Row="3">
+
+            </ListViewItem>
+            <ListViewItem>
+                    <Grid  Height="35" Style="{StaticResource listViewItemStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="0.8*"/>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition/>
                         <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                        <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition/>
-                        <ColumnDefinition/>
-                    </Grid.ColumnDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0"> <materialDesign:PackIcon Kind="QrcodeScan" />Flight ID:</TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.FlightId}" Grid.Row="0" Grid.Column="1"></TextBlock>
-                    <TextBlock Grid.Row="1" Grid.Column="0"> <materialDesign:PackIcon Kind="AirplaneCog" />Airline Name:</TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.AirlineName}" Grid.Row="1" Grid.Column="1"></TextBlock>
-                    <TextBlock Grid.Row="2" Grid.Column="0"> <materialDesign:PackIcon Kind="CheckboxMarkedCircleOutline" />Status:</TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.Status}" Grid.Row="2" Grid.Column="1"></TextBlock>
-                    <TextBlock Grid.Row="3" Grid.Column="0"> <materialDesign:PackIcon Kind="AirplaneTakeoff" />Departure Time:</TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.DepartureTime}" Grid.Row="3" Grid.Column="1"></TextBlock>
-                    <TextBlock Grid.Row="4" Grid.Column="0"> <materialDesign:PackIcon Kind="AirplaneLanding" />Estimeted Arrival Time:</TextBlock>
-                    <TextBlock Text="{Binding SelectedFlightModel.EstimetedArrivalTime}" Grid.Row="4" Grid.Column="1"></TextBlock>
-                    
+                    <materialDesign:PackIcon Kind="WeatherPartlyCloudy" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="0"/>
+                        <TextBlock   Text="Weather" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="0" Style="{StaticResource fontStyle}"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.DescriptionOrigin}"  Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.DescriptionDestination}" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Center"></TextBlock>
+                    <materialDesign:PackIcon Kind="TemperatureCelsius" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1"/>
+                        <TextBlock   Text="Temp" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Top" Grid.Row="1" Style="{StaticResource fontStyle}"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.OriginWeather}"  Grid.Column="2" Grid.Row="1" HorizontalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.DestinationWeather}" Grid.Column="3" Grid.Row="1" HorizontalAlignment="Center"></TextBlock>
                 </Grid>
 
+            </ListViewItem>
+                <ListViewItem>
+                    <Grid   Height="58" Style="{StaticResource listViewItemStyle}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="9*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <materialDesign:PackIcon Kind="Airport" HorizontalAlignment="Left" VerticalAlignment="Center" />
+                        <TextBlock Grid.Row="0"  Text="Airport" Grid.Column="1" HorizontalAlignment="Center" Style="{StaticResource fontStyle}"></TextBlock>
+                        <TextBlock Grid.Row="1" Grid.Column="0" Text="Origin:" Style="{StaticResource fontStyle}" ></TextBlock>
+                        <TextBlock Grid.Row="2" Grid.Column="0" Text="Destination" Style="{StaticResource fontStyle}"></TextBlock>
+                        <TextBlock Text="{Binding SelectedFlightModel.OriginName}" TextWrapping="Wrap"  Grid.Column="1" Grid.Row="1"></TextBlock>
+                        <TextBlock Text="{Binding SelectedFlightModel.DestinationName}" TextWrapping="Wrap" Grid.Column="1" Grid.Row="2"></TextBlock>
+                    </Grid>
+                </ListViewItem>
+                <ListViewItem>
+                <TextBlock Text="General Information: " FontWeight="Bold" Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Height="20"></TextBlock>
+
+            </ListViewItem>
+            <ListViewItem>
+                    <Grid Height="20" Style="{StaticResource listViewItemStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text=" Flight ID:" Style="{StaticResource fontStyle}"></TextBlock>
+                    <materialDesign:PackIcon Kind="QrcodeScan" HorizontalAlignment="Center" />
+                    <TextBlock Text="{Binding SelectedFlightModel.FlightId}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+
+            </ListViewItem>
+            <ListViewItem>
+                    <Grid Height="20" Style="{StaticResource listViewItemStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Airline Name:" Style="{StaticResource fontStyle}" ></TextBlock>
+                    <materialDesign:PackIcon Kind="AirplaneCog" HorizontalAlignment="Center" />
+                        <TextBlock Text="{Binding SelectedFlightModel.AirlineName}" TextWrapping="Wrap" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left"></TextBlock>
+                </Grid>
+
+            </ListViewItem>
+            <ListViewItem>
+                    <Grid Height="39" Style="{StaticResource listViewItemStyle}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Departure&#x0a;Time:" Style="{StaticResource fontStyle}"></TextBlock>
+                    <materialDesign:PackIcon Kind="AirplaneTakeoff" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding SelectedFlightModel.DepartureTime}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                </Grid>
+
+            </ListViewItem>
+            <ListViewItem>
+                    <Grid Height="39" Style="{StaticResource listViewItemStyle}" >
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.3*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Row="0" Grid.Column="1" Text="Estimeted&#x0a;Arrival Time" Style="{StaticResource fontStyle}"></TextBlock>
+                    <materialDesign:PackIcon Kind="AirplaneLanding" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                    <TextBlock Text="{Binding SelectedFlightModel.EstimetedArrivalTime}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
 
 
+                </Grid>
 
-                <StackPanel HorizontalAlignment="Right" Grid.Row="2" Orientation="Horizontal" Margin="8">
-                    <Button ToolTip="Export to widget" Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" materialDesign:RippleAssist.IsCentered="True">
-                        <materialDesign:PackIcon Kind="ShareVariant" />
-                    </Button>
-                    <Button Style="{StaticResource MaterialDesignToolButton}" Width="30" Padding="2 0 2 0" materialDesign:RippleAssist.IsCentered="True">
-                        <materialDesign:PackIcon Kind="Heart" />
-                    </Button>
-                    
-                </StackPanel>
-            </Grid>
-        </materialDesign:Card>
+            </ListViewItem>
 
+        </ListView>
+     
+    </Grid>
+        <!--<Button Grid.Row="1" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" HorizontalAlignment="Right" VerticalAlignment="Top" >
+            <materialDesign:PackIcon Kind="WatchExport" />
+        </Button>-->
     </Grid>
 </UserControl>
