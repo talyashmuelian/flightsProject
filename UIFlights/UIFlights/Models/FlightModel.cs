@@ -104,7 +104,7 @@ namespace UIFlights
             {
                 try
                 {
-                    return flightRoot.status.text;
+                    return flightRoot.status.text.Split(' ')[1];
                 }
                 catch
                 {
@@ -268,6 +268,7 @@ namespace UIFlights
             }
             catch { }
             return this;
+
         }
         public override string ToString()
         {

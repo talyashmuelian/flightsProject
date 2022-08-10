@@ -1,0 +1,58 @@
+﻿<Window x:Class="UIFlights.Gadget"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:UIFlights"
+         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:UserControls="clr-namespace:UIFlights"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        mc:Ignorable="d"
+        Title="Gadget"  Width="352" AllowsTransparency="True" Name="GadgetWindow"
+        WindowStyle="None" Background="Transparent" MouseLeftButtonDown="window_leftButton">
+    <!--<Window.Resources>
+        <local:UIFlights.CloseCommand x:Key="MyConverter">
+            </local:UIFlights.CloseCommand>
+    </Window.Resources>-->
+    <Grid Background="Transparent" >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="10*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Background="#FFF6D9F8" Width="200" VerticalAlignment="Center">
+            <Separator Width="5" Foreground="Transparent" Background="Transparent"/>
+            <TextBlock Text="{Binding SelectedFlightModel.OriginCountryName}" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" ></TextBlock>
+            <Separator Width="5" Foreground="Transparent" Background="Transparent"/>
+            <materialDesign:PackIcon Kind="ArrowRightCircle" Foreground="Purple"/>
+            <Separator Width="5" Foreground="Transparent" Background="Transparent"/>
+            <TextBlock Text="{Binding SelectedFlightModel.DestinationCountryName}" Style="{StaticResource MaterialDesignSubtitle2TextBlock}"></TextBlock>
+            <Separator Width="5" Foreground="Transparent" Background="Transparent"/>
+            <TextBlock Text="{Binding SelectedFlightModel.Status}" Style="{StaticResource MaterialDesignSubtitle2TextBlock}"></TextBlock>
+            <Separator Width="5" Foreground="Transparent" Background="Transparent"/>
+            <Button  Height="24" Width="24" Command="{Binding CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type Window}}}"   HorizontalAlignment="Right" VerticalAlignment="Top" Background="Transparent" BorderBrush="Transparent" 
+                  Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+
+
+                <materialDesign:PackIcon Kind="CloseCircleOutline" Foreground="Purple"  HorizontalAlignment="Right" VerticalAlignment="Top" 
+                                   
+                                     />
+            </Button>
+        </StackPanel>
+        <Expander  Background="#FFF6D9F8" Grid.Row="1"
+      HorizontalAlignment="Center"
+            VerticalAlignment="Top"  
+      >
+            <Expander.Header >
+                <TextBlock  Text="more details"  FontSize="12" Style="{StaticResource MaterialDesignSubtitle2TextBlock}"/>
+            </Expander.Header>
+
+
+            <UserControls:FlightUC Grid.Row="1" Grid.Column="1" Height="500" Width="352" HorizontalAlignment="Center" />
+        </Expander>
+
+
+
+    </Grid>
+</Window>

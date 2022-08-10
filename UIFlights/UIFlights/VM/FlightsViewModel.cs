@@ -24,6 +24,7 @@ namespace UIFlights
         private ObservableCollection<FlightInfoPartial> listOutgoingFlights;
         private Dictionary<string, List<FlightInfoPartial>> Flights = new Dictionary<string, List<FlightInfoPartial>>();
         private FlightCommand flightcommand = new FlightCommand();
+        private ExportCommand exportCommand = new ExportCommand();
         private Map myMap;
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private FlightInfoPartial selectedFlight;
@@ -73,6 +74,7 @@ namespace UIFlights
        
 
         public FlightCommand Flightcommand { get { return flightcommand; } set { flightcommand = value; } }
+        public ExportCommand ExportCommand { get { return exportCommand; } set { exportCommand = value; } }
         public ObservableCollection<FlightInfoPartial> ListIncomingFlights {
             get
             {

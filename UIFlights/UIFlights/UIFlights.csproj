@@ -69,14 +69,20 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Commands\CloseCommand.cs" />
+    <Compile Include="Commands\ExportCommand.cs" />
     <Compile Include="Commands\HolidayCommand.cs" />
     <Compile Include="Commands\SearchHistoryCommand.cs" />
     <Compile Include="Converters\MyConverter.cs" />
+    <Compile Include="Converters\NegativeVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Models\FlightModel.cs" />
     <Compile Include="MyConverter.cs" />
     <Compile Include="Views\FlightsHistoryWindow.xaml.cs">
       <DependentUpon>FlightsHistoryWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Gadget.xaml.cs">
+      <DependentUpon>Gadget.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\UserControls\FlightUC.xaml.cs">
       <DependentUpon>FlightUC.xaml</DependentUpon>
@@ -84,6 +90,7 @@
     <Compile Include="VM\FlightsHistoryViewModel.cs" />
     <Compile Include="VM\FlightsViewModel.cs" />
     <Compile Include="VM\FlightViewModel.cs" />
+    <Compile Include="VM\GadgetVM.cs" />
     <Compile Include="VM\hebrewDatesViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -99,6 +106,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\FlightsHistoryWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Gadget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -169,6 +180,9 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images1\airplane2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="flight12.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />

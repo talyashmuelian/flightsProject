@@ -158,7 +158,7 @@
                     </Grid.ColumnDefinitions>
                         <TextBlock Grid.Row="0" Grid.Column="1" Text="Estimeted&#x0a;Arrival Time" Style="{StaticResource fontStyle}"></TextBlock>
                     <materialDesign:PackIcon Kind="AirplaneLanding" HorizontalAlignment="Center" VerticalAlignment="Center" />
-                    <TextBlock Text="{Binding SelectedFlightModel.EstimetedArrivalTime}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
+                    <TextBlock Text="{Binding SelectedFlightModel.Status}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center"></TextBlock>
 
 
                 </Grid>

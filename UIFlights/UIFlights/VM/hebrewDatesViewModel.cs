@@ -31,6 +31,20 @@ namespace UIFlights
                 }
             }
         }
+        private bool isLoadingDate=false;
+
+        public bool IsLoadingDate
+        {
+            get { return isLoadingDate; }
+            set
+            {
+                isLoadingDate = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("IsLoadingDate"));
+                }
+            }
+        }
         public string UpcomingHoliday
         {
             get { return upcomingHoliday; }
@@ -82,9 +96,11 @@ namespace UIFlights
         }
         private async void CheckIsBeforeHoliday( DateTime date)
         {
+            IsLoadingDate = true;
             var result = await bl.IsBeforeHoliday(date);
             IsBeforeHoliday = result.Item1;
             UpcomingHoliday = result.Item2;
+            IsLoadingDate = false;
         }
     }
 }

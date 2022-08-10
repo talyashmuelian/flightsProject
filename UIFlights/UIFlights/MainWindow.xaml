@@ -15,6 +15,7 @@
     <Window.Resources>
         <local:MyConverter x:Key="MyConverter"></local:MyConverter>
         <local:VisibilityConverter x:Key="VisibilityConverter"/>
+        <local:NegativeVisibilityConverter x:Key="NegativeVisibilityConverter"/>
 
         <Style TargetType="m:Pushpin" x:Key="FromIsrael">
             <Setter x:Name="setterStyle" Property="Template">
@@ -116,7 +117,7 @@
         -->
                                     <Label Width="300" Height="30" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Flights map from/to Israel"/>
                                     <Label Content="A week before holiday" Visibility="{Binding ElementName=weekBeforeHoliday, Path=Visibility}" Width="129" Height="30" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,0,100,0"/>
-                                    <Label Content="{Binding ElementName=holiday, Path=Content}" Visibility="{Binding ElementName=holiday, Path=Visibility}"  Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"/>
+                                    <Label Content="{Binding ElementName=holiday, Path=Text}" Visibility="{Binding ElementName=holiday, Path=Visibility}"  Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                                     <!--<materialDesign:Card  Margin="0,30,0,0" >-->
                                         <m:Map x:Name="myMap" Margin="0,30,0,0" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"        
                Center="32.000454,34.870743" ZoomLevel="7.0" AnimationLevel="None"  Grid.Column="0" Grid.RowSpan="2" >
@@ -145,7 +146,8 @@
                                         <!--<Label Content="Flight Details" HorizontalAlignment="Left" Margin="59,20,0,0" VerticalAlignment="Top" Grid.Column="1" Grid.Row="1" Height="26" Width="79"/>-->
                                     <Grid Grid.Row="1" Grid.Column="1" Height="409" Width="357">
                                     <UserControls:FlightUC Grid.Row="1" Grid.Column="1" Height="403" Width="352" HorizontalAlignment="Center" ></UserControls:FlightUC>
-                                    <Button Grid.Row="1" Grid.Column="1" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" HorizontalAlignment="Right" VerticalAlignment="Top" >
+                                    <Button Grid.Row="1" Grid.Column="1" Command="{Binding ExportCommand}" CommandParameter="{Binding SelectedFlightModel}" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
+                                            HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Export to Widget">
                                         <materialDesign:PackIcon Kind="WatchExport" />
                                     </Button>
                                     </Grid>
@@ -189,14 +191,19 @@
         Padding="4"
         BorderThickness="0 0 0 1"
         BorderBrush="#FF9C27B0">
-                                                   
-                                                    <StackPanel Orientation="Horizontal">
+                                                        <Border.InputBindings>
+                                                            <MouseBinding 
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
+                                    MouseAction="LeftClick" />
+                                                        </Border.InputBindings>
+
+                                                        <StackPanel Orientation="Horizontal">
                                                         <TextBlock Text="{Binding Destination}" Width="60">
-                                                            <TextBlock.InputBindings>
+                                                            <!--<TextBlock.InputBindings>
                                                                 <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
                                     MouseAction="LeftClick" />
-                                                            </TextBlock.InputBindings>
+                                                            </TextBlock.InputBindings>-->
                                                         </TextBlock>
                                                         <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding ElementName=OutFlightsListBox,  Path=ListBoxItem.Selected }"/>-->
                                                     </StackPanel>
@@ -276,14 +283,14 @@
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="0.5*"/>
                                 </Grid.ColumnDefinitions>
-                                <Grid Grid.Row="1" Grid.Column="1">
+                                <Grid Grid.Row="1" Grid.Column="1" >
                                     <Grid.Background>
-                                        <ImageBrush ImageSource="flghtPhoto.jpg"/>
+                                        <ImageBrush ImageSource="flight12.png"/>
                                     </Grid.Background>
                                 </Grid>
-                                <ProgressBar  Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Visibility="{Binding IsLoadingHistory, Converter={StaticResource VisibilityConverter} }" />
+                                <ProgressBar x:Name="progressBarHistory" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Visibility="Hidden" />
                                 <ListView x:Name="historyListView" Grid.Row="1" Grid.Column="0" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Style="{StaticResource MaterialDesignListView}"
-                ItemsSource="{Binding SavedFlights}" FontSize="13" Width="600" Height="400" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607" >
+                ItemsSource="{Binding SavedFlights}" FontSize="13" Width="600" Height="400" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607"  >
 
                                     <ListView.View >
                                         <GridView x:Name="lineGridview">
@@ -333,14 +340,26 @@
                         </TabItem.Header>
                         <TabItem.Content>
                             <Grid x:Name="DateGrid" Background="White">
-
-                                <Button Style="{StaticResource MaterialDesignFlatAccentBgButton}" Height="50" Width="130" Content="change date" Command="{Binding HolidayCommand}" CommandParameter="{Binding ElementName=currentDate, Path=SelectedDate}" />
-
-                                <!--<TextBlock Text="erev hag" Margin="100,100,100,100" Width="60" Height="30"/>-->
-                                <Label Name="weekBeforeHoliday" Content="A week before holiday" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource VisibilityConverter} }" Width="166" HorizontalAlignment="Left" Margin="0,208,0,265.2"/>
-                                <Label Name="holiday" Content="{Binding UpcomingHoliday}" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource VisibilityConverter} }"  Width="166" HorizontalAlignment="Left" Margin="10,268,0,205"/>
-                                <DatePicker Name="currentDate"  Style="{StaticResource MaterialDesignOutlinedDatePicker}" HorizontalAlignment="Center" VerticalAlignment="Top" SelectedDate="{x:Static sys:DateTime.Today}" />
-
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="0.5*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                <Button Grid.Row="1" Style="{StaticResource MaterialDesignFlatAccentBgButton}" Height="50" Width="130" Content="change date" Command="{Binding HolidayCommand}" CommandParameter="{Binding ElementName=currentDate, Path=SelectedDate}" />
+                                    <ProgressBar Grid.Row="1" VerticalAlignment="Bottom" IsIndeterminate="True" Visibility="{Binding IsLoadingDate, Converter={StaticResource VisibilityConverter} }" />
+                                    <Calendar Name="currentDate" materialDesign:CalendarAssist.Orientation="Horizontal" SelectedDate="{x:Static sys:DateTime.Today}" />
+                                    <!--<TextBlock Text="erev hag" Margin="100,100,100,100" Width="60" Height="30"/>-->
+                                    <TextBlock Name="weekBeforeHoliday" Grid.Row="2" Text="A week before holiday" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource VisibilityConverter} }"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" />
+                                    <TextBlock Name="notweekBeforeHoliday" Grid.Row="2" Text="There is no upcoming holiday" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource NegativeVisibilityConverter} }"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" />
+                                    <TextBlock Name="holiday" Grid.Row="3" Text="{Binding UpcomingHoliday}" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource VisibilityConverter} }"   HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="30"/>
+                                <!--<DatePicker Name="currentDate"  Style="{StaticResource MaterialDesignOutlinedDatePicker}" HorizontalAlignment="Center" VerticalAlignment="Top" SelectedDate="{x:Static sys:DateTime.Today}" />-->
+                                </Grid>
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
