@@ -27,7 +27,7 @@ namespace UIFlights
     {
         private IBL bl = BLImp.theInstance();
         private FlightsViewModel flightsViewModel;
-        FlightInfoPartial SelectedFlight = null; //Selected Flight
+        //FlightInfoPartial SelectedFlight = null; //Selected Flight
         public MainWindow()
         {
 
