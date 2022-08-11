@@ -12,7 +12,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         
-        Title="Flights" WindowState="Maximized" Icon="airplane.png">
+        Title="Flights" WindowState="Maximized" Icon="Images\airplane.png">
     
     <Window.Resources>
         <local:MultiConverter x:Key="MultiConverter"></local:MultiConverter>
@@ -23,7 +23,7 @@
             <Setter x:Name="setterStyle" Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Image Source="Images1\airplane2.png" RenderTransformOrigin="0.5,0.5" >
+                        <Image Source="Images\airplane2.png" RenderTransformOrigin="0.5,0.5" >
                             <Image.RenderTransform>
                                 <TransformGroup>
                                     <ScaleTransform/>
@@ -41,7 +41,7 @@
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Image Source="pushpinOriginPhoto.png"/>
+                        <Image Source="Images\pushpinOriginPhoto.png"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -306,7 +306,7 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="2">
                                     <Grid.Background>
-                                        <ImageBrush ImageSource="flight12.png"/>
+                                        <ImageBrush ImageSource="Images\flight12.png"/>
                                     </Grid.Background>
                                 </Grid>
                                 <ProgressBar x:Name="progressBarHistory" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Visibility="Hidden" />
@@ -389,7 +389,7 @@
                                    
                                     <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Height="400" Width="380" VerticalAlignment="Bottom">
                                         <Grid.Background>
-                                            <ImageBrush ImageSource="globus.jpg"/>
+                                            <ImageBrush ImageSource="Images\globus.jpg"/>
                                         </Grid.Background>
 
                                     </Grid>

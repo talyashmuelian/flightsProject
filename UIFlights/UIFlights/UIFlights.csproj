@@ -77,7 +77,7 @@
     <Compile Include="Converters\NegativeVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Models\FlightModel.cs" />
-    <Compile Include="MultiConverter.cs" />
+    <Compile Include="Converters\MultiConverter.cs" />
     <Compile Include="Views\FlightsHistoryWindow.xaml.cs">
       <DependentUpon>FlightsHistoryWindow.xaml</DependentUpon>
     </Compile>
@@ -161,37 +161,19 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="flghtPhoto.jpg" />
+    <Resource Include="Images\airplane.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="airpalneToIsrael.jpeg" />
+    <Resource Include="Images\airplane2.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images1\airplaneToIsrael.png" />
+    <Resource Include="Images\flight12.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images1\airplane.png" />
+    <Resource Include="Images\globus.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="airplane.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images1\airplane1.jpeg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images1\airplane2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="flight12.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="calendarPhoto.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="globus.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="pushpinOriginPhoto.png" />
+    <Resource Include="Images\pushpinOriginPhoto.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Views\airplane.png" />
