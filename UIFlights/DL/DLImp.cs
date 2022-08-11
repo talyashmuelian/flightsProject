@@ -17,49 +17,8 @@ namespace DL
         private const string AllFlightsURL = "https://data-cloud.flightradar24.com/zones/fcgi/feed.js?faa=1&bounds=38.805%2C24.785%2C29.014%2C40.505&satellite=1&mlat=1&flarm=1&adsb=1&gnd=1&air=1&vehicles=1&estimated=1&maxage=14400&gliders=1&stats=1";
         private const string FlightURL = "https://data-live.flightradar24.com/clickhandler/?version=1.5&flight=";
         static DLImp instance;//=new DLImp();
-        Thread saveThread;
-        List<FlightInfoPartial> flightToSave = new List<FlightInfoPartial>();
         private DLImp()
         {
-            //saveThread = new Thread(runThread);
-            //saveThread.Start();
-        }
-        //~DLImp()
-        //{
-        //    Console.WriteLine("dsjkfhcsdk");
-        //    saveToDB();
-        //    saveThread.Abort();
-        //}
-        private void runThread()
-        {
-            while (true)
-            {
-                saveToDB();
-                Thread.Sleep(10000);
-            }
-        }
-        private void saveToDB()
-        {
-            try
-            {
-                if (flightToSave.Count() > 0)
-                {
-                    //object lck = new object();
-                    //lock (lck)
-                    //{
-                        using (var ctx = new FlightContext())
-                        {
-                            foreach (var f in flightToSave)
-                            {
-                                ctx.Flights.Add(f);
-                                ctx.SaveChanges();
-                            }
-                        }
-                        flightToSave.Clear();
-                    //}
-                }
-            }
-            catch { }
         }
        
         static public DLImp theInstance()
@@ -71,18 +30,19 @@ namespace DL
 
         public List<FlightInfoPartial> GetSavedFlights()
         {
-           //saveToDB();
-           // Thread.Sleep(15000);
-            using (var ctx = new FlightContext())
+            try
             {
-                return (from f in ctx.Flights
-                               select f).ToList();
+                using (var ctx = new FlightContext())
+                {
+                    return (from f in ctx.Flights
+                            select f).ToList();
+                }
             }
+            catch { return null; }
         }
 
         public void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial)
         {
-            //flightToSave.Add(flightInfoPartial);
             try
             {
                 using (var ctx = new FlightContext())
@@ -92,12 +52,6 @@ namespace DL
                 }
             }
             catch { }
-        }
-
-        public void DestroyThread()
-        {
-            saveToDB();
-            saveThread.Abort();
         }
 
         public List<FlightInfoPartial> GetCurrentFlightsSync()
@@ -139,10 +93,7 @@ namespace DL
                 }
             }
 
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
-            }
+            catch  { }
             if (flights.Count == 0)
                 throw new NoDataException("no flights return from server");
             return flights;
@@ -150,55 +101,28 @@ namespace DL
 
         public async Task<List<FlightInfoPartial>> GetCurrentFlightsAsync()
         {
-            //try
-            {
                 using (var webClient = new System.Net.WebClient())
                 {
                     var json = await webClient.DownloadStringTaskAsync(AllFlightsURL);
                     return extractFlightFromString(json);
                 }
-            }
-            //catch (Exception e) { throw e; }
         }
 
         public  BE.Weather.Root GetWeather(double lon, double lat)
         {
-
             BE.Weather.Root result = null;
             string urlWhether = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=05b1f955b138af8db2dac1319b725a96";
-            using (var webClient = new System.Net.WebClient())
+            try
             {
-                try
+                using (var webClient = new System.Net.WebClient())
                 {
                     var json = webClient.DownloadString(urlWhether);
-                    result = (BE.Weather.Root)JsonConvert.DeserializeObject(json, typeof(BE.Weather.Root));
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
+                        result = (BE.Weather.Root)JsonConvert.DeserializeObject(json, typeof(BE.Weather.Root));
                 }
             }
+            catch { }
             return result;
         }
-
-        public  BE.Flights.Root GetSelectedFlight(string id)
-        {
-            BE.Flights.Root result = null;
-            using (var webClient = new System.Net.WebClient())
-            {
-                try
-                {
-                    var json = webClient.DownloadString(FlightURL + id);
-                    result = (BE.Flights.Root)JsonConvert.DeserializeObject(json, typeof(BE.Flights.Root));
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
-            }
-            return result;
-        }
-
       
         public async Task<BE.HebrewDates.Root> GetHebrewDate(DateTime date)
         {
@@ -212,50 +136,12 @@ namespace DL
             {
                 using (var webClient = new System.Net.WebClient())
                 {
-                    //try
-                    //{
                         var json = await webClient.DownloadStringTaskAsync(hebrewDateUrl);
                         root = (BE.HebrewDates.Root)JsonConvert.DeserializeObject(json, typeof(BE.HebrewDates.Root));
-                    //}
-                    //catch (Exception e)
-                    //{
-                    //    Console.WriteLine(e);
-                    //}
                 }
                 return root;
             }
-            catch(Exception e) { return null; }
-
-        }
-
-
-
-        public bool IsBeforeHoliday1(DateTime date)
-        {
-
-            var yyyy = date.ToString("yyyy");
-            var mm = date.ToString("MM");
-            var dd = date.ToString("dd");
-            string hebrewDateUrl = $"http://www.hebcal.com./converter?cfg=json&date={yyyy}-{mm}-{dd}&g2h=1&strict=1";
-            BE.HebrewDates.Root root = null;
-            try
-            {
-                using (var webClient = new System.Net.WebClient())
-                {
-                    //try
-                    //{
-                    var json =  webClient.DownloadString(hebrewDateUrl);
-                    Debug.Print(json);
-                    root = (BE.HebrewDates.Root)JsonConvert.DeserializeObject(json, typeof(BE.HebrewDates.Root));
-                    //}
-                    //catch (Exception e)
-                    //{
-                    //    Console.WriteLine(e);
-                    //}
-                }
-                return root.events[0].Contains("Erev");
-            }
-            catch (Exception e) { return false; }
+            catch { return null; }
 
         }
 
@@ -263,18 +149,15 @@ namespace DL
         {
             BE.Weather.Root result = null;
             string urlWhether = $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid=05b1f955b138af8db2dac1319b725a96";
-            using (var webClient = new System.Net.WebClient())
+            try
             {
-                try
+                using (var webClient = new System.Net.WebClient())
                 {
                     var json = await webClient.DownloadStringTaskAsync(urlWhether);
                     result = (BE.Weather.Root)JsonConvert.DeserializeObject(json, typeof(BE.Weather.Root));
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
             }
+            catch { }
             return result;
         }
 
@@ -282,18 +165,15 @@ namespace DL
         {
 
             BE.Flights.Root result = null;
-            using (var webClient = new System.Net.WebClient())
+            try
             {
-                try
+                using (var webClient = new System.Net.WebClient())
                 {
                     var json = await webClient.DownloadStringTaskAsync(FlightURL + id);
                     result = (BE.Flights.Root)JsonConvert.DeserializeObject(json, typeof(BE.Flights.Root));
                 }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                }
             }
+            catch { }
             return result;
         }
     }

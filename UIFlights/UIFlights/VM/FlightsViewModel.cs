@@ -214,7 +214,7 @@ namespace UIFlights
             IsServerProblem = false;
             try
             {
-                Flights = await bl.GetCurrentFlightsAsync(Flights);
+                Flights = await bl.GetCurrentFlightsAsync();
                 ListIncomingFlights.Clear();
                 ListOutgoingFlights.Clear();
                 try
