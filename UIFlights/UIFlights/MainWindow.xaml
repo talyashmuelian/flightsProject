@@ -186,23 +186,17 @@
                                             <RowDefinition Height="5*"/>
                                         </Grid.RowDefinitions>
                                         <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Path=ListOutgoingFlights}" Name="OutFlightsListBox" HorizontalAlignment="center" VerticalAlignment="Stretch"   Width="70" >
-                                            <ListBox.Resources>
-
-                                            </ListBox.Resources>
+                                           
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate>
-                                                    <Border
-        x:Name="Border"
-        Padding="4"
-        BorderThickness="0 0 0 1"
-        BorderBrush="#FF9C27B0">
+                                                    <Border x:Name="Border" Padding="4" BorderThickness="0 0 0 1" BorderBrush="#FF9C27B0">
                                                         <Border.InputBindings>
                                                             <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
                                     MouseAction="LeftClick" />
                                                         </Border.InputBindings>
 
-                                                        <StackPanel Orientation="Horizontal">
+                                                        
                                                             <TextBlock Text="{Binding Destination}" Width="60">
                                                             <!--<TextBlock.InputBindings>
                                                                 <MouseBinding 
@@ -211,15 +205,37 @@
                                                             </TextBlock.InputBindings>-->
                                                             </TextBlock>
                                                             <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding ElementName=OutFlightsListBox,  Path=ListBoxItem.Selected }"/>-->
-                                                        </StackPanel>
+                                                      
                                                     </Border>
                                                 </DataTemplate>
                                             </ListBox.ItemTemplate>
                                         </ListBox>
 
 
-                                        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ListIncomingFlights}" x:Name="InFlightsListBox" HorizontalAlignment="Center"  VerticalAlignment="Stretch" Width="70" Style="{StaticResource MaterialDesignChoiceChipListBox}" >
-                                            <ListBox.ItemContainerStyle>
+                                        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ListIncomingFlights}" x:Name="InFlightsListBox" HorizontalAlignment="Center"  VerticalAlignment="Stretch" Width="70" >
+                                            <ListBox.ItemTemplate>
+                                                <DataTemplate>
+                                                    <Border x:Name="Border" Padding="4" BorderThickness="0 0 0 1" BorderBrush="#FF9C27B0">
+                                                        <Border.InputBindings>
+                                                            <MouseBinding 
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
+                                    MouseAction="LeftClick" />
+                                                        </Border.InputBindings>
+
+                                                        
+                                                            <TextBlock Text="{Binding Source}" Width="60">
+                                                            <!--<TextBlock.InputBindings>
+                                                                <MouseBinding 
+                                    Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
+                                    MouseAction="LeftClick" />
+                                                            </TextBlock.InputBindings>-->
+                                                            </TextBlock>
+                                                            <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding ElementName=OutFlightsListBox,  Path=ListBoxItem.Selected }"/>-->
+                                                      
+                                                    </Border>
+                                                </DataTemplate>
+                                            </ListBox.ItemTemplate>
+                                            <!--<ListBox.ItemContainerStyle>
                                                 <Style TargetType="{x:Type ListBoxItem}">
                                                     <Setter Property="Template">
                                                         <Setter.Value>
@@ -229,7 +245,7 @@
                                                         </Setter.Value>
                                                     </Setter>
                                                 </Style>
-                                            </ListBox.ItemContainerStyle>
+                                            </ListBox.ItemContainerStyle>-->
                                             <!--<ListBox.ItemContainerStyle>
                                                     <Style TargetType="ListBoxItem">
                                                         <Setter Property="Padding" Value="0"/>
@@ -237,7 +253,7 @@
 
                                                     </Style>
                                                 </ListBox.ItemContainerStyle>-->
-                                            <ListBox.ItemTemplate>
+                                            <!--<ListBox.ItemTemplate>
                                                 <DataTemplate >
                                                     <Border  x:Name="Border" Padding="4"  BorderThickness="0 0 0 1" BorderBrush="#FF9C27B0"  VerticalAlignment="Stretch" Height="40" >
                                                         <Border.InputBindings>
@@ -245,20 +261,20 @@
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
                                     MouseAction="LeftClick" />
                                                         </Border.InputBindings>
-                                                        <!--<StackPanel Orientation="Horizontal">-->
+                                                        --><!--<StackPanel Orientation="Horizontal">--><!--
 
                                                         <TextBlock Text="{Binding Source}" TextAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Width="25" Height="35">
-                                                                <!--<TextBlock.InputBindings>
+                                                                --><!--<TextBlock.InputBindings>
                                                                     <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
                                     MouseAction="LeftClick" />
-                                                                </TextBlock.InputBindings>-->
+                                                                </TextBlock.InputBindings>--><!--
                                                         </TextBlock>
-                                                        <!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding  Path=SourceID }"/>-->
-                                                        <!--</StackPanel>-->
+                                                        --><!--<Button Content="{Binding Destination}" Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}" CommandParameter="{Binding  Path=SourceID }"/>-->
+                                                        <!--</StackPanel>--><!--
                                                     </Border>
                                                 </DataTemplate>
-                                            </ListBox.ItemTemplate>
+                                            </ListBox.ItemTemplate>-->
                                         </ListBox>
                                         <Label FontWeight="Bold"  Content="Incoming" HorizontalAlignment="center"  VerticalAlignment="Bottom" Grid.Row="0" Height="26" Width="60" Grid.Column="1" />
                                         <Label FontWeight="Bold" Content="Outgoing" HorizontalAlignment="center"  VerticalAlignment="Bottom" Grid.Row="0" Height="26" Width="61" Grid.Column="0"/>
