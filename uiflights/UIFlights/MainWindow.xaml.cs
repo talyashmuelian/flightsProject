@@ -34,7 +34,7 @@ namespace UIFlights
                 InitializeComponent();
                 flightsViewModel = new FlightsViewModel(myMap, Resources);
                 mainGrid.DataContext = flightsViewModel;
-                historyGrid.DataContext = new FlightsHistoryViewModel();
+                historyGrid.DataContext = new FlightsHistoryViewModel(progressBarHistory);
                 DateGrid.DataContext = new hebrewDatesViewModel();
             }
             catch(Exception e)
@@ -161,6 +161,8 @@ namespace UIFlights
         }
 
         
+
+
 
         //private void DispatcherTimer_Tick(object sender, EventArgs e)
         //{

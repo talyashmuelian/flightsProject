@@ -77,7 +77,7 @@
     <Compile Include="Converters\NegativeVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Models\FlightModel.cs" />
-    <Compile Include="MyConverter.cs" />
+    <Compile Include="MultiConverter.cs" />
     <Compile Include="Views\FlightsHistoryWindow.xaml.cs">
       <DependentUpon>FlightsHistoryWindow.xaml</DependentUpon>
     </Compile>
@@ -183,6 +183,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="flight12.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="calendarPhoto.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="globus.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets" Condition="Exists('..\packages\MaterialDesignThemes.4.5.0\build\MaterialDesignThemes.targets')" />

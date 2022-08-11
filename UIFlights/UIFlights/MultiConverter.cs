@@ -8,7 +8,7 @@ using System.Windows.Data;
 
 namespace UIFlights
 {
-    public class MyConverter : IMultiValueConverter
+    public class MultiConverter : IMultiValueConverter
     {
 
         public object Convert(object[] values, Type targetType, object parameter, CultureInfo culture)

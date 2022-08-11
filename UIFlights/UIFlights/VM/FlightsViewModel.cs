@@ -42,6 +42,32 @@ namespace UIFlights
                 }
             }
         }
+        private bool isServerProblem = false;
+        public bool IsServerProblem
+        {
+            get { return isServerProblem; }
+            set
+            {
+                isServerProblem = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("IsServerProblem"));
+                }
+            }
+        }
+        private bool isNetworkProblem = false;
+        public bool IsNetworkProblem
+        {
+            get { return isNetworkProblem; }
+            set
+            {
+                isNetworkProblem = value;
+                if (PropertyChanged != null)
+                {
+                    PropertyChanged(this, new PropertyChangedEventArgs("IsNetworkProblem"));
+                }
+            }
+        }
         public FlightInfoPartial SelectedFlight
         {
             get { return selectedFlight; }
@@ -185,6 +211,8 @@ namespace UIFlights
         }
         private async void DispatcherTimer_Tick_Flights(object sender, EventArgs e)
         {
+            IsNetworkProblem = false;
+            IsServerProblem = false;
             try
             {
                 Flights = await bl.GetCurrentFlightsAsync(Flights);
@@ -201,10 +229,10 @@ namespace UIFlights
             catch(Exception ex)
             {
                 if (ex is BE.NoDataException)
-                    MessageBox.Show("sorry, the server doesn't return a flights");
+                    IsServerProblem = true;
                 else
                 {
-                    MessageBox.Show("sorry, there is connection network problem");
+                    IsNetworkProblem = true;
                 }
             }
         }
@@ -225,14 +253,6 @@ namespace UIFlights
             SelectedFlightModel =await new FlightModel(id).initialize(id);
             addNewPolyLine(SelectedFlightModel.Trail);
             IsLoadingFlight = false;
-            //addSourcePushPin(selectedFlightModel.)
-            //selectedFlight = listIncomingFlights.ToList().Find( f=>f.FlightID == id);
-            //if(selectedFlight==null)
-            //{
-            //    selectedFlight = listOutgoingFlights.ToList().Find(f => f.FlightID == id);
-            //}
-            //עדכון נתונים עבור טיסה בודדת
-
         }
         void addNewPolyLine(List<Trail> Route)
         {
@@ -278,7 +298,6 @@ namespace UIFlights
                 myMap.Children.Add(sourcePushPin);
             }
             catch { }
-            //addNewPolygon(Route[0]);
         }
         void addNewPolygon(Trail trail)
         {
