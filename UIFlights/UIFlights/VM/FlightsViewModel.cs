@@ -136,10 +136,10 @@ namespace UIFlights
             catch (Exception ex)
             {
                 if (ex is BE.NoDataException)
-                    MessageBox.Show("sorry, the server doesn't return a flights");
+                    IsServerProblem = true;
                 else
                 {
-                    MessageBox.Show("sorry, there is connection network problem");
+                    IsNetworkProblem = true;
                 }
             }
             // ListIncomingFlights = new ObservableCollection<FlightInfoPartial>();
@@ -148,12 +148,18 @@ namespace UIFlights
             ListOutgoingFlights = new ObservableCollection<FlightInfoPartial>(Flights["outgoing"]);
             ShowPushPinOnMap(null, null);
             //DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            initDispatcher();
+
+
+        } 
+        private void initDispatcher()
+        {
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flights;
             dispatcherTimer.Tick += ShowPushPinOnMap;
             dispatcherTimer.Tick += DispatcherTimer_Tick_Flight;
-            
 
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
+
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
             dispatcherTimer.Start();
         }
 
@@ -161,7 +167,7 @@ namespace UIFlights
 
         ~FlightsViewModel() {
             dispatcherTimer.Stop();
-            System.Windows.MessageBox.Show("arrived to dtor in vm");
+            
         }
         private void ShowPushPinOnMap(object sender, EventArgs e)
         {
@@ -192,18 +198,11 @@ namespace UIFlights
                 MouseBinding mouseBinding = new MouseBinding(Flightcommand, new MouseGesture(MouseAction.LeftClick));// add command definition 
                 mouseBinding.CommandParameter = f.FlightID;
                 PinCurrent.InputBindings.Add(mouseBinding);
-                PositionOrigin origin = new PositionOrigin { X = 0.7, Y = 0.7 };
+                PositionOrigin origin = new PositionOrigin { X = 0.4, Y = 0.4 };
                 MapLayer.SetPositionOrigin(PinCurrent, origin);
                
                 PinCurrent.DataContext = f;
-                if (f.Destination == "TLV")
-                {
-                    PinCurrent.Style = (Style)mainWindowResource["FromIsrael"];
-                }
-                else
-                {
-                    PinCurrent.Style = (Style)mainWindowResource["FromIsrael"];
-                }
+                PinCurrent.Style = (Style)mainWindowResource["flightStyle"];
                 var PlaneLocation = new Location { Latitude = f.Lat, Longitude = f.Long };
                 PinCurrent.Location = PlaneLocation;
                 myMap.Children.Add(PinCurrent);
@@ -220,6 +219,7 @@ namespace UIFlights
                 ListOutgoingFlights.Clear();
                 try
                 {
+                    ///to remove
                     Flights["outgoing"].Add(new FlightInfoPartial { Destination = random.Next(1, 100).ToString(), Source = "san fransisco", ID = 123 });
                     Flights["incoming"].ForEach(ListIncomingFlights.Add);
                     Flights["outgoing"].ForEach(ListOutgoingFlights.Add);
@@ -266,7 +266,7 @@ namespace UIFlights
 
                 MapPolyline polyline = new MapPolyline();
                 //polyline.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Blue);
-                polyline.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Gold);
+                polyline.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Purple);
                 polyline.StrokeThickness = 3;
                 polyline.Opacity = 1;
                 polyline.Locations = new LocationCollection();
@@ -288,11 +288,16 @@ namespace UIFlights
                 }
                 mapPolylinesToRemove.ForEach(myMap.Children.Remove);
                 mapPushpinToRemove.ForEach(myMap.Children.Remove);
+               
+                //myMap.Children.Add(polyline);
                 myMap.Children.Add(polyline);
+                
+                
                 Pushpin sourcePushPin = new Pushpin();
+                sourcePushPin.Style= (Style)mainWindowResource["originPushpin"];
                 sourcePushPin.Name = "source";
-                sourcePushPin.Height = 10;
-                sourcePushPin.Width = 10;
+                sourcePushPin.Height = 20;
+                sourcePushPin.Width = 20;
                 var sourceLocation = new Location { Latitude = Route[0].lat, Longitude = Route[0].lng };
                 sourcePushPin.Location = sourceLocation;
                 myMap.Children.Add(sourcePushPin);

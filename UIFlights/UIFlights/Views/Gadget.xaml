@@ -9,13 +9,13 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
-         Title="Gadget"  Width="352" AllowsTransparency="True" Height="Auto" Name="GadgetWindow" Top="0" Left="800"
-        WindowStyle="None" Background="Transparent" MouseLeftButtonDown="window_leftButton" WindowStartupLocation="Manual" >
+         Title="Widget"  Width="352" AllowsTransparency="True" Height="550" Name="GadgetWindow" Top="0" Left="800" 
+        WindowStyle="None" Background="Transparent" MouseLeftButtonDown="window_leftButton" WindowStartupLocation="Manual" Icon="airplane.png" >
     <!--<Window.Resources>
         <local:UIFlights.CloseCommand x:Key="MyConverter">
             </local:UIFlights.CloseCommand>
     </Window.Resources>-->
-    <Grid Background="Transparent" Height="Auto">
+    <Grid Background="Transparent" Height="550">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="0.1*"/>

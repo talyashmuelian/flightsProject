@@ -19,7 +19,7 @@
         <local:VisibilityConverter x:Key="VisibilityConverter"/>
         <local:NegativeVisibilityConverter x:Key="NegativeVisibilityConverter"/>
 
-        <Style TargetType="m:Pushpin" x:Key="FromIsrael">
+        <Style TargetType="m:Pushpin" x:Key="flightStyle">
             <Setter x:Name="setterStyle" Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
@@ -37,11 +37,11 @@
             </Setter>
 
         </Style>
-        <Style TargetType="m:Pushpin" x:Key="ToIsrael">
+        <Style TargetType="m:Pushpin" x:Key="originPushpin">
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
-                        <Image Source="Images1\airplaneToIsrael.png"/>
+                        <Image Source="pushpinOriginPhoto.png"/>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
@@ -121,7 +121,7 @@
                                 <TextBlock Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="A week before holiday" Visibility="{Binding ElementName=weekBeforeHoliday, Path=Visibility}" Width="145" Height="30" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,0,100,0"/>
                                 <TextBlock Text="{Binding ElementName=holiday, Path=Text}" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Visibility="{Binding ElementName=holiday, Path=Visibility}"  Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"/>
                                 <!--<materialDesign:Card  Margin="0,30,0,0" >-->
-                                <m:Map x:Name="myMap" Margin="0,30,0,0" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"        
+                                <m:Map x:Name="myMap" Margin="0,30,0,0" Language="en" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"        
                Center="32.000454,34.870743" ZoomLevel="7.0" AnimationLevel="None"  Grid.Column="0" Grid.RowSpan="2" >
                                     <m:Map.Background>
                                         <ImageBrush/>
@@ -371,7 +371,7 @@
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
                                    
-                                    <Grid Grid.Column="1" Grid.Row="1" Height="400" Width="380" VerticalAlignment="Bottom">
+                                    <Grid Grid.Column="1" Grid.Row="0" Grid.RowSpan="2" Height="400" Width="380" VerticalAlignment="Bottom">
                                         <Grid.Background>
                                             <ImageBrush ImageSource="globus.jpg"/>
                                         </Grid.Background>
