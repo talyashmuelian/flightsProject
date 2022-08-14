@@ -10,16 +10,16 @@ using BL;
 
 namespace UIFlights
 {
-    public class hebrewDatesViewModel : INotifyPropertyChanged
+    public class HolidayViewModel : INotifyPropertyChanged
     {
         private BLImp bl = BL.BLImp.theInstance();
+        private HolidayModel holidayModel = new HolidayModel();
         private System.Threading.Timer timer;
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         public DateTime CurrentDate { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         private bool isBeforeHoliday;
         private string upcomingHoliday;
-
         public bool IsBeforeHoliday
         {
             get { return isBeforeHoliday; }
@@ -53,12 +53,12 @@ namespace UIFlights
                 upcomingHoliday = value;
                 if (PropertyChanged != null)
                 {
-                    PropertyChanged(this, new PropertyChangedEventArgs("upcomingHoliday"));
+                    PropertyChanged(this, new PropertyChangedEventArgs("UpcomingHoliday"));
                 }
             }
         }
         public HolidayCommand HolidayCommand { get; set; }
-        public hebrewDatesViewModel()
+        public HolidayViewModel()
         {
             CurrentDate = DateTime.Now;
             HolidayCommand = new HolidayCommand();
@@ -77,14 +77,13 @@ namespace UIFlights
             }
             this.timer = new System.Threading.Timer(x =>
             {
-                this.SomeMethodRunsAt1600();
+                this.StartDispatcherAt12AM();
             }, null, timeToGo, Timeout.InfiniteTimeSpan);
         }
 
-        private void SomeMethodRunsAt1600()
+        private void StartDispatcherAt12AM()
         {
             //this runs at 00:00:00
-            //
             dispatcherTimer.Tick += CheckIsBeforeHolidayDispatcher;
             dispatcherTimer.Interval = new TimeSpan(24, 0, 0);
             dispatcherTimer.Start();
@@ -96,11 +95,15 @@ namespace UIFlights
         }
         private async void CheckIsBeforeHoliday( DateTime date)
         {
-            IsLoadingDate = true;
-            var result = await bl.IsBeforeHoliday(date);
-            IsBeforeHoliday = result.Item1;
-            UpcomingHoliday = result.Item2;
-            IsLoadingDate = false;
+            try
+            {
+                IsLoadingDate = true;
+                var result = await holidayModel.CheckIsBeforeHoliday(date);
+                IsBeforeHoliday = result.Item1;
+                UpcomingHoliday = result.Item2;
+                IsLoadingDate = false;
+            }
+            catch { }
         }
     }
 }

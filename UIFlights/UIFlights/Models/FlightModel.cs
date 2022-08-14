@@ -228,25 +228,8 @@ namespace UIFlights
             }
         }
 
-        public  FlightModel(string id)
+        public  FlightModel()
         {
-            //initialize(id);
-        //{
-        //    flightRoot =await bl.GetSelectedFlight(id);
-        //    try
-        //    {
-        //        double lonOrigin = flightRoot.airport.origin.position.longitude;
-        //        double latOrigin = flightRoot.airport.origin.position.latitude;
-        //        rootWeatherOrigin = bl.GetWeather(lonOrigin, latOrigin).Result;
-        //    }
-        //    catch { }
-        //    try
-        //    {
-        //        double lonDes = flightRoot.airport.destination.position.longitude;
-        //        double latDes = flightRoot.airport.destination.position.latitude;
-        //        rootWeatherDestination = bl.GetWeather(lonDes, latDes).Result;
-        //    }
-        //    catch { }
         }
         
         public async Task<FlightModel> initialize(string id)

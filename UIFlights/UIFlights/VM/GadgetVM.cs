@@ -37,16 +37,16 @@ namespace UIFlights
         public GadgetVM(FlightModel flightModel)
         {
             SelectedFlightModel = flightModel;
-            dispatcherTimer.Tick += DispatcherTimer_Tick_Flight;
+            dispatcherTimer.Tick += UpdateCurrentFlight;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             dispatcherTimer.Start();
         }
-        private async void DispatcherTimer_Tick_Flight(object sender, EventArgs e)/////////////////////////////////////////////////////
+        private async void UpdateCurrentFlight(object sender, EventArgs e)
         {
             if (SelectedFlightModel != null)
             {
                 string id = SelectedFlightModel.FlightId;
-                SelectedFlightModel = await new FlightModel(id).initialize(id);
+                SelectedFlightModel = await new FlightModel().initialize(id);
             }
         }
 

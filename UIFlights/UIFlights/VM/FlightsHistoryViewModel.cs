@@ -11,47 +11,49 @@ using System.Windows.Controls;
 
 namespace UIFlights
 {
-    public class FlightsHistoryViewModel: INotifyPropertyChanged
+    public class FlightsHistoryViewModel
     {
-        public event PropertyChangedEventHandler PropertyChanged;
         BLImp bl = BLImp.theInstance();
-
+        private HistoryModel historyModel = new HistoryModel();
         private SearchHistoryCommand searchHistoryCommand = new SearchHistoryCommand();
+        private ObservableCollection<FlightInfoPartial> savedFlights= new ObservableCollection<FlightInfoPartial>();
 
-
-        public SearchHistoryCommand SearchHistoryCommand { get { return searchHistoryCommand; } set { searchHistoryCommand = value; } }
-        public ObservableCollection<FlightInfoPartial> SavedFlights { get; set; }
-        public ProgressBar ProgressBar { get; set; }
-        private bool isLoadingHistory = false;
-        public bool IsLoadingHistory
+        public SearchHistoryCommand SearchHistoryCommand 
+        { 
+            get 
+            { 
+                return searchHistoryCommand; 
+            } 
+            set 
+            { 
+                searchHistoryCommand = value; 
+            } 
+        }
+        public ObservableCollection<FlightInfoPartial> SavedFlights
         {
-            get { return isLoadingHistory; }
+            get
+            {
+                return savedFlights;
+            }
             set
             {
-                isLoadingHistory = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("IsLoadingHistory"));
-                }
+                savedFlights = value;
             }
         }
-        public FlightsHistoryViewModel(ProgressBar progressBar)
+        
+        public FlightsHistoryViewModel()
         {
-            ProgressBar = progressBar;
             SearchHistoryCommand.SelectedRangeDates +=GetSavedFlights ;
-            SavedFlights = new ObservableCollection<FlightInfoPartial>();
         }
         private void GetSavedFlights(DateTime date1, DateTime date2)
         {
-            //IsLoadingHistory = true;
-            ProgressBar.Visibility = System.Windows.Visibility.Visible;
-            SavedFlights.Clear();
-            var saved = bl.GetSavedFlights(date1, date2);
-            saved.Sort((i, j) => j.CreateTime.CompareTo(i.CreateTime));
-            // bl.GetSavedFlights(date1, date2).ForEach(SavedFlights.Add);
-            saved.ForEach(SavedFlights.Add);
-            ProgressBar.Visibility = System.Windows.Visibility.Hidden;
-            //IsLoadingHistory = false;
+            try
+            {
+                SavedFlights.Clear();
+                var saved = historyModel.GetSavedFlights(date1, date2);
+                saved.ForEach(SavedFlights.Add);
+            }
+            catch { }
         }
     }
 }

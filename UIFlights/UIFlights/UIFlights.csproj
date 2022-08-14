@@ -73,11 +73,13 @@
     <Compile Include="Commands\ExportCommand.cs" />
     <Compile Include="Commands\HolidayCommand.cs" />
     <Compile Include="Commands\SearchHistoryCommand.cs" />
-    <Compile Include="Converters\MyConverter.cs" />
     <Compile Include="Converters\NegativeVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
+    <Compile Include="IATACodeConverter.cs" />
     <Compile Include="Models\FlightModel.cs" />
     <Compile Include="Converters\MultiConverter.cs" />
+    <Compile Include="Models\HistoryModel.cs" />
+    <Compile Include="Models\HolidayModel.cs" />
     <Compile Include="Views\FlightsHistoryWindow.xaml.cs">
       <DependentUpon>FlightsHistoryWindow.xaml</DependentUpon>
     </Compile>
@@ -91,7 +93,7 @@
     <Compile Include="VM\FlightsViewModel.cs" />
     <Compile Include="VM\FlightViewModel.cs" />
     <Compile Include="VM\GadgetVM.cs" />
-    <Compile Include="VM\hebrewDatesViewModel.cs" />
+    <Compile Include="VM\HolidayViewModel.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -119,7 +121,6 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Models\FlightsModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

@@ -27,9 +27,9 @@ namespace UIFlights
         private ExportCommand exportCommand = new ExportCommand();
         private Map myMap;
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        private FlightInfoPartial selectedFlight;
         private ResourceDictionary mainWindowResource;
         private bool isLoadingFlight = false;
+
         public bool IsLoadingFlight
         {
             get { return isLoadingFlight; }
@@ -68,19 +68,7 @@ namespace UIFlights
                 }
             }
         }
-        public FlightInfoPartial SelectedFlight
-        {
-            get { return selectedFlight; }
-            set
-            {
-                selectedFlight = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("SelectedFlight"));
-                }
-            }
-        }
-        private FlightsModel flightsModel;
+
         private FlightModel selectedFlightModel;
         public FlightModel SelectedFlightModel
         {
@@ -97,14 +85,35 @@ namespace UIFlights
                 }
             }
         }
-       
 
-        public FlightCommand Flightcommand { get { return flightcommand; } set { flightcommand = value; } }
-        public ExportCommand ExportCommand { get { return exportCommand; } set { exportCommand = value; } }
-        public ObservableCollection<FlightInfoPartial> ListIncomingFlights {
+
+        public FlightCommand Flightcommand
+        {
+            get 
+            { 
+                return flightcommand; 
+            }
+            set 
+            { 
+                flightcommand = value; 
+            }
+        }
+        public ExportCommand ExportCommand
+        {
+            get 
+            { 
+                return exportCommand;
+            }
+            set 
+            { 
+                exportCommand = value; 
+            }
+        }
+        public ObservableCollection<FlightInfoPartial> ListIncomingFlights
+        {
             get
             {
-                //return new ObservableCollection<FlightInfoPartial>(flightsModel.Flights["incoming"]);
+
                 return listIncomingFlights;
             }
             set
@@ -112,26 +121,27 @@ namespace UIFlights
                 listIncomingFlights = value;
             }
         }
-        public ObservableCollection<FlightInfoPartial> ListOutgoingFlights {
+        public ObservableCollection<FlightInfoPartial> ListOutgoingFlights
+        {
             get
             {
-                //return new ObservableCollection<FlightInfoPartial>(flightsModel.Flights["outgoing"]);
                 return listOutgoingFlights;
             }
-            set{ listOutgoingFlights = value; }
+            set { listOutgoingFlights = value; }
         }
         public FlightsViewModel(Map map, ResourceDictionary resources)
         {
-            
             myMap = map;
             mainWindowResource = resources;
-            flightsModel = new FlightsModel();
-            Flightcommand.SelectedFlight += extractSelectedFlight;
+            //add functions to FlightCommand
+            Flightcommand.SelectedFlight += UpdateCurrentFlight;
             Flightcommand.SelectedFlight += saveSelectedFlight;
-            //var Flights = bl.GetCurrentFlights();
             try
             {
+                //init the flights lists for the first seconds of the running
                 Flights = bl.GetCurrentFlightsSync();
+                ListIncomingFlights = new ObservableCollection<FlightInfoPartial>(Flights["incoming"]);
+                ListOutgoingFlights = new ObservableCollection<FlightInfoPartial>(Flights["outgoing"]);
             }
             catch (Exception ex)
             {
@@ -142,34 +152,22 @@ namespace UIFlights
                     IsNetworkProblem = true;
                 }
             }
-            // ListIncomingFlights = new ObservableCollection<FlightInfoPartial>();
-            //ListOutgoingFlights = new ObservableCollection<FlightInfoPartial>();
-            ListIncomingFlights = new ObservableCollection<FlightInfoPartial>(Flights["incoming"]);
-            ListOutgoingFlights = new ObservableCollection<FlightInfoPartial>(Flights["outgoing"]);
-            ShowPushPinOnMap(null, null);
-            //DispatcherTimer dispatcherTimer = new DispatcherTimer();
+            UpdateAirplaneOnMap(null, null);
             initDispatcher();
-
-
-        } 
+        }
         private void initDispatcher()
         {
-            dispatcherTimer.Tick += DispatcherTimer_Tick_Flights;
-            dispatcherTimer.Tick += ShowPushPinOnMap;
-            dispatcherTimer.Tick += DispatcherTimer_Tick_Flight;
-
-
+            dispatcherTimer.Tick += UpdateCurrentFlights;
+            dispatcherTimer.Tick += UpdateAirplaneOnMap;
+            dispatcherTimer.Tick += UpdateCurrentFlight;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
             dispatcherTimer.Start();
         }
-
-        
-
-        ~FlightsViewModel() {
+        ~FlightsViewModel()
+        {
             dispatcherTimer.Stop();
-            
         }
-        private void ShowPushPinOnMap(object sender, EventArgs e)
+        private void UpdateAirplaneOnMap(object sender, EventArgs e)
         {
             List<Pushpin> mapPushpinToRemove = new List<Pushpin>();
             foreach (var item in myMap.Children)
@@ -184,31 +182,37 @@ namespace UIFlights
             mapPushpinToRemove.ForEach(myMap.Children.Remove);
             addAirplanesToMap(ListOutgoingFlights);
             addAirplanesToMap(ListIncomingFlights);
-
         }
         private void addAirplanesToMap(ObservableCollection<FlightInfoPartial> flights)
         {
-            
-            foreach (var f in flights)
+            try
             {
-                Pushpin PinCurrent = new Pushpin { ToolTip = "source: " + f.Source + "\n destination: " + f.Destination };
-                PinCurrent.Name = "flightPin";
-                PinCurrent.Height = 20;
-                PinCurrent.Width = 20;
-                MouseBinding mouseBinding = new MouseBinding(Flightcommand, new MouseGesture(MouseAction.LeftClick));// add command definition 
-                mouseBinding.CommandParameter = f.FlightID;
-                PinCurrent.InputBindings.Add(mouseBinding);
-                PositionOrigin origin = new PositionOrigin { X = 0.4, Y = 0.4 };
-                MapLayer.SetPositionOrigin(PinCurrent, origin);
-               
-                PinCurrent.DataContext = f;
-                PinCurrent.Style = (Style)mainWindowResource["flightStyle"];
-                var PlaneLocation = new Location { Latitude = f.Lat, Longitude = f.Long };
-                PinCurrent.Location = PlaneLocation;
-                myMap.Children.Add(PinCurrent);
+                foreach (var f in flights)
+                {
+                    Pushpin PinCurrent = new Pushpin { ToolTip = "source: " + f.Source + "\n destination: " + f.Destination };
+                    PinCurrent.Name = "flightPin";
+                    PinCurrent.Height = 20;
+                    PinCurrent.Width = 20;
+                    MouseBinding mouseBinding = new MouseBinding(Flightcommand, new MouseGesture(MouseAction.LeftClick));// add command definition 
+                    mouseBinding.CommandParameter = f.FlightID;
+                    PinCurrent.InputBindings.Add(mouseBinding);
+                    PositionOrigin origin = new PositionOrigin { X = 0.4, Y = 0.4 };
+                    MapLayer.SetPositionOrigin(PinCurrent, origin);
+                    PinCurrent.DataContext = f;
+                    PinCurrent.Style = (Style)mainWindowResource["flightStyle"];
+                    var PlaneLocation = new Location { Latitude = f.Lat, Longitude = f.Long };
+                    PinCurrent.Location = PlaneLocation;
+                    myMap.Children.Add(PinCurrent);
+                }
             }
+            catch { }
         }
-        private async void DispatcherTimer_Tick_Flights(object sender, EventArgs e)
+        /// <summary>
+        /// update the flights in the list
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void UpdateCurrentFlights(object sender, EventArgs e)
         {
             IsNetworkProblem = false;
             IsServerProblem = false;
@@ -219,14 +223,12 @@ namespace UIFlights
                 ListOutgoingFlights.Clear();
                 try
                 {
-                    ///to remove
-                    Flights["outgoing"].Add(new FlightInfoPartial { Destination = random.Next(1, 100).ToString(), Source = "san fransisco", ID = 123 });
                     Flights["incoming"].ForEach(ListIncomingFlights.Add);
                     Flights["outgoing"].ForEach(ListOutgoingFlights.Add);
                 }
                 catch { }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex is BE.NoDataException)
                     IsServerProblem = true;
@@ -236,25 +238,33 @@ namespace UIFlights
                 }
             }
         }
-        private async void DispatcherTimer_Tick_Flight(object sender, EventArgs e)/////////////////////////////////////////////////////
+        /// <summary>
+        /// for dispatcher
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private async void UpdateCurrentFlight(object sender, EventArgs e)
         {
             if (SelectedFlightModel != null)
             {
                 string id = SelectedFlightModel.FlightId;
-                SelectedFlightModel = await new FlightModel(id).initialize(id);
-                addNewPolyLine(SelectedFlightModel.Trail);
+                SelectedFlightModel = await new FlightModel().initialize(id);
+                ShowTrail(SelectedFlightModel.Trail);
             }
-                //extractSelectedFlight(SelectedFlightModel.FlightId);
         }
-
-        private async void extractSelectedFlight(string id)
+        /// <summary>
+        /// for the command 
+        /// </summary>
+        /// <param name="id"></param>
+        private async void UpdateCurrentFlight(string id)
         {
+            SelectedFlightModel = null;
             IsLoadingFlight = true;
-            SelectedFlightModel =await new FlightModel(id).initialize(id);
-            addNewPolyLine(SelectedFlightModel.Trail);
+            SelectedFlightModel = await new FlightModel().initialize(id);
+            ShowTrail(SelectedFlightModel.Trail);
             IsLoadingFlight = false;
         }
-        void addNewPolyLine(List<Trail> Route)
+        void ShowTrail(List<Trail> Route)
         {
             try
             {
@@ -263,9 +273,7 @@ namespace UIFlights
                 Route = (from f in Route
                          orderby f.ts
                          select f).ToList<Trail>();
-
                 MapPolyline polyline = new MapPolyline();
-                //polyline.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Blue);
                 polyline.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Purple);
                 polyline.StrokeThickness = 3;
                 polyline.Opacity = 1;
@@ -288,13 +296,9 @@ namespace UIFlights
                 }
                 mapPolylinesToRemove.ForEach(myMap.Children.Remove);
                 mapPushpinToRemove.ForEach(myMap.Children.Remove);
-               
-                //myMap.Children.Add(polyline);
                 myMap.Children.Add(polyline);
-                
-                
                 Pushpin sourcePushPin = new Pushpin();
-                sourcePushPin.Style= (Style)mainWindowResource["originPushpin"];
+                sourcePushPin.Style = (Style)mainWindowResource["originPushpin"];
                 sourcePushPin.Name = "source";
                 sourcePushPin.Height = 20;
                 sourcePushPin.Width = 20;
@@ -304,32 +308,20 @@ namespace UIFlights
             }
             catch { }
         }
-        void addNewPolygon(Trail trail)
-        {
-            double distance = 0.05;
-            MapPolygon polygon = new MapPolygon();
-            polygon.Fill = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
-            polygon.Stroke = new System.Windows.Media.SolidColorBrush(System.Windows.Media.Colors.Red);
-            polygon.StrokeThickness = 5;
-            polygon.Opacity = 1;
-            polygon.Locations = new LocationCollection() {
-        new Location(trail.lat-distance,trail.lng-distance),
-        new Location(trail.lat-distance,trail.lng+distance),
-        new Location(trail.lat+distance,trail.lng+distance),
-        
-            new Location(trail.lat+distance,trail.lng-distance)};
 
-            myMap.Children.Add(polygon);
-        }
 
         private void saveSelectedFlight(string id)
         {
-            selectedFlight = listIncomingFlights.ToList().Find(f => f.FlightID == id);
-            if (selectedFlight == null)
+            try
             {
-                selectedFlight = listOutgoingFlights.ToList().Find(f => f.FlightID == id);
+                var selectedFlight = listIncomingFlights.ToList().Find(f => f.FlightID == id);
+                if (selectedFlight == null)
+                {
+                    selectedFlight = listOutgoingFlights.ToList().Find(f => f.FlightID == id);
+                }
+                bl.SaveFlightInfoPartial(selectedFlight);
             }
-            bl.SaveFlightInfoPartial(selectedFlight);
+            catch { }
         }
 
     }

@@ -18,6 +18,8 @@
         <local:MultiConverter x:Key="MultiConverter"></local:MultiConverter>
         <local:VisibilityConverter x:Key="VisibilityConverter"/>
         <local:NegativeVisibilityConverter x:Key="NegativeVisibilityConverter"/>
+        <!--<local:IATACodeConverter x:Key="IATACodeConverter"/>-->
+
 
         <Style TargetType="m:Pushpin" x:Key="flightStyle">
             <Setter x:Name="setterStyle" Property="Template">
@@ -123,9 +125,7 @@
                                 <!--<materialDesign:Card  Margin="0,30,0,0" >-->
                                 <m:Map x:Name="myMap" Margin="0,30,0,0" Language="en" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"        
                Center="32.000454,34.870743" ZoomLevel="7.0" AnimationLevel="None"  Grid.Column="0" Grid.RowSpan="2" >
-                                    <m:Map.Background>
-                                        <ImageBrush/>
-                                    </m:Map.Background>
+                                    
 
                                     <!--<m:Pushpin Name="_2cb98cf3" Location="32.000454,34.870743"  Width="20" Height="20" Margin="0.2,0,-0.2,-0.2" VerticalAlignment="Bottom">
 
@@ -196,8 +196,8 @@
                                     MouseAction="LeftClick" />
                                                         </Border.InputBindings>
 
-                                                        
-                                                            <TextBlock Text="{Binding Destination}" Width="60">
+
+                                                        <TextBlock Text="{Binding Destination}" Width="120">
                                                             <!--<TextBlock.InputBindings>
                                                                 <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
@@ -222,8 +222,8 @@
                                     MouseAction="LeftClick" />
                                                         </Border.InputBindings>
 
-                                                        
-                                                            <TextBlock Text="{Binding Source}" Width="60">
+
+                                                        <TextBlock Text="{Binding Source}" Width="120">
                                                             <!--<TextBlock.InputBindings>
                                                                 <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
@@ -311,7 +311,7 @@
                                 </Grid>
                                 <ProgressBar x:Name="progressBarHistory" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Visibility="Hidden" />
                                 <ListView x:Name="historyListView" Grid.Row="1" Grid.Column="0" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Style="{StaticResource MaterialDesignListView}"
-                ItemsSource="{Binding SavedFlights}" FontSize="13" Width="600" Height="400" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607"  >
+                ItemsSource="{Binding SavedFlights}" FontSize="13" Width="610" Height="400" HorizontalContentAlignment="Center" VerticalAlignment="Center" BorderBrush="#FF060607"  >
 
                                     <ListView.View >
                                         <GridView x:Name="lineGridview">
