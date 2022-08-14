@@ -75,7 +75,7 @@
     <Compile Include="Commands\SearchHistoryCommand.cs" />
     <Compile Include="Converters\NegativeVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
-    <Compile Include="IATACodeConverter.cs" />
+    <Compile Include="Converters\IATACodeConverter.cs" />
     <Compile Include="Models\FlightModel.cs" />
     <Compile Include="Converters\MultiConverter.cs" />
     <Compile Include="Models\HistoryModel.cs" />

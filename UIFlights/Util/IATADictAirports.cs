@@ -19,7 +19,7 @@ namespace Util
             { "LEJ","Germany" },
             { "LCA","Cyprus" },
             { "NAP","Italy" },
-            { "AUH","United Arab\n Emirates" },
+            { "AUH","United \nArab Emirates" },
             { "LGG","Belgium" },
             { "ETM","Israel" },
             { "BUD","Hungary" },
@@ -36,15 +36,24 @@ namespace Util
             { "JMK","Greece" },
             { "DLM","Turkey" },
             { "TGD","Montenegro" },
-            { "","" },
-            { "","" },
-            { "","" },
-            { "","" },
-            { "","" },
-            { "","" },
-            { "","" },
-            { "","" },
+            {"MRS","France" },
+            {"IAS","Romania" },
+            {"HER","Greece" },
+            {"AYT","Turkey" },
+            {"BOJ","Bulgaria" },
+            {"SSH","Egypt" },
+            {"BUS","Georgia" },
+            {"BJV","Turkey" },
+            {"AMS","Netherthelands" },
+            {"CPH","Denemark" },
+            {"BER","Germany" },
+            {"CTU","China" },
+            {"DXB","United \nArab Emirates" },
+            {"GYD","Azerbaijan" },
+            {"ADB","Turkey" },
+
         };
+      
         public static string IATACodeToCountry(string IATACode)
         {
             try

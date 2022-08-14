@@ -27,7 +27,7 @@ namespace UIFlights
     {
         private IBL bl = BLImp.theInstance();
         private FlightsViewModel flightsViewModel;
-        //FlightInfoPartial SelectedFlight = null; //Selected Flight
+        FlightInfoPartial SelectedFlight = null; //Selected Flight
         public MainWindow()
         {
 
@@ -37,8 +37,8 @@ namespace UIFlights
                 InitializeComponent();
                 flightsViewModel = new FlightsViewModel(myMap, Resources);
                 mainGrid.DataContext = flightsViewModel;
-                historyGrid.DataContext = new FlightsHistoryViewModel(progressBarHistory);
-                DateGrid.DataContext = new hebrewDatesViewModel();
+                historyGrid.DataContext = new FlightsHistoryViewModel();
+                DateGrid.DataContext = new HolidayViewModel();
             }
             catch (Exception e)
             {
