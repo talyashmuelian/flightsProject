@@ -72,7 +72,18 @@ namespace Util
             {"DME","Russia" },
             {"TIV","Montenegro" },
             {"EWR","United \nStates" },
-            {"SOF", "Bulgaria" }
+            {"SOF", "Bulgaria" },
+            ///////מפה הוספתי
+            {"SKG","Greece" },
+            {"YVR","Canada" },
+            {"BRU","Belgium" },
+            {"YUL","Canada" },
+            {"LTN","United \nKingdom" },
+            {"ORY","France" },
+            {"OLB","Italy" },
+            {"FRA","Germany" },
+            {"CGN","Germany" },
+            {"AOK","Greece" },
 
         };
       

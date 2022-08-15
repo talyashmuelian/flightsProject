@@ -19,6 +19,7 @@
         <local:VisibilityConverter x:Key="VisibilityConverter"/>
         <local:NegativeVisibilityConverter x:Key="NegativeVisibilityConverter"/>
         <local:IATACodeConverter x:Key="IATACodeConverter"/>
+        <local:IndexConverter x:Key="IndexConverter"/>
 
 
         <Style TargetType="m:Pushpin" x:Key="flightStyle">
@@ -189,10 +190,14 @@
                                 </Grid>
                                 <ProgressBar x:Name="progressBarHistory" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Visibility="Hidden" />
                                 <ListView x:Name="historyListView" Grid.Row="1" Grid.Column="0" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Style="{StaticResource MaterialDesignListView}"
-                ItemsSource="{Binding SavedFlights}" FontSize="13" Width="610" Height="400" HorizontalContentAlignment="Center" VerticalAlignment="Top" BorderBrush="#FF060607"  >
+                ItemsSource="{Binding SavedFlights}" FontSize="13" Width="700" Height="400" HorizontalContentAlignment="Center" VerticalAlignment="Top" BorderBrush="#FF060607"  >
 
                                     <ListView.View >
                                         <GridView x:Name="lineGridview">
+                                            <GridViewColumn Width="40"
+          DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, 
+                                         AncestorType={x:Type ListViewItem}}, 
+                                         Converter={StaticResource IndexConverter}}" />
                                             <GridViewColumn  DisplayMemberBinding="{Binding FlightID}"   >
                                                 <GridViewColumn.Header>
                                                     <StackPanel Orientation="Vertical">

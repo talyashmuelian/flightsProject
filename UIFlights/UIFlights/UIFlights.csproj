@@ -73,6 +73,7 @@
     <Compile Include="Commands\ExportCommand.cs" />
     <Compile Include="Commands\HolidayCommand.cs" />
     <Compile Include="Commands\SearchHistoryCommand.cs" />
+    <Compile Include="Converters\IndexConverter.cs" />
     <Compile Include="Converters\NegativeVisibilityConverter.cs" />
     <Compile Include="Converters\VisibilityConverter.cs" />
     <Compile Include="Converters\IATACodeConverter.cs" />
