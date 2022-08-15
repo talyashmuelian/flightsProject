@@ -9,6 +9,9 @@ using System.Windows.Data;
 
 namespace UIFlights
 {
+    /// <summary>
+    /// opposite to visibilityConverter
+    /// </summary>
     class NegativeVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

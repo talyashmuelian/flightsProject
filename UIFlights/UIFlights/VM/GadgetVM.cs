@@ -28,19 +28,22 @@ namespace UIFlights
                 }
             }
         }
-        private CloseCommand closeCommand=new CloseCommand();
-        public CloseCommand CloseCommand
-        {
-            get { return closeCommand; }
-            set { closeCommand = value; }
-        }
+
+        public CloseCommand CloseCommand { get; set; } = new CloseCommand();
         public GadgetVM(FlightModel flightModel)
         {
             SelectedFlightModel = flightModel;
+            //init the dispatcher
             dispatcherTimer.Tick += UpdateCurrentFlight;
             dispatcherTimer.Interval = new TimeSpan(0, 0, 10);
             dispatcherTimer.Start();
         }
+
+        /// <summary>
+        /// the function called from the dispatcher and update the gadget's flight 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private async void UpdateCurrentFlight(object sender, EventArgs e)
         {
             if (SelectedFlightModel != null)

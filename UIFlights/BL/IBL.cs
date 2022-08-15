@@ -11,14 +11,10 @@ namespace BL
     {
         Dictionary<string, List<FlightInfoPartial>> GetCurrentFlightsSync();
         Task<Dictionary<string, List<FlightInfoPartial>>> GetCurrentFlightsAsync();
-
-       
         Task<BE.Weather.Root> GetWeatherAsync(double lon, double lat);
         Task<BE.Flights.Root> GetSelectedFlightAsync(string id);
         void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial);
         List<FlightInfoPartial> GetSavedFlights(DateTime start, DateTime end);
-        
         Task<Tuple<bool, string>> IsBeforeHoliday(DateTime date);
-
     }
 }

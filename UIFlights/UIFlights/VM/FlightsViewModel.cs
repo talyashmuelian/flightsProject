@@ -19,16 +19,13 @@ namespace UIFlights
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private BLImp bl = BLImp.theInstance();
-        private Random random = new Random();
-        private ObservableCollection<FlightInfoPartial> listIncomingFlights;
-        private ObservableCollection<FlightInfoPartial> listOutgoingFlights;
         private Dictionary<string, List<FlightInfoPartial>> Flights = new Dictionary<string, List<FlightInfoPartial>>();
-        private FlightCommand flightcommand = new FlightCommand();
-        private ExportCommand exportCommand = new ExportCommand();
         private Map myMap;
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
         private ResourceDictionary mainWindowResource;
         private bool isLoadingFlight = false;
+        private bool isNetworkProblem = false;
+        private FlightModel selectedFlightModel;
 
         public bool IsLoadingFlight
         {
@@ -55,7 +52,6 @@ namespace UIFlights
                 }
             }
         }
-        private bool isNetworkProblem = false;
         public bool IsNetworkProblem
         {
             get { return isNetworkProblem; }
@@ -69,7 +65,6 @@ namespace UIFlights
             }
         }
 
-        private FlightModel selectedFlightModel;
         public FlightModel SelectedFlightModel
         {
             get
@@ -86,56 +81,17 @@ namespace UIFlights
             }
         }
 
-
-        public FlightCommand Flightcommand
-        {
-            get 
-            { 
-                return flightcommand; 
-            }
-            set 
-            { 
-                flightcommand = value; 
-            }
-        }
-        public ExportCommand ExportCommand
-        {
-            get 
-            { 
-                return exportCommand;
-            }
-            set 
-            { 
-                exportCommand = value; 
-            }
-        }
-        public ObservableCollection<FlightInfoPartial> ListIncomingFlights
-        {
-            get
-            {
-
-                return listIncomingFlights;
-            }
-            set
-            {
-                listIncomingFlights = value;
-            }
-        }
-        public ObservableCollection<FlightInfoPartial> ListOutgoingFlights
-        {
-            get
-            {
-                return listOutgoingFlights;
-            }
-            set { listOutgoingFlights = value; }
-        }
+        public FlightCommand Flightcommand { get; set; } = new FlightCommand();
+        public ExportCommand ExportCommand { get; set; } = new ExportCommand();
+        public ObservableCollection<FlightInfoPartial> ListIncomingFlights { get; set; }
+        public ObservableCollection<FlightInfoPartial> ListOutgoingFlights { get; set; }
         public FlightsViewModel(Map map, ResourceDictionary resources)
         {
             myMap = map;
             mainWindowResource = resources;
             //add functions to FlightCommand
-            Flightcommand.SelectedFlight += UpdateCurrentFlight;
-            Flightcommand.SelectedFlight += saveSelectedFlight;
+            Flightcommand.SelectedFlightEvent += UpdateCurrentFlight;
+            Flightcommand.SelectedFlightEvent += saveSelectedFlight;
             try
             {
                 //init the flights lists for the first seconds of the running
@@ -163,10 +119,12 @@ namespace UIFlights
             dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
             dispatcherTimer.Start();
         }
-        ~FlightsViewModel()
-        {
-            dispatcherTimer.Stop();
-        }
+
+        /// <summary>
+        /// remove the previous airplanes from the map and add the new
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void UpdateAirplaneOnMap(object sender, EventArgs e)
         {
             List<Pushpin> mapPushpinToRemove = new List<Pushpin>();
@@ -207,6 +165,7 @@ namespace UIFlights
             }
             catch { }
         }
+
         /// <summary>
         /// update the flights in the list
         /// </summary>
@@ -238,8 +197,9 @@ namespace UIFlights
                 }
             }
         }
+
         /// <summary>
-        /// for dispatcher
+        ///updaet the selected flight for the dispatcher
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -252,18 +212,20 @@ namespace UIFlights
                 ShowTrail(SelectedFlightModel.Trail);
             }
         }
+
         /// <summary>
-        /// for the command 
+        /// updaet the selected flight for the command 
         /// </summary>
         /// <param name="id"></param>
         private async void UpdateCurrentFlight(string id)
         {
-            SelectedFlightModel = null;
+            SelectedFlightModel = null; //delete the previous selected flight
             IsLoadingFlight = true;
             SelectedFlightModel = await new FlightModel().initialize(id);
             ShowTrail(SelectedFlightModel.Trail);
             IsLoadingFlight = false;
         }
+
         void ShowTrail(List<Trail> Route)
         {
             try
@@ -282,6 +244,7 @@ namespace UIFlights
                 {
                     polyline.Locations.Add(new Location(item.lat, item.lng));
                 }
+                //remove the previous polyline and source pushpin in the map
                 List<MapPolyline> mapPolylinesToRemove = new List<MapPolyline>();
                 List<Pushpin> mapPushpinToRemove = new List<Pushpin>();
                 foreach (var item in myMap.Children)
@@ -296,6 +259,7 @@ namespace UIFlights
                 }
                 mapPolylinesToRemove.ForEach(myMap.Children.Remove);
                 mapPushpinToRemove.ForEach(myMap.Children.Remove);
+                //add the new polyline and source pushpin
                 myMap.Children.Add(polyline);
                 Pushpin sourcePushPin = new Pushpin();
                 sourcePushPin.Style = (Style)mainWindowResource["originPushpin"];
@@ -309,15 +273,18 @@ namespace UIFlights
             catch { }
         }
 
-
+        /// <summary>
+        /// save to data base the selected flight
+        /// </summary>
+        /// <param name="id"></param>
         private void saveSelectedFlight(string id)
         {
             try
             {
-                var selectedFlight = listIncomingFlights.ToList().Find(f => f.FlightID == id);
+                var selectedFlight = ListIncomingFlights.ToList().Find(f => f.FlightID == id);
                 if (selectedFlight == null)
                 {
-                    selectedFlight = listOutgoingFlights.ToList().Find(f => f.FlightID == id);
+                    selectedFlight = ListOutgoingFlights.ToList().Find(f => f.FlightID == id);
                 }
                 bl.SaveFlightInfoPartial(selectedFlight);
             }

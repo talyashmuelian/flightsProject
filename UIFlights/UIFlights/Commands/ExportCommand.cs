@@ -9,7 +9,10 @@ using BE;
 
 namespace UIFlights
 {
-    public class ExportCommand:ICommand
+    /// <summary>
+    /// command that open gadget window of specific flight
+    /// </summary>
+    public class ExportCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {

@@ -12,10 +12,9 @@ namespace DL
         void SaveFlightInfoPartial(FlightInfoPartial flightInfoPartial);
         List<FlightInfoPartial> GetSavedFlights();
         List<FlightInfoPartial> GetCurrentFlightsSync();
+        Task<BE.Flights.Root> GetSelectedFlightAsync(string id);
         Task<List<FlightInfoPartial>> GetCurrentFlightsAsync();
         Task<BE.Weather.Root> GetWeatherAsync(double lon, double lat);
-        Task<BE.Flights.Root> GetSelectedFlightAsync(string id);
         Task<BE.HebrewDates.Root> GetHebrewDate(DateTime date);
-
     }
 }

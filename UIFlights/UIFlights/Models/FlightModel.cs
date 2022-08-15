@@ -10,7 +10,7 @@ using Newtonsoft.Json;
 
 namespace UIFlights
 {
-   public class FlightModel
+    public class FlightModel
     {
         private BE.Flights.Root flightRoot;
         private BE.Weather.Root rootWeatherOrigin;
@@ -23,27 +23,32 @@ namespace UIFlights
         {
             get
             {
-                try{
-                    return flightRoot.airport.destination.name;}
-                catch{ return "NA"; }
+                try
+                {
+                    return flightRoot.airport.destination.name;
+                }
+                catch { return "NA"; }
             }
         }
 
-        public string DestinationCountryName 
+        public string DestinationCountryName
         {
-            get {
+            get
+            {
                 try
                 {
                     return flightRoot.airport.destination.position.country.name;
                 }
                 catch
-                { 
-                    return "NA"; }
+                {
+                    return "NA";
                 }
+            }
         }
         public string FlightId
         {
-            get {
+            get
+            {
                 try
                 {
                     return flightRoot.identification.id;
@@ -52,8 +57,8 @@ namespace UIFlights
                 {
                     return "NA";
                 }
-            
-        }
+
+            }
         }
         public string AirlineName
         {
@@ -69,7 +74,7 @@ namespace UIFlights
                 }
             }
         }
-            
+
         public string OriginName
         {
             get
@@ -125,7 +130,7 @@ namespace UIFlights
                 }
                 catch
                 {
-                    return  "NA";
+                    return "NA";
                 }
             }
         }
@@ -152,7 +157,7 @@ namespace UIFlights
             {
                 try
                 {
-                    return Math.Round( Util.Helper.kelvinToCelsius(rootWeatherDestination.main.temp),1).ToString();
+                    return Math.Round(Util.Helper.kelvinToCelsius(rootWeatherDestination.main.temp), 1).ToString();
                 }
                 catch
                 {
@@ -166,7 +171,7 @@ namespace UIFlights
             {
                 try
                 {
-                    return Math.Round(Util.Helper.kelvinToCelsius(rootWeatherOrigin.main.temp),1).ToString();
+                    return Math.Round(Util.Helper.kelvinToCelsius(rootWeatherOrigin.main.temp), 1).ToString();
                 }
                 catch
                 {
@@ -174,7 +179,8 @@ namespace UIFlights
                 }
             }
         }
-        public string DescriptionOrigin { 
+        public string DescriptionOrigin
+        {
             get
             {
                 try
@@ -195,7 +201,8 @@ namespace UIFlights
                 catch { return "NA"; }
             }
         }
-        public List<Trail> Trail {
+        public List<Trail> Trail
+        {
             get
             {
                 try
@@ -206,7 +213,8 @@ namespace UIFlights
 
             }
         }
-        public string OriginIATA {
+        public string OriginIATA
+        {
             get
             {
                 try
@@ -228,30 +236,33 @@ namespace UIFlights
             }
         }
 
-        public  FlightModel()
+        public FlightModel()
         {
         }
-        
+
+        /// <summary>
+        /// init asynchronously the fields in this class
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<FlightModel> initialize(string id)
         {
-
-            flightRoot = await  bl.GetSelectedFlightAsync(id);
+            flightRoot = await bl.GetSelectedFlightAsync(id);
             try
             {
                 double lonOrigin = flightRoot.airport.origin.position.longitude;
                 double latOrigin = flightRoot.airport.origin.position.latitude;
-                rootWeatherOrigin =  await bl.GetWeatherAsync(lonOrigin, latOrigin);
+                rootWeatherOrigin = await bl.GetWeatherAsync(lonOrigin, latOrigin);
             }
             catch { }
             try
             {
                 double lonDes = flightRoot.airport.destination.position.longitude;
                 double latDes = flightRoot.airport.destination.position.latitude;
-                rootWeatherDestination =  await bl.GetWeatherAsync(lonDes, latDes);
+                rootWeatherDestination = await bl.GetWeatherAsync(lonDes, latDes);
             }
             catch { }
             return this;
-
         }
         public override string ToString()
         {

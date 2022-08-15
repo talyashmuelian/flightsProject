@@ -8,6 +8,9 @@ using System.Windows.Data;
 
 namespace UIFlights
 {
+    /// <summary>
+    /// get few parameters and return them in one list (for sending 2 dates to searchCommand)
+    /// </summary>
     public class MultiConverter : IMultiValueConverter
     {
 

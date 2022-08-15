@@ -80,9 +80,6 @@
     <Compile Include="Converters\MultiConverter.cs" />
     <Compile Include="Models\HistoryModel.cs" />
     <Compile Include="Models\HolidayModel.cs" />
-    <Compile Include="Views\FlightsHistoryWindow.xaml.cs">
-      <DependentUpon>FlightsHistoryWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Views\Gadget.xaml.cs">
       <DependentUpon>Gadget.xaml</DependentUpon>
     </Compile>
@@ -91,7 +88,6 @@
     </Compile>
     <Compile Include="VM\FlightsHistoryViewModel.cs" />
     <Compile Include="VM\FlightsViewModel.cs" />
-    <Compile Include="VM\FlightViewModel.cs" />
     <Compile Include="VM\GadgetVM.cs" />
     <Compile Include="VM\HolidayViewModel.cs" />
     <Page Include="MainWindow.xaml">
@@ -107,10 +103,6 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Views\FlightsHistoryWindow.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
     <Page Include="Views\Gadget.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

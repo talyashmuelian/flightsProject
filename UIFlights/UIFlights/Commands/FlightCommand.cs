@@ -9,9 +9,12 @@ using System.Windows.Input;
 
 namespace UIFlights
 {
+    /// <summary>
+    /// command for show flight details
+    /// </summary>
     public class FlightCommand : ICommand
     {
-        public event Action<string> SelectedFlight; //parameter is id flight
+        public event Action<string> SelectedFlightEvent; //parameter is id flight
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -26,9 +29,9 @@ namespace UIFlights
         public void Execute(object parameter)
         {
             string FlightID = parameter as string;
-            if (SelectedFlight != null)
+            if (SelectedFlightEvent != null)
             {
-                SelectedFlight(FlightID);
+                SelectedFlightEvent(FlightID);
             }
         }
     }

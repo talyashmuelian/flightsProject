@@ -8,17 +8,23 @@ using System.Windows.Input;
 
 namespace UIFlights
 {
-    public class CloseCommand : ICommand 
-    { 
-        public bool CanExecute(object parameter) 
-        { return true; } 
-        public event EventHandler CanExecuteChanged {
+    /// <summary>
+    /// close window command, used in widget
+    /// </summary>
+    public class CloseCommand : ICommand
+    {
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+        public event EventHandler CanExecuteChanged
+        {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
-        } 
-        public void Execute(object wnd) {
+        }
+        public void Execute(object wnd)
+        {
             if (wnd is Window) ((Window)wnd).Close();
-        } 
+        }
     }
-
 }

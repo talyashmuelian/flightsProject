@@ -10,7 +10,7 @@ namespace Util
     {
         private static Dictionary<string, string> IATAdict = new Dictionary<string, string>()
         {
-            { "TLV", "Israel"},
+           { "TLV", "Israel"},
             { "PFO","Cyprus" },
             { "JTR","Greece" },
             { "ATH","Greece" },
@@ -51,6 +51,28 @@ namespace Util
             {"DXB","United \nArab Emirates" },
             {"GYD","Azerbaijan" },
             {"ADB","Turkey" },
+            {"RHO","Greece" },
+            {"DUS","Germany" },
+            {"VAR","Bulgaria" },
+            {"LHR","United \nKingdom" },
+            {"JFK","United \nStates" },
+            {"LAX","United \nStates" },
+            {"WAW","Poland" },
+            {"BLQ","Italy" },
+            {"BOS","United \nStates" },
+            {"BAH","Bahrain" },
+            {"INN","Austria" },
+            {"CMN","Morocco" },
+            {"FMM","Germany" },
+            {"BGY","Italy" },
+            {"GVA","Switzerland" },
+            {"TAS","Uzbekistan" },
+            {"NHT","United \nKingdom" },
+            {"YYZ","Canada" },
+            {"DME","Russia" },
+            {"TIV","Montenegro" },
+            {"EWR","United \nStates" },
+            {"SOF", "Bulgaria" }
 
         };
       

@@ -12,14 +12,17 @@ namespace UIFlights
 {
     public class HolidayViewModel : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private BLImp bl = BL.BLImp.theInstance();
         private HolidayModel holidayModel = new HolidayModel();
-        private System.Threading.Timer timer;
+        private Timer timer;
         private DispatcherTimer dispatcherTimer = new DispatcherTimer();
-        public DateTime CurrentDate { get; set; }
-        public event PropertyChangedEventHandler PropertyChanged;
         private bool isBeforeHoliday;
         private string upcomingHoliday;
+        private bool isLoadingDate = false;
+
+        public DateTime CurrentDate { get; set; }
         public bool IsBeforeHoliday
         {
             get { return isBeforeHoliday; }
@@ -31,7 +34,6 @@ namespace UIFlights
                 }
             }
         }
-        private bool isLoadingDate=false;
 
         public bool IsLoadingDate
         {
@@ -64,9 +66,13 @@ namespace UIFlights
             HolidayCommand = new HolidayCommand();
             SetUpTimer(new TimeSpan(0,0,0));
             CheckIsBeforeHoliday(CurrentDate);
-            HolidayCommand.SelectedDate += CheckIsBeforeHoliday;
+            HolidayCommand.SelectedDateEvent += CheckIsBeforeHoliday;
         }
         
+        /// <summary>
+        /// start the dispatcher at the required time
+        /// </summary>
+        /// <param name="alertTime"></param>
         private void SetUpTimer(TimeSpan alertTime)
         {
             DateTime current = DateTime.Now;
@@ -93,6 +99,11 @@ namespace UIFlights
            CurrentDate=CurrentDate.AddDays(1);
             CheckIsBeforeHoliday(CurrentDate);
         }
+
+        /// <summary>
+        /// call the model function to check is before holiday
+        /// </summary>
+        /// <param name="date"></param>
         private async void CheckIsBeforeHoliday( DateTime date)
         {
             try

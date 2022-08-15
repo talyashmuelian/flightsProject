@@ -15,36 +15,19 @@ namespace UIFlights
     {
         BLImp bl = BLImp.theInstance();
         private HistoryModel historyModel = new HistoryModel();
-        private SearchHistoryCommand searchHistoryCommand = new SearchHistoryCommand();
-        private ObservableCollection<FlightInfoPartial> savedFlights= new ObservableCollection<FlightInfoPartial>();
+        public SearchHistoryCommand SearchHistoryCommand { get; set; } = new SearchHistoryCommand();
+        public ObservableCollection<FlightInfoPartial> SavedFlights { get; set; } = new ObservableCollection<FlightInfoPartial>();
 
-        public SearchHistoryCommand SearchHistoryCommand 
-        { 
-            get 
-            { 
-                return searchHistoryCommand; 
-            } 
-            set 
-            { 
-                searchHistoryCommand = value; 
-            } 
-        }
-        public ObservableCollection<FlightInfoPartial> SavedFlights
-        {
-            get
-            {
-                return savedFlights;
-            }
-            set
-            {
-                savedFlights = value;
-            }
-        }
-        
         public FlightsHistoryViewModel()
         {
-            SearchHistoryCommand.SelectedRangeDates +=GetSavedFlights ;
+            SearchHistoryCommand.SelectedRangeDatesEvent += GetSavedFlights;
         }
+
+        /// <summary>
+        /// run when command is called
+        /// </summary>
+        /// <param name="date1"></param>
+        /// <param name="date2"></param>
         private void GetSavedFlights(DateTime date1, DateTime date2)
         {
             try

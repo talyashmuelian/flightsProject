@@ -8,9 +8,12 @@ using System.Windows.Input;
 
 namespace UIFlights
 {
-    public class HolidayCommand:ICommand
+    /// <summary>
+    /// command for change date
+    /// </summary>
+    public class HolidayCommand : ICommand
     {
-        public event Action<DateTime> SelectedDate; 
+        public event Action<DateTime> SelectedDateEvent;
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
@@ -28,9 +31,9 @@ namespace UIFlights
             {
                 DateTime date = DateTime.Parse(parameter.ToString());
 
-                if (SelectedDate != null)
+                if (SelectedDateEvent != null)
                 {
-                    SelectedDate(date);
+                    SelectedDateEvent(date);
                 }
             }
             catch { MessageBox.Show("no selected date"); }
