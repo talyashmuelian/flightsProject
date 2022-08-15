@@ -185,7 +185,7 @@
                                             <RowDefinition Height="1*"/>
                                             <RowDefinition Height="5*"/>
                                         </Grid.RowDefinitions>
-                                        <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Path=ListOutgoingFlights}" Name="OutFlightsListBox" HorizontalAlignment="center" VerticalAlignment="Stretch"   Width="120" >
+                                        <ListBox Grid.Column="0" Grid.Row="1" ItemsSource="{Binding Path=ListOutgoingFlights}" Name="OutFlightsListBox" HorizontalAlignment="center" VerticalAlignment="Stretch"   Width="150" >
                                            
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate>
@@ -197,7 +197,7 @@
                                                         </Border.InputBindings>
 
 
-                                                        <TextBlock Text="{Binding Destination,Converter={StaticResource IATACodeConverter}}" Width="120">
+                                                        <TextBlock Text="{Binding Destination,Converter={StaticResource IATACodeConverter}}" Width="110" TextAlignment="Center">
                                                             <!--<TextBlock.InputBindings>
                                                                 <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"
@@ -212,7 +212,7 @@
                                         </ListBox>
 
 
-                                        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ListIncomingFlights}" x:Name="InFlightsListBox" HorizontalAlignment="Center"  VerticalAlignment="Stretch" Width="120" >
+                                        <ListBox Grid.Column="1" Grid.Row="1" ItemsSource="{Binding Path=ListIncomingFlights}" x:Name="InFlightsListBox" HorizontalAlignment="Center"  VerticalAlignment="Stretch" Width="150" >
                                             <ListBox.ItemTemplate>
                                                 <DataTemplate>
                                                     <Border x:Name="Border" Padding="4" BorderThickness="0 0 0 1" BorderBrush="#FF9C27B0">
@@ -223,7 +223,7 @@
                                                         </Border.InputBindings>
 
 
-                                                        <TextBlock Text="{Binding Source, Converter={StaticResource IATACodeConverter}}" Width="120">
+                                                        <TextBlock Text="{Binding Source, Converter={StaticResource IATACodeConverter}}" Width="110" TextAlignment="Center">
                                                             <!--<TextBlock.InputBindings>
                                                                 <MouseBinding 
                                     Command="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBox}}, Path=DataContext.Flightcommand}"  CommandParameter="{Binding Path=FlightID}"

@@ -16,6 +16,8 @@ namespace UIFlights
             if (value is string)
             {
                 string IATACode = value.ToString();
+                if (IATACode == "")
+                    return "N/A";
                 string country= Util.IATADictAirports.IATACodeToCountry(IATACode);
                 return IATACode + "-" + country;
 
