@@ -9,7 +9,7 @@
         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" 
         xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
         mc:Ignorable="d"
-         Title="Widget"  Width="352" AllowsTransparency="True" Height="550" Name="GadgetWindow" Top="0" Left="800" 
+         Title="Widget"  Width="352" AllowsTransparency="True" Height="550" Name="GadgetWindow" Top="0" Left="800" Topmost="True"
         WindowStyle="None" Background="Transparent" MouseLeftButtonDown="window_leftButton" WindowStartupLocation="Manual" Icon="airplane.png" >
 
     <Grid Background="Transparent" Height="550">
