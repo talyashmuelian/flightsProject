@@ -118,7 +118,24 @@ namespace Util
             {"BRI","Italy" },
             {"VRN","Italy" },
             {"BKK","Thailand" },
-
+            //מפה
+            {"FNC" ,"Portugal"},
+            {"KGS","Greece" },
+            {"VNO", "Lithuania"},
+            {"ADJ","Jordan" },
+            {"FKB","Germany" },
+            {"PVK","Greece" },
+            {"TSF","Italy" },
+            {"SEZ","Seychelles" },
+            {"DEB","Hungary" },
+            {"ARN","Sweden" },
+            {"VCE","Italy" },
+            {"IAD","United \nStates" },
+            {"LYS","France" },
+            {"LGW","United \nKingdom" },
+            {"OSL","Norway" },
+            {"AMM","Jordan" },
+            {"HRG","Egypt" }
 
         };
       

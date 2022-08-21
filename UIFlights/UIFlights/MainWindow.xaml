@@ -190,9 +190,11 @@
                                 </Grid>
                                 <ProgressBar x:Name="progressBarHistory" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Grid.Row="1" VerticalAlignment="Top" Grid.Column="0" Visibility="Hidden" />
                                 <ListView x:Name="historyListView" Grid.Row="1" Grid.Column="0" AutomationProperties.IsColumnHeader="True" BorderThickness="1,1,1,1" Style="{StaticResource MaterialDesignListView}"
-                ItemsSource="{Binding SavedFlights}" FontSize="13" Width="700" Height="400" HorizontalContentAlignment="Center" VerticalAlignment="Top" BorderBrush="#FF060607"  >
-
-                                    <ListView.View >
+                ItemsSource="{Binding SavedFlights}" FontSize="13" Width="710" Height="400" HorizontalContentAlignment="Center" VerticalAlignment="Top" BorderBrush="#FF060607"  >
+                                    <ListView.Resources>
+                                        <Style TargetType="ScrollBar"> </Style>
+                                    </ListView.Resources>
+                                        <ListView.View >
                                         <GridView x:Name="lineGridview">
                                             <GridViewColumn Width="40"
           DisplayMemberBinding="{Binding RelativeSource={RelativeSource FindAncestor, 
