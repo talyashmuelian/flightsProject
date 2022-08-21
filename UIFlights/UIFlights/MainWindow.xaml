@@ -20,6 +20,7 @@
         <local:NegativeVisibilityConverter x:Key="NegativeVisibilityConverter"/>
         <local:IATACodeConverter x:Key="IATACodeConverter"/>
         <local:IndexConverter x:Key="IndexConverter"/>
+        <local:CloseCommand x:Key="CloseCommand"/>
 
 
         <Style TargetType="m:Pushpin" x:Key="flightStyle">
@@ -68,7 +69,7 @@
        
         
     </Window.Resources>
-    <Grid> 
+    <Grid>
         <materialDesign:Card >
             <TabControl TabStripPlacement="Left"  VerticalContentAlignment="Top"   Style="{StaticResource MaterialDesignNavigationRailTabControl}" Background="#FFF2F2F2">
                 <TabControl.Items >
@@ -86,10 +87,10 @@
                                     <ColumnDefinition Width="650*"/>
                                 </Grid.ColumnDefinitions>
 
-                                <TextBlock Width="300" Height="30" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Text="Flights map from/to Israel" Margin="10 0 0 0"/>
-                                <TextBlock Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="A week before holiday" Visibility="{Binding ElementName=weekBeforeHoliday, Path=Visibility}" Width="145" Height="30" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,0,100,0"/>
-                                <TextBlock Text="{Binding ElementName=holiday, Path=Text}" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Visibility="{Binding ElementName=holiday, Path=Visibility}"  Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top"/>
-                                <m:Map x:Name="myMap" Margin="0,30,0,0" Language="en" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"        
+                                <TextBlock Width="300" Height="32" Style="{StaticResource MaterialDesignHeadline5TextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top"  Text="Flights map from/to Israel" Margin="10 3 0 0"/>
+                                <TextBlock Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Text="A week before holiday" Visibility="{Binding ElementName=weekBeforeHoliday, Path=Visibility}" Width="145" Height="30" HorizontalAlignment="Right"  VerticalAlignment="Top" Margin="0,10,100,0" Foreground="Purple"/>
+                                <TextBlock Text="{Binding ElementName=holiday, Path=Text}" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Visibility="{Binding ElementName=holiday, Path=Visibility}"  Width="100" Height="30" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0 10 0 0" Foreground="Purple"/>
+                                <m:Map x:Name="myMap" Margin="0,38,0,0" Language="en" CredentialsProvider="pmksqyqcmeWrxky6IrfU~jixiZJcunx8PB2Vs2UkZsA~AkChBGumbFyz2cK1YC_twzO10Pvcuj017rY2Vy5q3Mng5DUZcqzk8BYsaFcKVaC9" Mode="AerialWithLabels"        
                Center="32.000454,34.870743" ZoomLevel="7.0" AnimationLevel="None"  Grid.Column="0" Grid.RowSpan="2" >
 
 
@@ -270,7 +271,6 @@
                                         </Button.CommandParameter>
                                     </Button>
                                 </Grid>
-
                             </Grid>
                         </TabItem.Content>
                     </TabItem>
@@ -302,7 +302,6 @@
                                     <TextBlock Name="weekBeforeHoliday" Grid.Row="2" Text="A week before holiday" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource VisibilityConverter} }"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" />
                                     <TextBlock Name="notweekBeforeHoliday" Grid.Row="2" Text="There is no upcoming holiday" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource NegativeVisibilityConverter} }"  HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="20" />
                                     <TextBlock Name="holiday" Grid.Row="2" Text="{Binding UpcomingHoliday}" Style="{StaticResource MaterialDesignSubtitle2TextBlock}" Visibility="{Binding IsBeforeHoliday, Converter={StaticResource VisibilityConverter} }"   HorizontalAlignment="Center" VerticalAlignment="Bottom" FontSize="30"/>
-                                    <!--<DatePicker Name="currentDate"  Style="{StaticResource MaterialDesignOutlinedDatePicker}" HorizontalAlignment="Center" VerticalAlignment="Top" SelectedDate="{x:Static sys:DateTime.Today}" />-->
                                 </Grid>
                                 <Grid Grid.Column="1">
                                     <Grid.RowDefinitions>
@@ -333,7 +332,11 @@
                 </TabControl.Items>
             </TabControl>
         </materialDesign:Card>
-      
+        <Button  Height="24" Width="24"  Command="{StaticResource  CloseCommand}" CommandParameter="{Binding RelativeSource={RelativeSource FindAncestor, 
+                           AncestorType={x:Type Window}}}"   HorizontalAlignment="Right" VerticalAlignment="Top"  Background="Transparent" BorderBrush="Transparent" Margin="3"
+                  Style="{StaticResource MaterialDesignFloatingActionMiniDarkButton}">
+            <materialDesign:PackIcon Kind="CloseCircleOutline" Foreground="Purple"  HorizontalAlignment="Right" VerticalAlignment="Top"  Width="24" Height="24"   />
+        </Button>
     </Grid>
 
 </Window>
