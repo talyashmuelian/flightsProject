@@ -34,7 +34,6 @@ namespace UIFlights
                 {
                     DateTime date1 = DateTime.Parse(dates[0].ToString());
                     DateTime date2 = DateTime.Parse(dates[1].ToString());
-                    date2 = date2.AddHours(23).AddMinutes(59).AddSeconds(59);
                     SelectedRangeDatesEvent(date1, date2);
                 }
             }

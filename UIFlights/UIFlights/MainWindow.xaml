@@ -12,7 +12,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         
-        Title="Flights" WindowState="Maximized" Icon="Images\airplane.png">
+        Title="Flights" WindowState="Maximized" Icon="Images\airplane.png" WindowStyle="None"> 
     
     <Window.Resources>
         <local:MultiConverter x:Key="MultiConverter"></local:MultiConverter>
@@ -66,11 +66,9 @@
             </Setter>
         </Style>
        
-        <Style TargetType="ListViewItem">
-            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-        </Style>
+        
     </Window.Resources>
-    <Grid>
+    <Grid> 
         <materialDesign:Card >
             <TabControl TabStripPlacement="Left"  VerticalContentAlignment="Top"   Style="{StaticResource MaterialDesignNavigationRailTabControl}" Background="#FFF2F2F2">
                 <TabControl.Items >
@@ -105,7 +103,9 @@
                                     </Grid.RowDefinitions>
                                     <ProgressBar Visibility="{Binding IsLoadingFlight, Converter={StaticResource VisibilityConverter} }" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" VerticalAlignment="Bottom"/>
                                     <Grid Grid.Row="1" Grid.Column="1" Height="409" Width="357">
+                                        
                                         <UserControls:FlightUC Grid.Row="1" Grid.Column="1" Height="403" Width="352" HorizontalAlignment="Center" ></UserControls:FlightUC>
+                                        
                                         <Button Grid.Row="1" Grid.Column="1" Command="{Binding ExportCommand}" CommandParameter="{Binding SelectedFlightModel}" Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}" 
                                             HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Export to Widget">
                                             <materialDesign:PackIcon Kind="WatchExport" />

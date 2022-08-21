@@ -14,22 +14,6 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.purple.xaml" />
 
             </ResourceDictionary.MergedDictionaries>
-            <Style TargetType="ScrollBar">
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="ScrollBar">
-                            <Grid VerticalAlignment="Stretch" Width="5" >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition/>
-                                    <RowDefinition/>
-                                </Grid.RowDefinitions>
-                                <materialDesign:PackIcon Kind="ChevronUp" Foreground="Gray" Grid.Row="0" VerticalAlignment="Bottom"/>
-                                <materialDesign:PackIcon Kind="ChevronDown" Foreground="Gray" Grid.Row="1" VerticalAlignment="Top"/>
-                            </Grid>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-            </Style>
         </ResourceDictionary>
         
         

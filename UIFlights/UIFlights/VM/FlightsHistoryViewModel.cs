@@ -7,6 +7,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace UIFlights
@@ -32,6 +33,8 @@ namespace UIFlights
         {
             try
             {
+                if (date2<date1)
+                { MessageBox.Show("end date must be after start date");}
                 SavedFlights.Clear();
                 var saved = historyModel.GetSavedFlights(date1, date2);
                 saved.ForEach(SavedFlights.Add);

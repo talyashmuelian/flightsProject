@@ -116,7 +116,7 @@ namespace UIFlights
             dispatcherTimer.Tick += UpdateCurrentFlights;
             dispatcherTimer.Tick += UpdateAirplaneOnMap;
             dispatcherTimer.Tick += UpdateCurrentFlight;
-            dispatcherTimer.Interval = new TimeSpan(0, 0, 5);
+            dispatcherTimer.Interval = new TimeSpan(0, 0, 2);
             dispatcherTimer.Start();
         }
 
@@ -160,7 +160,7 @@ namespace UIFlights
                     PinCurrent.Style = (Style)mainWindowResource["flightStyle"];
                     var PlaneLocation = new Location { Latitude = f.Lat, Longitude = f.Long };
                     PinCurrent.Location = PlaneLocation;
-                    myMap.Children.Add(PinCurrent);
+                    myMap.Children.Insert(0, PinCurrent);
                 }
             }
             catch { }
