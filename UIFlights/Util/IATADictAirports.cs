@@ -135,7 +135,10 @@ namespace Util
             {"LGW","United \nKingdom" },
             {"OSL","Norway" },
             {"AMM","Jordan" },
-            {"HRG","Egypt" }
+            {"HRG","Egypt" },
+            //מפה
+            {"ORD","United \nStates" },
+            {"MAN","United \nKingdom" }
 
         };
       
