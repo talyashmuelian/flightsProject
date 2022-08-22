@@ -136,9 +136,10 @@ namespace Util
             {"HRG","Egypt" },
             {"ORD","United \nStates" },
             {"MAN","United \nKingdom" },
-            //מפה
             {"ZTH","Greece" },
-            {"TLN","France" }
+            {"TLN","France" },
+            //מפה
+            {"HKG","Hong Kong" }
 
         };
       
