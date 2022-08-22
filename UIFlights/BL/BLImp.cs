@@ -88,8 +88,17 @@ namespace BL
             }
 
             catch { }
-            dict.Add("outgoing", outgoing);
-            dict.Add("incoming", incoming);
+            List<FlightInfoPartial> sortOutgoing = (from a in outgoing
+                                                    orderby a.Destination descending
+                                                    select a).ToList();
+            List<FlightInfoPartial> sortIncoming = (from a in incoming
+                                                    orderby a.Source descending
+                                                    select a).ToList();
+            dict.Add("outgoing", sortOutgoing);
+            dict.Add("incoming", sortIncoming);
+            //dict.Add("outgoing", outgoing);
+            //dict.Add("incoming", incoming);
+
             return dict;
         }
 

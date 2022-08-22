@@ -83,7 +83,6 @@ namespace Util
             {"FRA","Germany" },
             {"CGN","Germany" },
             {"AOK","Greece" },
-             ///////מפה הוספתי
             {"CFU","Greece" },
             {"PRG","Czechia" },
             {"NCE","France" },
@@ -118,7 +117,6 @@ namespace Util
             {"BRI","Italy" },
             {"VRN","Italy" },
             {"BKK","Thailand" },
-            //מפה
             {"FNC" ,"Portugal"},
             {"KGS","Greece" },
             {"VNO", "Lithuania"},
@@ -136,9 +134,11 @@ namespace Util
             {"OSL","Norway" },
             {"AMM","Jordan" },
             {"HRG","Egypt" },
-            //מפה
             {"ORD","United \nStates" },
-            {"MAN","United \nKingdom" }
+            {"MAN","United \nKingdom" },
+            //מפה
+            {"ZTH","Greece" },
+            {"TLN","France" }
 
         };
       
